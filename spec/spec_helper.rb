@@ -2,6 +2,8 @@
 
 require "hwf_hmrc_api"
 require "pry"
+require "timecop"
+require "hwf_hmrc_api/user_validation"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

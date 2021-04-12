@@ -22,7 +22,6 @@ RSpec.describe HwfHmrcApi do
         connection = HwfHmrcApi.new(hmrc_secret, totp_secret, client_id)
         expect(connection).to be_a_kind_of(HwfHmrcApi::Connection)
       end
-
     end
   end
 end
