@@ -22,7 +22,10 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Credentials
+To be able to use HMRC API, you will need three credentials. HMRC_SECRET, TOTP token and client id.
+You can generate HMRC_SECRET in your account on https://developer.service.hmrc.gov.uk/.
+To receive the TOTP secret, you need to speak with the team from HMRC.
 
 ## Development
 
