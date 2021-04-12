@@ -10,4 +10,5 @@ group :development, :test do
   gem "rake", "~> 13.0"
   gem "rspec", "~> 3.0"
   gem "rubocop", "~> 1.7"
+  gem "timecop", "~> 0.9.4"
 end
