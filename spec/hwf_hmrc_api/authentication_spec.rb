@@ -47,11 +47,11 @@ RSpec.describe HwfHmrcApi::Authentication do
 
       it "load access token" do
         subject.token
-        expect(subject.access_token).to eql('d7070416e4e8e6dd8384573a24d2a1eb')
+        expect(subject.access_token).to eql("d7070416e4e8e6dd8384573a24d2a1eb")
       end
 
       it "token method returns auth_token too" do
-        expect(subject.token).to eql('d7070416e4e8e6dd8384573a24d2a1eb')
+        expect(subject.token).to eql("d7070416e4e8e6dd8384573a24d2a1eb")
       end
 
       context "expires time" do

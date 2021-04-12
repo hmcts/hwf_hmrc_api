@@ -8,7 +8,7 @@ module HwfHmrcApi
       dob_valid?(user_params[:dob])
       nino_present?(user_params[:nino])
       last_name_present?(user_params[:last_name])
-      fist_name_present?(user_params[:fist_name])
+      fist_name_present?(user_params[:first_name])
     end
 
     def dob_valid?(dob)

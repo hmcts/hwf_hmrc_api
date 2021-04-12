@@ -54,6 +54,5 @@ module HwfHmrcApi
     def load_access_token
       @access_token = @token[:access_token]
     end
-
   end
 end
