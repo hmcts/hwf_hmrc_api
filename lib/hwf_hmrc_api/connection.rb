@@ -8,8 +8,8 @@ module HwfHmrcApi
   class Connection
     include UserValidation
 
-    def initialize(hmrc_secret, totp_secret, client_id)
-      @authentication = HwfHmrcApi::Authentication.new(hmrc_secret, totp_secret, client_id)
+    def initialize(connection_attributes)
+      @authentication = HwfHmrcApi::Authentication.new(connection_attributes)
     end
     # Load token/store token / check for token and the expiry date - managed in token class
     # What to do here?
