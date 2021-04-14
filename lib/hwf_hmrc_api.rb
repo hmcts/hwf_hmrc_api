@@ -7,7 +7,10 @@ require_relative "hwf_hmrc_api/connection_attribute_validation"
 module HwfHmrcApi
   class << self
     include ConnectionAttributeValidation
-
+    # Mandatory attributes
+    # :hmrc_secret
+    # :totp_secret
+    # :client_id
     def new(connection_attributes)
       validate_mandatory_attributes(connection_attributes)
       HwfHmrcApi::Connection.new(connection_attributes)

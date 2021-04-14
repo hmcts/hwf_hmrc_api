@@ -10,10 +10,11 @@ module HwfHmrcApi
     # class that will handle the calls
     attr_reader :access_token
 
-    def initialize(hmrc_secret, totp_secret, client_id)
-      @totp_secret = totp_secret
-      @hmrc_secret = hmrc_secret
-      @client_id = client_id
+    def initialize(connection_attributes)
+      @totp_secret = connection_attributes[:totp_secret]
+      @hmrc_secret = connection_attributes[:hmrc_secret]
+      @client_id = connection_attributes[:client_id]
+      token
     end
 
     def token
@@ -22,7 +23,8 @@ module HwfHmrcApi
     end
 
     def get_token
-      @token = HwfHmrcApi::Endpoint.token(clien_secret, @client_id)
+      token_response = HwfHmrcApi::Endpoint.token(clien_secret, @client_id)
+      @token = token_response.transform_keys {|key| key.to_sym }
       set_expired_time
       load_access_token
     end

@@ -40,10 +40,10 @@ RSpec.describe HwfHmrcApi::Connection do
       expect { subject.match_user(user_params.merge(nino: '')) }.to raise_error
     end
 
-    # it "call endpoint with formatted params" do
-    #   HwfHmrcApi::Endpoint.match_user('4ece41402ecabdd91265f561baf602b8', user_info)
-    #   expect(HwfHmrcApi::Endpoint).to receive(:match_user).with(access_token, user_info)
-    #   subject.match_user(user_params)
-    # end
+    it "call endpoint with formatted params" do
+      expect(HwfHmrcApi::Endpoint).to receive(:match_user).with(access_token, user_info)
+      subject.match_user(user_params)
+    end
   end
+
 end

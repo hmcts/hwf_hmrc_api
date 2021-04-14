@@ -11,11 +11,6 @@ module HwfHmrcApi
     def initialize(connection_attributes)
       @authentication = HwfHmrcApi::Authentication.new(connection_attributes)
     end
-    # Load token/store token / check for token and the expiry date - managed in token class
-    # What to do here?
-    # store ID references like match id
-    # call specific endpoints via API class/interface
-    # API class - calls the api/ parse response / checks for errors
 
     def match_user(user_params)
       validate_user_params(user_params)

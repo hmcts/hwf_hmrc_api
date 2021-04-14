@@ -3,7 +3,7 @@
 require "timecop"
 
 RSpec.describe HwfHmrcApi::Authentication do
-  subject(:application) { described_class.new(hmrc_secret, totp_secret, client_id) }
+  subject(:application) { described_class.new(connection_attributes) }
   let(:hmrc_secret) { "12345" }
   let(:totp_secret) { "base32secret3232" }
   let(:client_id) { "6789" }
@@ -14,6 +14,13 @@ RSpec.describe HwfHmrcApi::Authentication do
       "token_type": "bearer" }
   end
   let(:expires_in) { 14_400 }
+  let(:connection_attributes) {{
+     hmrc_secret: hmrc_secret,
+     totp_secret: totp_secret,
+     client_id: client_id,
+     auth_token: auth_token,
+     expires_in: Time.now + 1000
+  }}
 
   it "has a version number" do
     expect(HwfHmrcApi::VERSION).not_to be nil
