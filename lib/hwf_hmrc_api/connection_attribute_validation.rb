@@ -27,6 +27,5 @@ module HwfHmrcApi
 
       raise HwfHmrcApiError.new("Connection attributes validation: CLIENT ID is missing", :validation)
     end
-
   end
 end

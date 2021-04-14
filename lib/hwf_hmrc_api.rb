@@ -15,8 +15,5 @@ module HwfHmrcApi
       validate_mandatory_attributes(connection_attributes)
       HwfHmrcApi::Connection.new(connection_attributes)
     end
-
-    private
-
   end
 end

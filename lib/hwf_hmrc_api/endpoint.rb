@@ -6,7 +6,6 @@ module HwfHmrcApi
       require "httparty"
       require "uuid"
 
-
       def token(secret, client_id)
         response = HTTParty.post("#{api_url}/oauth/token",
                                  headers: { "content-type" => "application/x-www-form-urlencoded" },
@@ -33,16 +32,19 @@ module HwfHmrcApi
       def process_response(response)
         response_hash = JSON.parse(response.to_s)
         if response.code == 403
-          raise HwfHmrcApiError.new("API call error: #{response_hash['code']}: #{response_hash['message']}", :response_error)
+          raise HwfHmrcApiError.new("API call error: #{response_hash["code"]}: #{response_hash["message"]}",
+                                    :response_error)
         elsif response.code != 200
-          raise HwfHmrcApiError.new("API call error: #{response_hash['error']}: #{response_hash['error_description']}", :response_error)
+          raise HwfHmrcApiError.new("API call error: #{response_hash["error"]}: #{response_hash["error_description"]}",
+                                    :response_error)
         end
+
         response_hash
       end
 
       def parse_matching_user_response(response)
         if response.code == 200
-          id = JSON.parse(response.to_s)["_links"]["individual"]["href"].sub('/individuals/matching/','')
+          id = JSON.parse(response.to_s)["_links"]["individual"]["href"].sub("/individuals/matching/", "")
           { matching_id: id }
         else
           process_response(response)
@@ -50,7 +52,7 @@ module HwfHmrcApi
       end
 
       def api_url
-        'https://test-api.service.hmrc.gov.uk'
+        "https://test-api.service.hmrc.gov.uk"
       end
     end
   end

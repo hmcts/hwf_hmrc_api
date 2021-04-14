@@ -8,11 +8,13 @@ RSpec.describe HwfHmrcApi::Connection do
   let(:totp_secret) { "base32secret3232" }
   let(:client_id) { "6789" }
   let(:access_token) { "d7070416e4e8e6dd8384573a24d2a1eb" }
-  let(:connection_attributes) {{
-     hmrc_secret: hmrc_secret,
-     totp_secret: totp_secret,
-     client_id: client_id
-  }}
+  let(:connection_attributes) do
+    {
+      hmrc_secret: hmrc_secret,
+      totp_secret: totp_secret,
+      client_id: client_id
+    }
+  end
 
   before do
     authentication = instance_double("HwfHmrcApi::Authentication")
@@ -37,7 +39,7 @@ RSpec.describe HwfHmrcApi::Connection do
     end
 
     it "with invalid params and validation exception" do
-      expect { subject.match_user(user_params.merge(nino: '')) }.to raise_error
+      expect { subject.match_user(user_params.merge(nino: "")) }.to raise_error
     end
 
     it "call endpoint with formatted params" do
@@ -45,5 +47,4 @@ RSpec.describe HwfHmrcApi::Connection do
       subject.match_user(user_params)
     end
   end
-
 end

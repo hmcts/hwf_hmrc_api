@@ -14,13 +14,15 @@ RSpec.describe HwfHmrcApi::Authentication do
       "token_type": "bearer" }
   end
   let(:expires_in) { 14_400 }
-  let(:connection_attributes) {{
-     hmrc_secret: hmrc_secret,
-     totp_secret: totp_secret,
-     client_id: client_id,
-     auth_token: auth_token,
-     expires_in: Time.now + 1000
-  }}
+  let(:connection_attributes) do
+    {
+      hmrc_secret: hmrc_secret,
+      totp_secret: totp_secret,
+      client_id: client_id,
+      auth_token: auth_token,
+      expires_in: Time.now + 1000
+    }
+  end
 
   it "has a version number" do
     expect(HwfHmrcApi::VERSION).not_to be nil

@@ -24,7 +24,7 @@ module HwfHmrcApi
 
     def get_token
       token_response = HwfHmrcApi::Endpoint.token(clien_secret, @client_id)
-      @token = token_response.transform_keys {|key| key.to_sym }
+      @token = token_response.transform_keys(&:to_sym)
       set_expired_time
       load_access_token
     end
