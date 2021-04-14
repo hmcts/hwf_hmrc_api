@@ -4,6 +4,8 @@ require "hwf_hmrc_api"
 require "pry"
 require "timecop"
 require "hwf_hmrc_api/user_validation"
+require 'webmock/rspec'
+
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -15,4 +17,6 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  WebMock.disable_net_connect!
 end
