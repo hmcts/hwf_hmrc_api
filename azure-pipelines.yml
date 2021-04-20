@@ -9,6 +9,16 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-  - template: ./pipeline-steps/test-application.yaml
-  - template: ./pipeline-steps/publish-tests.yaml
+jobs:
+  - job: TestApplication
+
+    pool:
+      vmImage: ubuntu-latest
+
+    variables:
+      rubyVersion: '= 2.7.3'
+      bundlerVersion: '2.2.15'
+
+    steps:
+    - template: ./pipeline-steps/test-application.yaml
+    - template: ./pipeline-steps/publish-tests.yaml

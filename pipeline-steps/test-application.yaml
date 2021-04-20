@@ -1,6 +1,6 @@
 parameters:
-  rubyVersion: '2.7.3'
-  bundlerVersion: '2.2.15'
+  rubyVersion: ''
+  bundlerVersion: ''
 
 
 steps:
