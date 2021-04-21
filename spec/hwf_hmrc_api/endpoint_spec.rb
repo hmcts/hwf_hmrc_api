@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe HwfHmrcApi::Endpoint do
-  subject(:endoint) { HwfHmrcApi::Endpoint }
+  subject(:endoint) { described_class }
 
   let(:hmrc_secret) { "12345" }
   let(:totp_secret) { "base32secret3232" }
@@ -19,11 +19,11 @@ RSpec.describe HwfHmrcApi::Endpoint do
         }
       end
 
-      it "with invalid params and validation exception" do
+      it "with valid params and validation exception" do
         stub_request(:post, "https://test-api.service.hmrc.gov.uk/oauth/token")
           .to_return(body: auth_token.to_json, status: 200)
 
-        response = HwfHmrcApi::Endpoint.token(1, 2).transform_keys(&:to_sym)
+        response = described_class.token(1, 2).transform_keys(&:to_sym)
         expect(response).to eq(auth_token)
       end
 
@@ -33,7 +33,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
                      status: 401)
 
         expect do
-          HwfHmrcApi::Endpoint.token(1, 2)
+          described_class.token(1, 2)
         end.to raise_error(HwfHmrcApiError, "API call error: Error name: Error description")
       end
     end
@@ -43,7 +43,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
         stub_request(:post, "https://test-api.service.hmrc.gov.uk/individuals/matching")
           .to_return(body: match_user_response.to_json, status: 200)
 
-        response = HwfHmrcApi::Endpoint.match_user(1, 2)
+        response = described_class.match_user(1, 2)
         expect(response).to eq({ matching_id: "e5c601b6-0aea-4023-9c3b-4fc421ab3d48" })
       end
 
@@ -53,14 +53,15 @@ RSpec.describe HwfHmrcApi::Endpoint do
                              message: "There is no match for the information provided" }.to_json,
                      status: 403)
         expect do
-          HwfHmrcApi::Endpoint.match_user(1,
-                                          2)
+          described_class.match_user(1,
+                                     2)
         end.to raise_error(HwfHmrcApiError,
                            "API call error: MATCHING_FAILED: There is no match for the information provided")
       end
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   def match_user_response
     {
       "_links": {
@@ -75,4 +76,5 @@ RSpec.describe HwfHmrcApi::Endpoint do
       }
     }
   end
+  # rubocop:enable Metrics/MethodLength
 end

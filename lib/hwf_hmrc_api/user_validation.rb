@@ -12,13 +12,9 @@ module HwfHmrcApi
     end
 
     def dob_valid?(dob)
-      if dob.nil? || dob.empty?
-        raise HwfHmrcApiError.new("User validation: DOB is missing", :validation)
-      elsif invalid_date?(dob)
-        raise HwfHmrcApiError.new("User validation: DOB has wrong format", :validation)
-      elsif date_out_of_range?(dob)
-        raise HwfHmrcApiError.new("User validation: DOB is out of range", :validation)
-      end
+      raise HwfHmrcApiError.new("User validation: DOB is missing", :validation) if dob.nil? || dob.empty?
+      raise HwfHmrcApiError.new("User validation: DOB has wrong format", :validation) if invalid_date?(dob)
+      raise HwfHmrcApiError.new("User validation: DOB is out of range", :validation) if date_out_of_range?(dob)
 
       true
     end

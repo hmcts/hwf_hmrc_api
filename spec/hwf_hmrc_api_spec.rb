@@ -21,31 +21,34 @@ RSpec.describe HwfHmrcApi do
         allow(HwfHmrcApi::Connection).to receive(:new).and_return "connection"
       end
       it {
-        expect { HwfHmrcApi.new(connection_attributes) }.not_to raise_error
+        expect { described_class.new(connection_attributes) }.not_to raise_error
       }
+
       context "mandatory attributes" do
         it {
           expect do
-            HwfHmrcApi.new(connection_attributes.merge(hmrc_secret: ""))
+            described_class.new(connection_attributes.merge(hmrc_secret: ""))
           end.to raise_error(HwfHmrcApiError,
                              "Connection attributes validation: HMRC secret is missing")
         }
+
         it {
           expect do
-            HwfHmrcApi.new(connection_attributes.merge(totp_secret: ""))
+            described_class.new(connection_attributes.merge(totp_secret: ""))
           end.to raise_error(HwfHmrcApiError,
                              "Connection attributes validation: TOTP secret is missing")
         }
+
         it {
           expect do
-            HwfHmrcApi.new(connection_attributes.merge(client_id: ""))
+            described_class.new(connection_attributes.merge(client_id: ""))
           end.to raise_error(HwfHmrcApiError,
                              "Connection attributes validation: CLIENT ID is missing")
         }
       end
 
       it "return connection instance" do
-        connection = HwfHmrcApi.new(connection_attributes)
+        connection = described_class.new(connection_attributes)
         expect(connection).to eql("connection")
       end
     end
