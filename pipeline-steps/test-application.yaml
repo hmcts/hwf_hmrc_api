@@ -16,9 +16,9 @@ steps:
     bundle install --retry=3 --jobs=4
   displayName: 'bundle install'
 
-# - script: |
-#     bundle exec rubocop --fail-fast
-#   displayName: 'rubocop'
+- script: |
+    bundle exec rubocop --fail-fast
+  displayName: 'rubocop'
 
 - script: |
     bundle exec rspec spec
