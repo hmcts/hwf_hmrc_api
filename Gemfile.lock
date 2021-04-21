@@ -63,6 +63,9 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.4.1)
       parser (>= 2.7.1.5)
+    rubocop-rspec (2.2.0)
+      rubocop (~> 1.0)
+      rubocop-ast (>= 1.1.0)
     ruby-progressbar (1.11.0)
     systemu (2.6.5)
     timecop (0.9.4)
@@ -84,6 +87,7 @@ DEPENDENCIES
   rake (~> 13.0)
   rspec (~> 3.0)
   rubocop (~> 1.7)
+  rubocop-rspec (~> 2.2)
   timecop (~> 0.9.4)
   webmock (~> 3.12, >= 3.12.2)
 

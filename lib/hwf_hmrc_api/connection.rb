@@ -15,7 +15,7 @@ module HwfHmrcApi
     def match_user(user_params)
       validate_user_params(user_params)
       user_info = map_user_params(user_params)
-      match_id = HwfHmrcApi::Endpoint.match_user(@authentication.access_token, user_info)
+      HwfHmrcApi::Endpoint.match_user(@authentication.access_token, user_info)
     end
 
     private

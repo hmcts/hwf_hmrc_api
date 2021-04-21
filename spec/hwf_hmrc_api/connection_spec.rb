@@ -24,7 +24,7 @@ RSpec.describe HwfHmrcApi::Connection do
 
   describe "init" do
     it "load authentication" do
-      subject
+      connection
       expect(HwfHmrcApi::Authentication).to have_received(:new)
     end
   end
@@ -34,17 +34,22 @@ RSpec.describe HwfHmrcApi::Connection do
     let(:user_info) { { "firstName": "Tom", "lastName": "Jerry", "nino": "SN123456C", "dateOfBirth": "1950-05-09" } }
 
     it "with valid params" do
-      expect(HwfHmrcApi::Endpoint).to receive(:match_user)
-      subject.match_user(user_params)
+      allow(HwfHmrcApi::Endpoint).to receive(:match_user)
+      connection.match_user(user_params)
+      expect(HwfHmrcApi::Endpoint).to have_received(:match_user)
     end
 
     it "with invalid params and validation exception" do
-      expect { subject.match_user(user_params.merge(nino: "")) }.to raise_error
+      expect do
+        connection.match_user(user_params.merge(nino: ""))
+      end.to raise_error(HwfHmrcApiError,
+                         "User validation: NINO is missing")
     end
 
     it "call endpoint with formatted params" do
-      expect(HwfHmrcApi::Endpoint).to receive(:match_user).with(access_token, user_info)
-      subject.match_user(user_params)
+      allow(HwfHmrcApi::Endpoint).to receive(:match_user)
+      connection.match_user(user_params)
+      expect(HwfHmrcApi::Endpoint).to have_received(:match_user).with(access_token, user_info)
     end
   end
 end

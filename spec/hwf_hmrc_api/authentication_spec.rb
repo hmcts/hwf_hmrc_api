@@ -38,57 +38,56 @@ RSpec.describe HwfHmrcApi::Authentication do
       end
 
       it "generated TOTP code" do
-        subject.token
+        application.token
         expect(totp).to have_received(:now)
       end
 
       it "passed TOTP code with secret to connection" do
         client_secret = "98765432#{hmrc_secret}"
-        expect(HwfHmrcApi::Endpoint).to receive(:token).with(client_secret, client_id)
-        subject.token
+        application.token
+        expect(HwfHmrcApi::Endpoint).to have_received(:token).with(client_secret, client_id)
       end
 
       it "load stored token" do
-        subject.token
-        expect(HwfHmrcApi::Endpoint).not_to receive(:token)
-        subject.token
+        application.token
+        application.token
+        expect(HwfHmrcApi::Endpoint).to have_received(:token).once
       end
 
       it "load access token" do
-        subject.token
-        expect(subject.access_token).to eql("d7070416e4e8e6dd8384573a24d2a1eb")
+        application.token
+        expect(application.access_token).to eql("d7070416e4e8e6dd8384573a24d2a1eb")
       end
 
       it "token method returns auth_token too" do
-        expect(subject.token).to eql("d7070416e4e8e6dd8384573a24d2a1eb")
+        expect(application.token).to eql("d7070416e4e8e6dd8384573a24d2a1eb")
       end
 
       context "expires time" do
         let(:expires_in) { 0 }
         it "load new token if old is expired" do
-          subject.token
-          expect(HwfHmrcApi::Endpoint).to receive(:token)
-          subject.token
+          application.token
+          expect(HwfHmrcApi::Endpoint).to have_received(:token).twice
         end
       end
 
-      context "set expires time according expire number from token" do
+      context "not expired when expires_in is more then 100s in future" do
         let(:expires_in) { 400 }
         it "set expire time" do
           Timecop.freeze(Time.now) do
-            subject.token
+            application.token
 
-            expect(subject.expired?).to be_falsey
+            expect(application.expired?).to be_falsey
           end
         end
       end
-      context "set expires time according expire number from token" do
+      context "expired when expires_in is less or eql 100s in future" do
         let(:expires_in) { 100 }
         it "set expire time" do
           Timecop.freeze(Time.now) do
-            subject.token
+            application.token
 
-            expect(subject.expired?).to be_truthy
+            expect(application.expired?).to be_truthy
           end
         end
       end
