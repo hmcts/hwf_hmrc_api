@@ -27,14 +27,49 @@ RSpec.describe HwfHmrcApi::Endpoint do
         expect(response).to eq(auth_token)
       end
 
-      it "with invalid params and validation exception" do
-        stub_request(:post, "https://test-api.service.hmrc.gov.uk/oauth/token")
-          .to_return(body: { error: "Error name", error_description: "Error description" }.to_json,
-                     status: 401)
+      context "generic 500 response" do
+        it "without formatted json response" do
+          stub_request(:post, "https://test-api.service.hmrc.gov.uk/oauth/token")
+            .to_return(body: "Something went wrong", status: 500)
+          expect do
+            described_class.token(1, 2)
+          end.to raise_error(HwfHmrcApiError, "783: unexpected token at 'Something went wrong'")
+        end
+      end
 
-        expect do
-          described_class.token(1, 2)
-        end.to raise_error(HwfHmrcApiError, "API call error: Error name: Error description")
+      context "token errors" do
+        before do
+          stub_request(:post, "https://test-api.service.hmrc.gov.uk/oauth/token")
+            .to_return(body: { error: "Error name", error_description: "Error description" }.to_json,
+                       status: status_code)
+        end
+
+        context "status_code 400" do
+          let(:status_code) { 400 }
+          it do
+            expect do
+              described_class.token(1, 2)
+            end.to raise_error(HwfHmrcApiError, "API: Error name - Error description")
+          end
+        end
+
+        context "status_code 401" do
+          let(:status_code) { 401 }
+          it do
+            expect do
+              described_class.token(1, 2)
+            end.to raise_error(HwfHmrcApiError, "API: Error name - Error description")
+          end
+        end
+
+        context "status_code 500" do
+          let(:status_code) { 500 }
+          it do
+            expect do
+              described_class.token(1, 2)
+            end.to raise_error(HwfHmrcApiError, "API: Error name - Error description")
+          end
+        end
       end
     end
 
@@ -47,16 +82,44 @@ RSpec.describe HwfHmrcApi::Endpoint do
         expect(response).to eq({ matching_id: "e5c601b6-0aea-4023-9c3b-4fc421ab3d48" })
       end
 
-      it "with invalid params and validation exception" do
+      context "error response" do
+        before do
+          stub_request(:post, "https://test-api.service.hmrc.gov.uk/individuals/matching")
+            .to_return(body: { code: hash_code,
+                               message: "There is no match for the information provided" }.to_json,
+                       status: status_code)
+        end
+
+        context "erorr code 403" do
+          let(:status_code) { 403 }
+          let(:hash_code) { "MATCHING_FAILED" }
+          it do
+            expect do
+              described_class.match_user(1, 2)
+            end.to raise_error(HwfHmrcApiError, "API: MATCHING_FAILED - There is no match for the information provided")
+          end
+        end
+
+        context "erorr code 400" do
+          let(:status_code) { 400 }
+          let(:hash_code) { "INVALID_REQUEST" }
+
+          it do
+            expect do
+              described_class.match_user(1, 2)
+            end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - There is no match for the information provided")
+          end
+        end
+      end
+    end
+
+    context "generic 500 response" do
+      it "without formatted json response" do
         stub_request(:post, "https://test-api.service.hmrc.gov.uk/individuals/matching")
-          .to_return(body: { code: "MATCHING_FAILED",
-                             message: "There is no match for the information provided" }.to_json,
-                     status: 403)
+          .to_return(body: "Something went wrong", status: 500)
         expect do
-          described_class.match_user(1,
-                                     2)
-        end.to raise_error(HwfHmrcApiError,
-                           "API call error: MATCHING_FAILED: There is no match for the information provided")
+          described_class.match_user(1, 2)
+        end.to raise_error(HwfHmrcApiError, "783: unexpected token at 'Something went wrong'")
       end
     end
   end
