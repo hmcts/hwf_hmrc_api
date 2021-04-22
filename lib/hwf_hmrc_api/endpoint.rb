@@ -34,7 +34,7 @@ module HwfHmrcApi
 
         message = "API: #{response_hash["error"]} - #{response_hash["error_description"]}"
         raise HwfHmrcApiError.new(message, :token_error) if [401, 400, 500].include?(@response.code)
-      rescue StandardError => e
+      rescue StandardError => ess
         raise HwfHmrcApiError.new(e.message, :standard_error)
       end
 
