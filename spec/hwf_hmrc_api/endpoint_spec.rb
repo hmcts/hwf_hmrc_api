@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 
+require "spec_helper"
+
 RSpec.describe HwfHmrcApi::Endpoint do
   subject(:endoint) { described_class }
 
   let(:hmrc_secret) { "12345" }
   let(:totp_secret) { "base32secret3232" }
   let(:client_id) { "6789" }
-  let(:access_token) { "4ece41402ecabdd91265f561baf602b8" }
+  let(:access_token) { "1988460f19b2c092844931b288a31ca7" }
 
   describe "API calls" do
     context "token" do
       let(:auth_token) do
         {
-          "access_token": "QGbWG8KckncuwwD4uYXgWxF4HQvuPmrmUqKgkpQP",
+          "access_token": access_token,
           "token_type": "bearer",
           "expires_in": 14_400,
           "scope": "hello"
@@ -38,36 +40,36 @@ RSpec.describe HwfHmrcApi::Endpoint do
       end
 
       context "token errors" do
-        before do
-          stub_request(:post, "https://test-api.service.hmrc.gov.uk/oauth/token")
-            .to_return(body: { error: "Error name", error_description: "Error description" }.to_json,
-                       status: status_code)
-        end
-
         context "status_code 400" do
           let(:status_code) { 400 }
           it do
-            expect do
-              described_class.token(1, 2)
-            end.to raise_error(HwfHmrcApiError, "API: Error name - Error description")
+            VCR.use_cassette "hmrc_token_400" do
+              expect do
+                described_class.token(1, 2)
+              end.to raise_error(HwfHmrcApiError, "API: invalid_request - client_secret is required")
+            end
           end
         end
 
         context "status_code 401" do
           let(:status_code) { 401 }
           it do
-            expect do
-              described_class.token(1, 2)
-            end.to raise_error(HwfHmrcApiError, "API: Error name - Error description")
+            VCR.use_cassette "hmrc_token_401" do
+              expect do
+                described_class.token(1, 2)
+              end.to raise_error(HwfHmrcApiError, "API: invalid_client - invalid client id or secret")
+            end
           end
         end
 
         context "status_code 500" do
           let(:status_code) { 500 }
           it do
-            expect do
-              described_class.token(1, 2)
-            end.to raise_error(HwfHmrcApiError, "API: Error name - Error description")
+            VCR.use_cassette "hmrc_token_500" do
+              expect do
+                described_class.token(1, 2)
+              end.to raise_error(HwfHmrcApiError, "API: server_error - something went wrong")
+            end
           end
         end
       end
@@ -75,39 +77,35 @@ RSpec.describe HwfHmrcApi::Endpoint do
 
     context "match_user" do
       it "found a match" do
-        stub_request(:post, "https://test-api.service.hmrc.gov.uk/individuals/matching")
-          .to_return(body: match_user_response.to_json, status: 200)
-
-        response = described_class.match_user(1, 2)
-        expect(response).to eq({ matching_id: "e5c601b6-0aea-4023-9c3b-4fc421ab3d48" })
+        VCR.use_cassette "match_user_success" do
+          user_info = { "firstName": "Nell", "lastName": "Walker", "nino": "ZL262438D", "dateOfBirth": "1964-09-20" }
+          response = described_class.match_user(access_token, user_info)
+          expect(response).to eq({ matching_id: "d7899dfd-99c1-44f4-b3c3-c7631d206245" })
+        end
       end
 
       context "error response" do
-        before do
-          stub_request(:post, "https://test-api.service.hmrc.gov.uk/individuals/matching")
-            .to_return(body: { code: hash_code,
-                               message: "There is no match for the information provided" }.to_json,
-                       status: status_code)
-        end
-
         context "erorr code 403" do
-          let(:status_code) { 403 }
-          let(:hash_code) { "MATCHING_FAILED" }
           it do
-            expect do
-              described_class.match_user(1, 2)
-            end.to raise_error(HwfHmrcApiError, "API: MATCHING_FAILED - There is no match for the information provided")
+            VCR.use_cassette "match_user_matching_failed" do
+              user_info = { "firstName": "Nell", "lastName": "Walker", "nino": "ZL262438D",
+                            "dateOfBirth": "1960-09-20" }
+              expect do
+                described_class.match_user(access_token, user_info)
+              end.to raise_error(HwfHmrcApiError,
+                                 "API: MATCHING_FAILED - There is no match for the information provided")
+            end
           end
         end
 
         context "erorr code 400" do
-          let(:status_code) { 400 }
-          let(:hash_code) { "INVALID_REQUEST" }
-
           it do
-            expect do
-              described_class.match_user(1, 2)
-            end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - There is no match for the information provided")
+            VCR.use_cassette "match_user_invalid_request" do
+              user_info = { "firstName": "Nell" }
+              expect do
+                described_class.match_user(access_token, user_info)
+              end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - nino is required")
+            end
           end
         end
       end

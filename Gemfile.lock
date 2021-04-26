@@ -72,6 +72,7 @@ GEM
     unicode-display_width (2.0.0)
     uuid (2.3.9)
       macaddr (~> 1.0)
+    vcr (6.0.0)
     webmock (3.12.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -89,6 +90,7 @@ DEPENDENCIES
   rubocop (~> 1.7)
   rubocop-rspec (~> 2.2)
   timecop (~> 0.9.4)
+  vcr
   webmock (~> 3.12, >= 3.12.2)
 
 BUNDLED WITH
