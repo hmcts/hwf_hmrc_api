@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require 'spec_helper'
+
+require "spec_helper"
 
 RSpec.describe HwfHmrcApi::Endpoint do
   subject(:endoint) { described_class }
@@ -77,21 +78,22 @@ RSpec.describe HwfHmrcApi::Endpoint do
     context "match_user" do
       it "found a match" do
         VCR.use_cassette "match_user_success" do
-          user_info =  { "firstName": "Nell", "lastName": "Walker", "nino": "ZL262438D", "dateOfBirth": "1964-09-20" }
+          user_info = { "firstName": "Nell", "lastName": "Walker", "nino": "ZL262438D", "dateOfBirth": "1964-09-20" }
           response = described_class.match_user(access_token, user_info)
           expect(response).to eq({ matching_id: "d7899dfd-99c1-44f4-b3c3-c7631d206245" })
         end
       end
 
       context "error response" do
-
         context "erorr code 403" do
           it do
             VCR.use_cassette "match_user_matching_failed" do
-              user_info =  { "firstName": "Nell", "lastName": "Walker", "nino": "ZL262438D", "dateOfBirth": "1960-09-20" }
+              user_info = { "firstName": "Nell", "lastName": "Walker", "nino": "ZL262438D",
+                            "dateOfBirth": "1960-09-20" }
               expect do
                 described_class.match_user(access_token, user_info)
-              end.to raise_error(HwfHmrcApiError, "API: MATCHING_FAILED - There is no match for the information provided")
+              end.to raise_error(HwfHmrcApiError,
+                                 "API: MATCHING_FAILED - There is no match for the information provided")
             end
           end
         end
@@ -99,7 +101,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
         context "erorr code 400" do
           it do
             VCR.use_cassette "match_user_invalid_request" do
-              user_info =  { "firstName": "Nell" }
+              user_info = { "firstName": "Nell" }
               expect do
                 described_class.match_user(access_token, user_info)
               end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - nino is required")
