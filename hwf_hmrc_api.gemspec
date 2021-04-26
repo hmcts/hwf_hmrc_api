@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "httparty", "~> 0.18.1"
   spec.add_dependency "rotp", "~> 6.2.0"
   spec.add_dependency "uuid", "~> 2.3.9"
+  spec.add_development_dependency "vcr"
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html
