@@ -57,6 +57,77 @@ RSpec.describe HwfHmrcApi do
           end.not_to raise_error(HwfHmrcApiError)
         end
 
+        context "expires in validation" do
+          it "expires_in as valid string date" do
+            expires_in = "2030-04-27 12:21:43"
+            expect do
+              described_class.new(connection_attributes.merge(access_token: "secrettoken", expires_in: expires_in))
+            end.not_to raise_error(HwfHmrcApiError)
+          end
+
+          it "expires_in as valid string date in past" do
+            expires_in = "2020-04-27 12:21:43"
+            expect do
+              described_class.new(connection_attributes.merge(access_token: "secrettoken", expires_in: expires_in))
+            end.to raise_error(HwfHmrcApiError)
+          end
+
+          it "expires_in as invalid string date" do
+            expires_in = "2021"
+            expect do
+              described_class.new(connection_attributes.merge(access_token: "secrettoken", expires_in: expires_in))
+            end.to raise_error(HwfHmrcApiError, "Connection attributes validation: EXPIRES IN has invalid format")
+          end
+
+          it "expires_in as invalid string" do
+            expires_in = "test"
+            expect do
+              described_class.new(connection_attributes.merge(access_token: "secrettoken", expires_in: expires_in))
+            end.to raise_error(HwfHmrcApiError, "Connection attributes validation: EXPIRES IN has invalid format")
+          end
+
+          it "expires_in as Time now" do
+            expect do
+              described_class.new(connection_attributes.merge(access_token: "secrettoken", expires_in: Time.now + 100))
+            end.not_to raise_error(HwfHmrcApiError)
+          end
+
+          it "expires_in as Time in past" do
+            expires_in = Time.now - 3600
+            expect do
+              described_class.new(connection_attributes.merge(access_token: "secrettoken", expires_in: expires_in))
+            end.to raise_error(HwfHmrcApiError, "Connection attributes validation: EXPIRES IN is in past")
+          end
+
+          it "expires_in is integer number in past" do
+            expect do
+              described_class.new(connection_attributes.merge(access_token: "secrettoken",
+                                                              expires_in: Time.now.to_i - 100))
+            end.to raise_error(HwfHmrcApiError, "Connection attributes validation: EXPIRES IN is in past")
+          end
+
+          it "expires_in is integer number in future" do
+            expect do
+              described_class.new(connection_attributes.merge(access_token: "secrettoken",
+                                                              expires_in: Time.now.to_i + 100))
+            end.not_to raise_error(HwfHmrcApiError)
+          end
+
+          it "expires_in is float number in past" do
+            expect do
+              described_class.new(connection_attributes.merge(access_token: "secrettoken",
+                                                              expires_in: Time.now.to_f - 100))
+            end.to raise_error(HwfHmrcApiError, "Connection attributes validation: EXPIRES IN is in past")
+          end
+
+          it "expires_in is float number in future" do
+            expect do
+              described_class.new(connection_attributes.merge(access_token: "secrettoken",
+                                                              expires_in: Time.now.to_f + 100))
+            end.not_to raise_error(HwfHmrcApiError)
+          end
+        end
+
         context "validate presence of time when token present" do
           it {
             expect do
