@@ -8,27 +8,27 @@ RSpec.describe HwfHmrcApi::Authentication do
   let(:totp_secret) { "base32secret3232" }
   let(:client_id) { "6789" }
   let(:auth_token) do
-    { "access_token": "d7070416e4e8e6dd8384573a24d2a1eb",
+    { "access_token": access_token,
       "scope": "read:individuals-matching-hmcts-c2",
       "expires_in": expires_in,
       "token_type": "bearer" }
   end
   let(:expires_in) { 14_400 }
-  let(:connection_attributes) do
-    {
-      hmrc_secret: hmrc_secret,
-      totp_secret: totp_secret,
-      client_id: client_id,
-      auth_token: auth_token,
-      expires_in: Time.now + 1000
-    }
-  end
+  let(:access_token) { "d7070416e4e8e6dd8384573a24d2a1eb" }
 
   it "has a version number" do
     expect(HwfHmrcApi::VERSION).not_to be nil
   end
 
   describe "load credentials" do
+    let(:connection_attributes) do
+      {
+        hmrc_secret: hmrc_secret,
+        totp_secret: totp_secret,
+        client_id: client_id
+      }
+    end
+
     context "totp" do
       let(:totp) { instance_double(ROTP::TOTP) }
       before do
@@ -76,21 +76,46 @@ RSpec.describe HwfHmrcApi::Authentication do
         it "set expire time" do
           Timecop.freeze(Time.now) do
             application.token
-
             expect(application.expired?).to be_falsey
           end
         end
       end
+
       context "expired when expires_in is less or eql 100s in future" do
         let(:expires_in) { 100 }
         it "set expire time" do
           Timecop.freeze(Time.now) do
             application.token
-
             expect(application.expired?).to be_truthy
           end
         end
       end
+    end
+  end
+
+  context "access_token provided in params" do
+    let(:connection_attributes) do
+      {
+        hmrc_secret: hmrc_secret,
+        totp_secret: totp_secret,
+        client_id: client_id,
+        access_token: access_token,
+        expires_in: Time.now + 1000
+      }
+    end
+
+    it "doesn't load new token" do
+      allow(HwfHmrcApi::Endpoint).to receive(:token)
+      application
+      expect(HwfHmrcApi::Endpoint).not_to have_received(:token)
+    end
+
+    it "stores token in access_token value" do
+      expect(application.access_token).to eql(access_token)
+    end
+
+    it "stores expires_in in a value" do
+      expect(application.expires_in).to eql(connection_attributes[:expires_in])
     end
   end
 end

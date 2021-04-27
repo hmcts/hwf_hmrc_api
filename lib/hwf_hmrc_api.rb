@@ -11,6 +11,9 @@ module HwfHmrcApi
     # :hmrc_secret
     # :totp_secret
     # :client_id
+    # Optional attributes - expires_in is mandatory if token is provided
+    # :expires_in
+    # :access_token
     def new(connection_attributes)
       validate_mandatory_attributes(connection_attributes)
       HwfHmrcApi::Connection.new(connection_attributes)

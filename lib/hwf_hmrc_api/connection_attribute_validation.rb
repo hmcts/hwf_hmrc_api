@@ -8,6 +8,7 @@ module HwfHmrcApi
       hmrc_secret_present?(connection_attributes[:hmrc_secret])
       totp_secret_present?(connection_attributes[:totp_secret])
       client_id_present?(connection_attributes[:client_id])
+      expires_in_present?(connection_attributes[:expires_in]) if connection_attributes[:access_token]
     end
 
     def hmrc_secret_present?(value)
@@ -26,6 +27,12 @@ module HwfHmrcApi
       return true unless value.nil? || value.empty?
 
       raise HwfHmrcApiError.new("Connection attributes validation: CLIENT ID is missing", :validation)
+    end
+
+    def expires_in_present?(value)
+      return true unless value.nil? || value.empty?
+
+      raise HwfHmrcApiError.new("Connection attributes validation: EXPIRES IN is missing", :validation)
     end
   end
 end
