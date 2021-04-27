@@ -56,13 +56,22 @@ module HwfHmrcApi
     def prepare_token(attributes)
       if attributes[:access_token]
         @access_token = attributes[:access_token]
-        @expires_in = attributes[:expires_in]
+        @expires_in = preformat_expires_in(attributes[:expires_in])
         @token = {
           access_token: @access_token,
           expires_in: @expires_in
         }
       else
         token
+      end
+    end
+
+    def preformat_expires_in(value)
+      case value
+      when String
+        DateTime.parse(value).to_time
+      when Time, Integer, Float
+        Time.at(value)
       end
     end
   end
