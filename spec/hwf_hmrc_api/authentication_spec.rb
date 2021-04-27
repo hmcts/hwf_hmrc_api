@@ -100,9 +100,10 @@ RSpec.describe HwfHmrcApi::Authentication do
         totp_secret: totp_secret,
         client_id: client_id,
         access_token: access_token,
-        expires_in: Time.now + 1000
+        expires_in: expires_in
       }
     end
+    let(:expires_in) { Time.now + 1000 }
 
     it "doesn't load new token" do
       allow(HwfHmrcApi::Endpoint).to receive(:token)
@@ -116,6 +117,14 @@ RSpec.describe HwfHmrcApi::Authentication do
 
     it "stores expires_in in a value" do
       expect(application.expires_in).to eql(connection_attributes[:expires_in])
+    end
+
+    context "expires_in string format" do
+      let(:expires_in) { "2021-01-01 11:25" }
+
+      it "stores expires_in as Time" do
+        expect(application.expires_in).to be_a(Time)
+      end
     end
   end
 end
