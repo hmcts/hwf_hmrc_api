@@ -8,12 +8,12 @@ module HwfHmrcApi
   class << self
     include ConnectionAttributeValidation
     # Mandatory attributes
-    # :hmrc_secret
-    # :totp_secret
-    # :client_id
+    # :hmrc_secret - String
+    # :totp_secret - String
+    # :client_id - String
     # Optional attributes - expires_in is mandatory if token is provided
-    # :expires_in
-    # :access_token
+    # :expires_in - Time or String (YYYY-mm-dd)
+    # :access_token - String
     def new(connection_attributes)
       validate_mandatory_attributes(connection_attributes)
       HwfHmrcApi::Connection.new(connection_attributes)

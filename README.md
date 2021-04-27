@@ -27,6 +27,33 @@ To be able to use HMRC API, you will need three credentials. HMRC_SECRET, TOTP t
 You can generate HMRC_SECRET in your account on https://developer.service.hmrc.gov.uk/.
 To receive the TOTP secret, you need to speak with the team from HMRC.
 
+### How to use
+
+#### When you don't have access_token already
+```ruby
+attributes = {
+  hmrc_secret: HMRC_SECRET,
+  totp_secret: HMRC_TTP_SECRET,
+  client_id: HMRC_TTP_SECRET,
+}
+hmrc = HwfHmrcApi.new(attributes)
+# store this so you don't generate new token every call
+access_token = hmrc.access_token
+expires_in = hmrc.expires_in
+```
+
+#### When you stored access_token alredy
+```ruby
+attributes = {
+  hmrc_secret: HMRC_SECRET,
+  totp_secret: HMRC_TTP_SECRET,
+  client_id: HMRC_TTP_SECRET,
+  access_token: ACCESS_TOKEN,
+  expires_in: EXPIRES_IN
+}
+hmrc = HwfHmrcApi.new(attributes)
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
