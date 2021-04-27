@@ -4,17 +4,13 @@ require_relative "endpoint"
 
 module HwfHmrcApi
   class Authentication
-    # client_secret has to renew to ask for new token
-    # Time + expires_at is for when the token should be re-newed
-    # Parse the response and check for failed responses - this could be managed in
-    # class that will handle the calls
-    attr_reader :access_token
+    attr_reader :access_token, :expires_in
 
     def initialize(connection_attributes)
       @totp_secret = connection_attributes[:totp_secret]
       @hmrc_secret = connection_attributes[:hmrc_secret]
       @client_id = connection_attributes[:client_id]
-      token
+      prepare_token(connection_attributes)
     end
 
     def token
@@ -55,6 +51,19 @@ module HwfHmrcApi
 
     def load_access_token
       @access_token = @token[:access_token]
+    end
+
+    def prepare_token(attributes)
+      if attributes[:access_token]
+        @access_token = attributes[:access_token]
+        @expires_in = attributes[:expires_in]
+        @token = {
+          access_token: @access_token,
+          expires_in: @expires_in
+        }
+      else
+        token
+      end
     end
   end
 end
