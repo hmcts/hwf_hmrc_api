@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://test-api.service.hmrc.gov.uk/individuals/matching
+    body:
+      encoding: UTF-8
+      string: '{"firstName":"Nell","lastName":"Walker","nino":"ZL262438D","dateOfBirth":"1960-09-20"}'
+    headers:
+      Content-Type:
+      - application/json
+      Correlationid:
+      - b77609d0-8a2a-0139-cebe-1e00e23ae066
+      Accept:
+      - application/vnd.hmrc.2.0+json
+      Authorization:
+      - Bearer 1988460f19b2c092844931b288a31ca7
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Content-Type:
+      - application/json
+      Www-Authenticate:
+      - Bearer realm="HMRC API Platform"
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Content-Security-Policy:
+      - default-src 'self'
+      Content-Length:
+      - '89'
+      Date:
+      - Wed, 28 Apr 2021 08:36:14 GMT
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"code": "INVALID_CREDENTIALS", "message": "Invalid Authentication
+        information provided"}'
+  recorded_at: Wed, 28 Apr 2021 08:36:14 GMT
+recorded_with: VCR 6.0.0

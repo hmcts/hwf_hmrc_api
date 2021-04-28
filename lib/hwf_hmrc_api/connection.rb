@@ -16,6 +16,9 @@ module HwfHmrcApi
       validate_user_params(user_params)
       user_info = map_user_params(user_params)
       HwfHmrcApi::Endpoint.match_user(@authentication.access_token, user_info)
+    rescue HwfHmrcApiTokenError
+      @authentication.get_token
+      match_user(user_params)
     end
 
     private
