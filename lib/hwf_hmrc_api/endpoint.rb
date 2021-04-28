@@ -23,7 +23,6 @@ module HwfHmrcApi
                                              "Authorization" => "Bearer #{access_token}" },
                                   body: user_info.to_json,
                                   debug_output: $stdout)
-
         parse_matching_user_response
       end
 
@@ -40,14 +39,16 @@ module HwfHmrcApi
 
       def parse_standard_error_response
         message = "API: #{response_hash["code"]} - #{response_hash["message"]}"
+
         raise HwfHmrcApiError.new(message, :invalid_request) if [403, 400].include?(@response.code)
+        raise HwfHmrcApiTokenError.new(message, :invalid_token) if @response.code == 401
       end
 
       def parse_matching_user_response
         parse_standard_error_response if @response.code != 200
         id = response_hash["_links"]["individual"]["href"].sub("/individuals/matching/", "")
         { matching_id: id }
-      rescue StandardError => e
+      rescue JSON::ParserError => e
         raise HwfHmrcApiError.new(e.message, :standard_error)
       end
 

@@ -108,6 +108,19 @@ RSpec.describe HwfHmrcApi::Endpoint do
             end
           end
         end
+
+        context "erorr code 401 INVALID_CREDENTIALS" do
+          it do
+            VCR.use_cassette "hmrc_user_matching_invalid_token_error" do
+              user_info = { "firstName": "Nell", "lastName": "Walker", "nino": "ZL262438D",
+                            "dateOfBirth": "1960-09-20" }
+              expect do
+                described_class.match_user(access_token, user_info)
+              end.to raise_error(HwfHmrcApiTokenError,
+                                 "API: INVALID_CREDENTIALS - Invalid Authentication information provided")
+            end
+          end
+        end
       end
     end
 

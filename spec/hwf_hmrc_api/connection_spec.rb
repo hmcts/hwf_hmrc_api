@@ -16,8 +16,9 @@ RSpec.describe HwfHmrcApi::Connection do
     }
   end
 
+  let(:authentication) { instance_double("HwfHmrcApi::Authentication") }
+
   before do
-    authentication = instance_double("HwfHmrcApi::Authentication")
     allow(authentication).to receive(:access_token).and_return access_token
     allow(HwfHmrcApi::Authentication).to receive(:new).and_return authentication
   end
@@ -50,6 +51,30 @@ RSpec.describe HwfHmrcApi::Connection do
       allow(HwfHmrcApi::Endpoint).to receive(:match_user)
       connection.match_user(user_params)
       expect(HwfHmrcApi::Endpoint).to have_received(:match_user).with(access_token, user_info)
+    end
+
+    context "expired token" do
+      it "re-new token" do
+        VCR.use_cassette "hmrc_user_matching_invalid_token_error" do
+          allow(authentication).to receive(:access_token).and_return(access_token, "new token")
+          allow(authentication).to receive(:get_token)
+          allow(HwfHmrcApi::Endpoint).to receive(:match_user).with(access_token, user_info).and_call_original
+          allow(HwfHmrcApi::Endpoint).to receive(:match_user).with("new token", user_info).and_return(true)
+          connection.match_user(user_params)
+          expect(authentication).to have_received(:get_token).once
+        end
+      end
+
+      it "rerun the match request" do
+        VCR.use_cassette "hmrc_user_matching_invalid_token_error" do
+          allow(authentication).to receive(:access_token).and_return(access_token, "new token")
+          allow(authentication).to receive(:get_token)
+          allow(HwfHmrcApi::Endpoint).to receive(:match_user).with(access_token, user_info).and_call_original
+          allow(HwfHmrcApi::Endpoint).to receive(:match_user).with("new token", user_info).and_return(true)
+          connection.match_user(user_params)
+          expect(HwfHmrcApi::Endpoint).to have_received(:match_user).twice
+        end
+      end
     end
   end
 end
