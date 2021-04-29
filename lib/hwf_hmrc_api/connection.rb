@@ -7,6 +7,7 @@ require_relative "user_validation"
 module HwfHmrcApi
   class Connection
     include UserValidation
+    attr_reader :matching_id
 
     def initialize(connection_attributes)
       @authentication = HwfHmrcApi::Authentication.new(connection_attributes)
@@ -15,7 +16,8 @@ module HwfHmrcApi
     def match_user(user_params)
       validate_user_params(user_params)
       user_info = map_user_params(user_params)
-      HwfHmrcApi::Endpoint.match_user(@authentication.access_token, user_info)
+      response = HwfHmrcApi::Endpoint.match_user(@authentication.access_token, user_info)
+      @matching_id = response[:matching_id]
     rescue HwfHmrcApiTokenError
       @authentication.get_token
       match_user(user_params)
