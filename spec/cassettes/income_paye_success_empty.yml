@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://test-api.service.hmrc.gov.uk/individuals/employments/paye?fromDate=2019-01-01&matchId=e5a25de7-9d26-4300-9986-6ea600d400e5&toDate=2019-01-01
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.hmrc.2.0+json
+      Authorization:
+      - Bearer 8ca019f0c4024233e746f92562d73a52
+      Correlationid:
+      - 1ba2b300-8bca-0139-cf55-1e00e23ae066
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Cache-Control:
+      - no-cache,no-store,max-age=0
+      X-Envoy-Upstream-Service-Time:
+      - '33'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Content-Security-Policy:
+      - default-src 'self'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Fri, 30 Apr 2021 10:09:43 GMT
+      Content-Length:
+      - '160'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"_links":{"self":{"href":"/individuals/employments/paye?matchId=e5a25de7-9d26-4300-9986-6ea600d400e5&fromDate=2019-01-01&toDate=2019-01-01"}},"employments":[]}'
+  recorded_at: Fri, 30 Apr 2021 10:09:43 GMT
+recorded_with: VCR 6.0.0

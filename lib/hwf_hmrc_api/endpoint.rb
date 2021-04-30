@@ -21,12 +21,32 @@ module HwfHmrcApi
                                              "correlationId" => UUID.new.generate,
                                              "Accept" => "application/vnd.hmrc.2.0+json",
                                              "Authorization" => "Bearer #{access_token}" },
-                                  body: user_info.to_json,
-                                  debug_output: $stdout)
+                                  body: user_info.to_json)
         parse_matching_user_response
       end
 
+      def income_paye(access_token, attributes)
+        @response = HTTParty.get("#{api_url}/individuals/income/paye",
+                                 headers: request_headers(access_token),
+                                 query: {
+                                   matchId: attributes[:matching_id],
+                                   fromDate: attributes[:from_date],
+                                   toDate: attributes[:to_date]
+                                 },
+                                 debug_output: $stdout)
+        parse_paye_response
+      end
+
       private
+
+      def request_headers(access_token)
+        {
+          "Content-Type": "application/json",
+          "Accept" => "application/vnd.hmrc.2.0+json",
+          "Authorization" => "Bearer #{access_token}",
+          "correlationId" => UUID.new.generate
+        }
+      end
 
       def process_token_response
         return response_hash if @response.code == 200
@@ -48,6 +68,13 @@ module HwfHmrcApi
         parse_standard_error_response if @response.code != 200
         id = response_hash["_links"]["individual"]["href"].sub("/individuals/matching/", "")
         { matching_id: id }
+      rescue JSON::ParserError => e
+        raise HwfHmrcApiError.new(e.message, :standard_error)
+      end
+
+      def parse_paye_response
+        parse_standard_error_response if @response.code != 200
+        response_hash["paye"]
       rescue JSON::ParserError => e
         raise HwfHmrcApiError.new(e.message, :standard_error)
       end

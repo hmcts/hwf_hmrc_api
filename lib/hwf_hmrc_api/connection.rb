@@ -3,11 +3,13 @@
 require "rotp"
 require_relative "authentication"
 require_relative "user_validation"
+require_relative "individual_income"
 
 module HwfHmrcApi
   class Connection
     include UserValidation
-    attr_reader :matching_id
+    include IndividualIncome
+    attr_reader :matching_id, :authentication
 
     def initialize(connection_attributes)
       @authentication = HwfHmrcApi::Authentication.new(connection_attributes)

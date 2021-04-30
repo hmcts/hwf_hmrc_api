@@ -8,7 +8,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
   let(:hmrc_secret) { "12345" }
   let(:totp_secret) { "base32secret3232" }
   let(:client_id) { "6789" }
-  let(:access_token) { "1988460f19b2c092844931b288a31ca7" }
+  let(:access_token) { "8ca019f0c4024233e746f92562d73a52" }
 
   describe "API calls" do
     context "token" do
@@ -131,6 +131,17 @@ RSpec.describe HwfHmrcApi::Endpoint do
         expect do
           described_class.match_user(1, 2)
         end.to raise_error(HwfHmrcApiError, "783: unexpected token at 'Something went wrong'")
+      end
+    end
+
+    context "income paye" do
+      it "found a record" do
+        VCR.use_cassette "income_paye_success" do
+          request_params = { matching_id: "e5a25de7-9d26-4300-9986-6ea600d400e5", from_date: "2019-04-01",
+                             to_date: "2019-04-28" }
+          response = described_class.income_paye(access_token, request_params)
+          expect(response["income"][0]).to have_key("totalTaxToDate")
+        end
       end
     end
   end
