@@ -60,7 +60,7 @@ module HwfHmrcApi
       def parse_standard_error_response
         message = "API: #{response_hash["code"]} - #{response_hash["message"]}"
 
-        raise HwfHmrcApiError.new(message, :invalid_request) if [403, 400].include?(@response.code)
+        raise HwfHmrcApiError.new(message, :invalid_request) if [403, 404, 400].include?(@response.code)
         raise HwfHmrcApiTokenError.new(message, :invalid_token) if @response.code == 401
       end
 
