@@ -14,6 +14,12 @@ module HwfHmrcApi
     def paye(from_date, to_date)
       validate_match_id
       validate_dates(from_date, to_date)
+      reqeust_params = {
+        matching_id: matching_id,
+        from_date: from_date,
+        to_date: to_date
+      }
+      HwfHmrcApi::Endpoint.income_paye(access_token, reqeust_params)
     end
 
     private

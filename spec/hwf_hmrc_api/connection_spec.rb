@@ -30,6 +30,10 @@ RSpec.describe HwfHmrcApi::Connection do
     end
   end
 
+  describe "access_token" do
+    it { expect(connection.access_token).to eql(access_token) }
+  end
+
   describe "match user" do
     let(:user_params) { { first_name: "Tom", last_name: "Jerry", nino: "SN123456C", dob: "1950-05-09" } }
     let(:user_info) { { "firstName": "Tom", "lastName": "Jerry", "nino": "SN123456C", "dateOfBirth": "1950-05-09" } }

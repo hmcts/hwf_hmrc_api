@@ -9,6 +9,7 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
   let(:matching_id) { "6789" }
   let(:from_date) { "2021-01-20" }
   let(:to_date) { "2021-02-20" }
+  let(:access_token) { "0f3adcfc0e6f5ace9102af880cedd279" }
 
   context "missing matching_id" do
     before { allow(dummy_class).to receive(:matching_id).and_return nil }
@@ -22,9 +23,27 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
   end
 
   context "matching_id present" do
-    before { allow(dummy_class).to receive(:matching_id).and_return "1" }
+    before do
+      allow(dummy_class).to receive(:matching_id).and_return matching_id
+      allow(dummy_class).to receive(:access_token).and_return access_token
+    end
 
     describe "Paye" do
+      let(:paye_request_params) do
+        {
+          matching_id: matching_id,
+          from_date: from_date,
+          to_date: to_date
+        }
+      end
+      context "call endpoint" do
+        it do
+          allow(HwfHmrcApi::Endpoint).to receive(:income_paye).and_return({})
+          individual_income.paye(from_date, to_date)
+          expect(HwfHmrcApi::Endpoint).to have_received(:income_paye).with(access_token, paye_request_params)
+        end
+      end
+
       context "date present validation" do
         it do
           expect do

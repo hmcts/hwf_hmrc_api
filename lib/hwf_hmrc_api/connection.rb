@@ -25,6 +25,10 @@ module HwfHmrcApi
       match_user(user_params)
     end
 
+    def access_token
+      @authentication.access_token
+    end
+
     private
 
     def validate_user_params(user_params)
