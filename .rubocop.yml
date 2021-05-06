@@ -13,8 +13,14 @@ Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes
 
+Style/IfUnlessModifier:
+  Enabled: false
+
 Layout/LineLength:
   Max: 120
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
 
 Style/Documentation:
   Description: Document classes and non-namespace modules.

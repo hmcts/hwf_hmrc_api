@@ -16,7 +16,7 @@ module HwfHmrcApi
     def paye(from_date, to_date)
       validate_match_id
       validate_dates(from_date, to_date)
-      params = request_params(from_date,to_date)
+      params = request_params(from_date, to_date)
       HwfHmrcApi::Endpoint.income_paye(access_token, params)
     end
 
@@ -25,30 +25,26 @@ module HwfHmrcApi
     def sa_summary(from_tax_year, to_tax_year)
       validate_match_id
       validate_tax_years(from_tax_year, to_tax_year)
-      params = request_params(from_tax_year,to_tax_year)
+      params = request_params(from_tax_year, to_tax_year)
 
       HwfHmrcApi::Endpoint.income_summary(access_token, params)
     end
 
     # From Tax Year format: YYYY-YY
     # To Tax Year format: YYYY-YY
-    def sa_interest_dividends(from_tax_year, to_tax_year)
-    end
+    def sa_interest_dividends(from_tax_year, to_tax_year); end
 
     # From Tax Year format: YYYY-YY
     # To Tax Year format: YYYY-YY
-    def sa_self_employments(from_tax_year, to_tax_year)
-    end
+    def sa_self_employments(from_tax_year, to_tax_year); end
 
     # From Tax Year format: YYYY-YY
     # To Tax Year format: YYYY-YY
-    def sa_uk_properties(from_tax_year, to_tax_year)
-    end
+    def sa_uk_properties(from_tax_year, to_tax_year); end
 
     # From Tax Year format: YYYY-YY
     # To Tax Year format: YYYY-YY
-    def sa_foreign(from_tax_year, to_tax_year)
-    end
+    def sa_foreign(from_tax_year, to_tax_year); end
 
     private
 
@@ -57,12 +53,12 @@ module HwfHmrcApi
     end
 
     def validate_dates(from_date, to_date)
-      raise HwfHmrcApiError, "Attributes validation: FromDate is not a String" unless date_type_valid?(from_date)
-      raise HwfHmrcApiError, "Attributes validation: ToDate is not a String" unless date_type_valid?(to_date)
-      raise HwfHmrcApiError, "Attributes validation: FromDate is missing" unless date_present?(from_date)
-      raise HwfHmrcApiError, "Attributes validation: ToDate is missing" unless date_present?(to_date)
-      raise HwfHmrcApiError, "Attributes validation: FromDate format is invalid" unless date_format_valid?(from_date)
-      raise HwfHmrcApiError, "Attributes validation: ToDate format is invalid" unless date_format_valid?(to_date)
+      raise_hwf_api_error("FromDate is not a String") unless date_type_valid?(from_date)
+      raise_hwf_api_error("ToDate is not a String") unless date_type_valid?(to_date)
+      raise_hwf_api_error("FromDate is missing") unless date_present?(from_date)
+      raise_hwf_api_error("ToDate is missing") unless date_present?(to_date)
+      raise_hwf_api_error("FromDate format is invalid") unless date_format_valid?(from_date)
+      raise_hwf_api_error("ToDate format is invalid") unless date_format_valid?(to_date)
     end
 
     def date_type_valid?(value)
@@ -91,13 +87,17 @@ module HwfHmrcApi
     end
 
     def validate_tax_years(from_tax_year, to_tax_year)
-      raise HwfHmrcApiError, "Attributes validation: FromTaxYear is not a String" unless date_type_valid?(from_tax_year)
-      raise HwfHmrcApiError, "Attributes validation: ToTaxYear is not a String" unless date_type_valid?(to_tax_year)
-      raise HwfHmrcApiError, "Attributes validation: FromTaxYear is missing" unless date_present?(from_tax_year)
-      raise HwfHmrcApiError, "Attributes validation: ToTaxYear is missing" unless date_present?(to_tax_year)
-      raise HwfHmrcApiError, "Attributes validation: FromTaxYear format is invalid" unless tax_year_format_valid?(from_tax_year)
-      raise HwfHmrcApiError, "Attributes validation: ToTaxYear format is invalid" unless tax_year_format_valid?(to_tax_year)
-      raise HwfHmrcApiError, "Attributes validation: FromTaxYear year is before ToTaxYear" unless tax_years_in_order?(from_tax_year, to_tax_year)
+      raise_hwf_api_error("FromTaxYear is not a String") unless date_type_valid?(from_tax_year)
+      raise_hwf_api_error("ToTaxYear is not a String") unless date_type_valid?(to_tax_year)
+      raise_hwf_api_error("FromTaxYear is missing") unless date_present?(from_tax_year)
+      raise_hwf_api_error("ToTaxYear is missing") unless date_present?(to_tax_year)
+      raise_hwf_api_error("FromTaxYear format is invalid") unless tax_year_format_valid?(from_tax_year)
+      raise_hwf_api_error("ToTaxYear format is invalid") unless tax_year_format_valid?(to_tax_year)
+      raise_hwf_api_error("FromTaxYear year is before ToTaxYear") unless tax_years_in_order?(from_tax_year, to_tax_year)
+    end
+
+    def raise_hwf_api_error(message, prefix = "Attributes validation:")
+      raise HwfHmrcApiError, "#{prefix} #{message}"
     end
 
     def tax_year_format_valid?(value)
@@ -109,15 +109,15 @@ module HwfHmrcApi
     end
 
     def incremental_year(value)
-      years = value.split('-')
+      years = value.split("-")
       first = years[0][2..3].to_i
       second = years[1].to_i
       first + 1 == second
     end
 
     def tax_years_in_order?(from, to)
-      first = from.split('-')[0].to_i
-      second = to.split('-')[0].to_i
+      first = from.split("-")[0].to_i
+      second = to.split("-")[0].to_i
       first <= second
     end
 
@@ -128,6 +128,5 @@ module HwfHmrcApi
         to: to
       }
     end
-
   end
 end

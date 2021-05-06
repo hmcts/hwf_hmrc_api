@@ -14,7 +14,6 @@ module HwfHmrcApi
     end
 
     def income_summary(access_token, attributes)
-
       @response = HTTParty.get("#{api_url}/individuals/income/sa/summary",
                                headers: request_headers(access_token),
                                query: {
@@ -41,6 +40,5 @@ module HwfHmrcApi
     rescue JSON::ParserError => e
       raise HwfHmrcApiError.new(e.message, :standard_error)
     end
-
   end
 end

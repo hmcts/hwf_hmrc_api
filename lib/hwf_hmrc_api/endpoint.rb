@@ -31,6 +31,7 @@ module HwfHmrcApi
         message = "API: #{response_hash["code"]} - #{response_hash["message"]}"
 
         raise HwfHmrcApiTokenError.new(message, :invalid_token) if @response.code == 401
+
         raise HwfHmrcApiError.new(message, :invalid_request)
       end
 

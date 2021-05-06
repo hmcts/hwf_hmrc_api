@@ -70,8 +70,8 @@ RSpec.describe HwfHmrcApi::EndpointIncome do
         end
       end
 
-      context 'error response' do
-        it "500 error"do
+      context "error response" do
+        it "500 error" do
           VCR.use_cassette "income_summary_500" do
             request_params = { matching_id: "e5a25de7-9d26-4300-9986-6ea600d400e5", from: "2019-20",
                                to: "2019-20" }
@@ -101,7 +101,6 @@ RSpec.describe HwfHmrcApi::EndpointIncome do
           end
         end
       end
-
     end
   end
 end

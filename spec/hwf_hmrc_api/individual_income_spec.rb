@@ -14,9 +14,16 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
   context "missing matching_id" do
     before { allow(dummy_class).to receive(:matching_id).and_return nil }
 
-    it do
+    it "Paye" do
       expect do
         individual_income.paye(from_date, to_date)
+      end.to raise_error(HwfHmrcApiError,
+                         "Params validation: Mathching ID is missing")
+    end
+
+    it "Income summary" do
+      expect do
+        individual_income.sa_summary("2018-19", "2019-20")
       end.to raise_error(HwfHmrcApiError,
                          "Params validation: Mathching ID is missing")
     end
@@ -203,7 +210,6 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
           expect(HwfHmrcApi::Endpoint).to have_received(:income_summary).with(access_token, paye_request_params)
         end
       end
-
     end
   end
 end
