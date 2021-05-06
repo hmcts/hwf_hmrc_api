@@ -32,8 +32,8 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
       let(:paye_request_params) do
         {
           matching_id: matching_id,
-          from_date: from_date,
-          to_date: to_date
+          from: from_date,
+          to: to_date
         }
       end
       context "call endpoint" do
@@ -96,6 +96,114 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
                              "Attributes validation: ToDate format is invalid")
         end
       end
+    end
+
+    describe "SA summary" do
+      let(:from_tax_year) { "2018-19" }
+      let(:to_tax_year) { "2020-21" }
+
+      context "tax year validation" do
+        it do
+          expect do
+            individual_income.sa_summary("2018", to_tax_year)
+          end.to raise_error(HwfHmrcApiError,
+                             "Attributes validation: FromTaxYear format is invalid")
+        end
+
+        it do
+          expect do
+            individual_income.sa_summary("2018-", to_tax_year)
+          end.to raise_error(HwfHmrcApiError,
+                             "Attributes validation: FromTaxYear format is invalid")
+        end
+
+        it do
+          expect do
+            individual_income.sa_summary("2018-1", to_tax_year)
+          end.to raise_error(HwfHmrcApiError,
+                             "Attributes validation: FromTaxYear format is invalid")
+        end
+
+        it do
+          expect do
+            individual_income.sa_summary("2018-18", to_tax_year)
+          end.to raise_error(HwfHmrcApiError,
+                             "Attributes validation: FromTaxYear format is invalid")
+        end
+
+        it do
+          expect do
+            individual_income.sa_summary("2018-20", to_tax_year)
+          end.to raise_error(HwfHmrcApiError,
+                             "Attributes validation: FromTaxYear format is invalid")
+        end
+
+        it do
+          expect do
+            individual_income.sa_summary("2018-19", "2017-18")
+          end.to raise_error(HwfHmrcApiError,
+                             "Attributes validation: FromTaxYear year is before ToTaxYear")
+        end
+
+        it do
+          expect do
+            individual_income.sa_summary("", to_tax_year)
+          end.to raise_error(HwfHmrcApiError,
+                             "Attributes validation: FromTaxYear is missing")
+        end
+
+        it do
+          expect do
+            individual_income.sa_summary(nil, to_tax_year)
+          end.to raise_error(HwfHmrcApiError,
+                             "Attributes validation: FromTaxYear is missing")
+        end
+
+        it do
+          expect do
+            individual_income.sa_summary(from_tax_year, "")
+          end.to raise_error(HwfHmrcApiError,
+                             "Attributes validation: ToTaxYear is missing")
+        end
+
+        it do
+          expect do
+            individual_income.sa_summary(from_tax_year, nil)
+          end.to raise_error(HwfHmrcApiError,
+                             "Attributes validation: ToTaxYear is missing")
+        end
+
+        it do
+          expect do
+            individual_income.sa_summary(from_tax_year, 2000)
+          end.to raise_error(HwfHmrcApiError,
+                             "Attributes validation: ToTaxYear is not a String")
+        end
+
+        it do
+          expect do
+            individual_income.sa_summary(2000, to_tax_year)
+          end.to raise_error(HwfHmrcApiError,
+                             "Attributes validation: FromTaxYear is not a String")
+        end
+      end
+
+      context "call summary endpoint" do
+        let(:paye_request_params) do
+          {
+            matching_id: matching_id,
+            from: from_tax_year,
+            to: to_tax_year
+          }
+        end
+
+        it do
+          allow(HwfHmrcApi::Endpoint).to receive(:income_summary).and_return({})
+          individual_income.sa_summary(from_tax_year, to_tax_year)
+          expect(HwfHmrcApi::Endpoint).to have_received(:income_summary).with(access_token, paye_request_params)
+        end
+      end
+
     end
   end
 end

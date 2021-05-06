@@ -5,6 +5,43 @@ require_relative "authentication"
 require_relative "user_validation"
 require_relative "individual_income"
 
+# Connection methods
+# IMPORTANT: To be able to get information about user you need to call match_user method first
+# # # # # # # # # # # # # # # # # # # # # # # #
+# Method name: match_user(user_info_hash)
+#
+# Method attributes example:
+# { first_name: "Nell",
+#   last_name: = "Walker",
+#   nino: "ZL262438D",
+#   dob: "1964-09-20" }
+#
+# Returns matching_id
+#
+# # # # # # # # # # # # # # # # # # # # # # # #
+# Method name: paye(from_date, to_date)
+#
+# Method attributes example:
+# from_date format: YYYY-MM-DD
+# to_date format: YYYY-MM-DD
+#
+# Returns paye Hash: {"income"=> [...]}
+#
+# more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-paye-income-history_get_accordion
+#
+# # # # # # # # # # # # # # # # # # # # # # # #
+# Method name: sa_summary(from_date, to_date)
+#
+# Method attributes example:
+# from_tax_year format: YYYY-YY
+# to_tax_year format: YYYY-YY
+#
+# Returns paye Hash: {"taxReturns" => [...]}
+#
+# more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-self-assessment-tax-returns-summary_get_accordion
+#
+# # # # # # # # # # # # # # # # # # # # # # # #
+
 module HwfHmrcApi
   class Connection
     include UserValidation

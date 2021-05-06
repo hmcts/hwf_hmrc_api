@@ -10,16 +10,44 @@
 module HwfHmrcApi
   module IndividualIncome
     require_relative "hwf_hmrc_api_error"
-    # YYYY-MM-DD  date format
+
+    # From Date format: YYYY-MM-DD
+    # To Date format: YYYY-MM-DD
     def paye(from_date, to_date)
       validate_match_id
       validate_dates(from_date, to_date)
-      reqeust_params = {
-        matching_id: matching_id,
-        from_date: from_date,
-        to_date: to_date
-      }
-      HwfHmrcApi::Endpoint.income_paye(access_token, reqeust_params)
+      params = request_params(from_date,to_date)
+      HwfHmrcApi::Endpoint.income_paye(access_token, params)
+    end
+
+    # From Tax Year format: YYYY-YY
+    # To Tax Year format: YYYY-YY
+    def sa_summary(from_tax_year, to_tax_year)
+      validate_match_id
+      validate_tax_years(from_tax_year, to_tax_year)
+      params = request_params(from_tax_year,to_tax_year)
+
+      HwfHmrcApi::Endpoint.income_summary(access_token, params)
+    end
+
+    # From Tax Year format: YYYY-YY
+    # To Tax Year format: YYYY-YY
+    def sa_interest_dividends(from_tax_year, to_tax_year)
+    end
+
+    # From Tax Year format: YYYY-YY
+    # To Tax Year format: YYYY-YY
+    def sa_self_employments(from_tax_year, to_tax_year)
+    end
+
+    # From Tax Year format: YYYY-YY
+    # To Tax Year format: YYYY-YY
+    def sa_uk_properties(from_tax_year, to_tax_year)
+    end
+
+    # From Tax Year format: YYYY-YY
+    # To Tax Year format: YYYY-YY
+    def sa_foreign(from_tax_year, to_tax_year)
     end
 
     private
@@ -61,5 +89,45 @@ module HwfHmrcApi
       hundred_years_ago = Date.today.year - 100
       Date.parse(string) <= Date.parse("#{hundred_years_ago}-01-01")
     end
+
+    def validate_tax_years(from_tax_year, to_tax_year)
+      raise HwfHmrcApiError, "Attributes validation: FromTaxYear is not a String" unless date_type_valid?(from_tax_year)
+      raise HwfHmrcApiError, "Attributes validation: ToTaxYear is not a String" unless date_type_valid?(to_tax_year)
+      raise HwfHmrcApiError, "Attributes validation: FromTaxYear is missing" unless date_present?(from_tax_year)
+      raise HwfHmrcApiError, "Attributes validation: ToTaxYear is missing" unless date_present?(to_tax_year)
+      raise HwfHmrcApiError, "Attributes validation: FromTaxYear format is invalid" unless tax_year_format_valid?(from_tax_year)
+      raise HwfHmrcApiError, "Attributes validation: ToTaxYear format is invalid" unless tax_year_format_valid?(to_tax_year)
+      raise HwfHmrcApiError, "Attributes validation: FromTaxYear year is before ToTaxYear" unless tax_years_in_order?(from_tax_year, to_tax_year)
+    end
+
+    def tax_year_format_valid?(value)
+      return true if value.match(/\d{4}-\d{2}/) && incremental_year(value)
+
+      false
+    rescue ArgumentError
+      raise HwfHmrcApiError, "Attributes validation: Date format #{value} is invalid"
+    end
+
+    def incremental_year(value)
+      years = value.split('-')
+      first = years[0][2..3].to_i
+      second = years[1].to_i
+      first + 1 == second
+    end
+
+    def tax_years_in_order?(from, to)
+      first = from.split('-')[0].to_i
+      second = to.split('-')[0].to_i
+      first <= second
+    end
+
+    def request_params(from, to)
+      {
+        matching_id: matching_id,
+        from: from,
+        to: to
+      }
+    end
+
   end
 end

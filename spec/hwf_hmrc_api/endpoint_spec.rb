@@ -133,46 +133,6 @@ RSpec.describe HwfHmrcApi::Endpoint do
         end.to raise_error(HwfHmrcApiError, "783: unexpected token at 'Something went wrong'")
       end
     end
-
-    context "income paye" do
-      it "found a record" do
-        VCR.use_cassette "income_paye_success" do
-          request_params = { matching_id: "e5a25de7-9d26-4300-9986-6ea600d400e5", from_date: "2019-04-01",
-                             to_date: "2019-04-28" }
-          response = described_class.income_paye(access_token, request_params)
-          expect(response["income"][0]).to have_key("totalTaxToDate")
-        end
-      end
-
-      it "no record found" do
-        VCR.use_cassette "income_paye_success_empty" do
-          request_params = { matching_id: "e5a25de7-9d26-4300-9986-6ea600d400e5", from_date: "2019-04-02",
-                             to_date: "2019-04-28" }
-          response = described_class.income_paye(access_token, request_params)
-          expect(response["income"]).to eq([])
-        end
-      end
-
-      it "invalid request" do
-        VCR.use_cassette "income_paye_400" do
-          request_params = { matching_id: "e5a25de7-9d26-4300-9986-6ea600d400e5", from_date: "",
-                             to_date: "2019-04-28" }
-          expect do
-            described_class.income_paye(access_token, request_params)
-          end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - fromDate: invalid date format")
-        end
-      end
-
-      it "not found" do
-        VCR.use_cassette "income_paye_404" do
-          request_params = { matching_id: "e5a25de7-9d26-4300-9986-6ea600d400e4", from_date: "2019-04-02",
-                             to_date: "2019-04-28" }
-          expect do
-            described_class.income_paye(access_token, request_params)
-          end.to raise_error(HwfHmrcApiError, "API: NOT_FOUND - The resource can not be found")
-        end
-      end
-    end
   end
 
   # rubocop:disable Metrics/MethodLength

@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://test-api.service.hmrc.gov.uk/individuals/income/sa/summary?fromTaxYear=2019-20&matchId=e5a25de7-9d26-4300-9986-6ea600d400e5&toTaxYear=2019-20
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.hmrc.2.0+json
+      Authorization:
+      - Bearer dbc4adfc4bf72fd514437a2c9c28fea5
+      Correlationid:
+      - 65ca41a0-907e-0139-25c3-1e00e23ae066
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Content-Type:
+      - application/json
+      Www-Authenticate:
+      - Bearer realm="HMRC API Platform"
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Content-Security-Policy:
+      - default-src 'self'
+      Date:
+      - Thu, 06 May 2021 09:50:22 GMT
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"code":"INTERNAL_SERVER_ERROR","message":"Something went wrong."}'
+  recorded_at: Thu, 06 May 2021 09:50:22 GMT
+recorded_with: VCR 6.0.0

@@ -30,11 +30,12 @@ module HwfHmrcApi
       def parse_standard_error_response
         message = "API: #{response_hash["code"]} - #{response_hash["message"]}"
 
-        raise HwfHmrcApiError.new(message, :invalid_request) if [403, 404, 400].include?(@response.code)
         raise HwfHmrcApiTokenError.new(message, :invalid_token) if @response.code == 401
+        raise HwfHmrcApiError.new(message, :invalid_request)
       end
 
       def api_url
+        # "https://api.service.hmrc.gov.uk"
         "https://test-api.service.hmrc.gov.uk"
       end
     end

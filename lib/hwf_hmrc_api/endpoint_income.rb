@@ -7,11 +7,23 @@ module HwfHmrcApi
                                headers: request_headers(access_token),
                                query: {
                                  matchId: attributes[:matching_id],
-                                 fromDate: attributes[:from_date],
-                                 toDate: attributes[:to_date]
+                                 fromDate: attributes[:from],
+                                 toDate: attributes[:to]
+                               })
+      parse_paye_response
+    end
+
+    def income_summary(access_token, attributes)
+
+      @response = HTTParty.get("#{api_url}/individuals/income/sa/summary",
+                               headers: request_headers(access_token),
+                               query: {
+                                 matchId: attributes[:matching_id],
+                                 fromTaxYear: attributes[:from],
+                                 toTaxYear: attributes[:to]
                                },
                                debug_output: $stdout)
-      parse_paye_response
+      parse_summary_response
     end
 
     private
@@ -22,5 +34,13 @@ module HwfHmrcApi
     rescue JSON::ParserError => e
       raise HwfHmrcApiError.new(e.message, :standard_error)
     end
+
+    def parse_summary_response
+      parse_standard_error_response if @response.code != 200
+      response_hash["selfAssessment"]
+    rescue JSON::ParserError => e
+      raise HwfHmrcApiError.new(e.message, :standard_error)
+    end
+
   end
 end
