@@ -8,7 +8,7 @@ RSpec.describe HwfHmrcApi::EndpointIncome do
   let(:hmrc_secret) { "12345" }
   let(:totp_secret) { "base32secret3232" }
   let(:client_id) { "6789" }
-  let(:access_token) { "70a458197e0bff117c04cf6ee43ec3de" }
+  let(:access_token) { "94f19ed3aea3443e04849a847d9dde34" }
 
   describe "API calls" do
     context "income paye" do
@@ -97,6 +97,48 @@ RSpec.describe HwfHmrcApi::EndpointIncome do
                                to: "2019-20" }
             expect do
               endoint.income_summary(access_token, request_params)
+            end.to raise_error(HwfHmrcApiError, "API: NOT_FOUND - The resource can not be found")
+          end
+        end
+      end
+    end
+
+    context "income intereset and dividend" do
+      it "found a record" do
+        VCR.use_cassette "income_interest_dividends_success" do
+          request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f9", from: "2018-19",
+                             to: "2019-20" }
+          response = endoint.income_interest_dividends(access_token, request_params)
+          expect(response["taxReturns"][0]).to have_key("interestsAndDividends")
+        end
+      end
+
+      it "record empty" do
+        VCR.use_cassette "income_interest_dividends_success_empty" do
+          request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f9", from: "2019-20",
+                             to: "2020-21" }
+          response = endoint.income_interest_dividends(access_token, request_params)
+          expect(response["taxReturns"]).to eq([])
+        end
+      end
+
+      context "error response" do
+        it "formatting error" do
+          VCR.use_cassette "income_interest_dividends_400" do
+            request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f9", from: "2019-2000",
+                               to: "2019-20" }
+            expect do
+              endoint.income_interest_dividends(access_token, request_params)
+            end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - fromTaxYear: invalid tax year format")
+          end
+        end
+
+        it "no record found" do
+          VCR.use_cassette "income_interest_dividends_404" do
+            request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f", from: "2019-20",
+                               to: "2019-20" }
+            expect do
+              endoint.income_interest_dividends(access_token, request_params)
             end.to raise_error(HwfHmrcApiError, "API: NOT_FOUND - The resource can not be found")
           end
         end

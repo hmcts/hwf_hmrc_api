@@ -20,9 +20,20 @@ module HwfHmrcApi
                                  matchId: attributes[:matching_id],
                                  fromTaxYear: attributes[:from],
                                  toTaxYear: attributes[:to]
+                               })
+      parse_self_assessment_response
+    end
+
+    def income_interest_dividends(access_token, attributes)
+      @response = HTTParty.get("#{api_url}/individuals/income/sa/interests-and-dividends",
+                               headers: request_headers(access_token),
+                               query: {
+                                 matchId: attributes[:matching_id],
+                                 fromTaxYear: attributes[:from],
+                                 toTaxYear: attributes[:to]
                                },
                                debug_output: $stdout)
-      parse_summary_response
+      parse_self_assessment_response
     end
 
     private
@@ -34,7 +45,7 @@ module HwfHmrcApi
       raise HwfHmrcApiError.new(e.message, :standard_error)
     end
 
-    def parse_summary_response
+    def parse_self_assessment_response
       parse_standard_error_response if @response.code != 200
       response_hash["selfAssessment"]
     rescue JSON::ParserError => e

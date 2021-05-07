@@ -20,6 +20,8 @@ RSpec.configure do |config|
   end
 
   WebMock.disable_net_connect!(allow_localhost: true)
+
+  Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 end
 
 VCR.configure do |c|

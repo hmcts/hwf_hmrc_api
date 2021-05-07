@@ -10,6 +10,13 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
   let(:from_date) { "2021-01-20" }
   let(:to_date) { "2021-02-20" }
   let(:access_token) { "0f3adcfc0e6f5ace9102af880cedd279" }
+  let(:tax_year_request_params) do
+    {
+      matching_id: matching_id,
+      from: from_tax_year,
+      to: to_tax_year
+    }
+  end
 
   context "missing matching_id" do
     before { allow(dummy_class).to receive(:matching_id).and_return nil }
@@ -24,6 +31,13 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
     it "Income summary" do
       expect do
         individual_income.sa_summary("2018-19", "2019-20")
+      end.to raise_error(HwfHmrcApiError,
+                         "Params validation: Mathching ID is missing")
+    end
+
+    it "Income interest and dividends" do
+      expect do
+        individual_income.sa_interest_dividends("2018-19", "2019-20")
       end.to raise_error(HwfHmrcApiError,
                          "Params validation: Mathching ID is missing")
     end
@@ -109,106 +123,28 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
       let(:from_tax_year) { "2018-19" }
       let(:to_tax_year) { "2020-21" }
 
-      context "tax year validation" do
-        it do
-          expect do
-            individual_income.sa_summary("2018", to_tax_year)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: FromTaxYear format is invalid")
-        end
-
-        it do
-          expect do
-            individual_income.sa_summary("2018-", to_tax_year)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: FromTaxYear format is invalid")
-        end
-
-        it do
-          expect do
-            individual_income.sa_summary("2018-1", to_tax_year)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: FromTaxYear format is invalid")
-        end
-
-        it do
-          expect do
-            individual_income.sa_summary("2018-18", to_tax_year)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: FromTaxYear format is invalid")
-        end
-
-        it do
-          expect do
-            individual_income.sa_summary("2018-20", to_tax_year)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: FromTaxYear format is invalid")
-        end
-
-        it do
-          expect do
-            individual_income.sa_summary("2018-19", "2017-18")
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: FromTaxYear year is before ToTaxYear")
-        end
-
-        it do
-          expect do
-            individual_income.sa_summary("", to_tax_year)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: FromTaxYear is missing")
-        end
-
-        it do
-          expect do
-            individual_income.sa_summary(nil, to_tax_year)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: FromTaxYear is missing")
-        end
-
-        it do
-          expect do
-            individual_income.sa_summary(from_tax_year, "")
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: ToTaxYear is missing")
-        end
-
-        it do
-          expect do
-            individual_income.sa_summary(from_tax_year, nil)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: ToTaxYear is missing")
-        end
-
-        it do
-          expect do
-            individual_income.sa_summary(from_tax_year, 2000)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: ToTaxYear is not a String")
-        end
-
-        it do
-          expect do
-            individual_income.sa_summary(2000, to_tax_year)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: FromTaxYear is not a String")
-        end
-      end
+      include_examples "Tax year validation", :sa_summary
 
       context "call summary endpoint" do
-        let(:paye_request_params) do
-          {
-            matching_id: matching_id,
-            from: from_tax_year,
-            to: to_tax_year
-          }
-        end
-
         it do
           allow(HwfHmrcApi::Endpoint).to receive(:income_summary).and_return({})
           individual_income.sa_summary(from_tax_year, to_tax_year)
-          expect(HwfHmrcApi::Endpoint).to have_received(:income_summary).with(access_token, paye_request_params)
+          expect(HwfHmrcApi::Endpoint).to have_received(:income_summary).with(access_token, tax_year_request_params)
         end
+      end
+    end
+
+    describe "SA dividends and interest" do
+      let(:from_tax_year) { "2018-19" }
+      let(:to_tax_year) { "2020-21" }
+
+      include_examples "Tax year validation", :sa_interest_dividends
+
+      it "call income_interest_dividends" do
+        allow(HwfHmrcApi::Endpoint).to receive(:income_interest_dividends).and_return({})
+        individual_income.sa_interest_dividends(from_tax_year, to_tax_year)
+        expect(HwfHmrcApi::Endpoint).to have_received(:income_interest_dividends).with(access_token,
+                                                                                       tax_year_request_params)
       end
     end
   end
