@@ -8,7 +8,7 @@ RSpec.describe HwfHmrcApi::EndpointIncome do
   let(:hmrc_secret) { "12345" }
   let(:totp_secret) { "base32secret3232" }
   let(:client_id) { "6789" }
-  let(:access_token) { "94f19ed3aea3443e04849a847d9dde34" }
+  let(:access_token) { "8c656cbd605d4887c375eedffc5529b4" }
 
   describe "API calls" do
     context "income paye" do
@@ -181,6 +181,48 @@ RSpec.describe HwfHmrcApi::EndpointIncome do
                                to: "2019-20" }
             expect do
               endoint.income_self_employments(access_token, request_params)
+            end.to raise_error(HwfHmrcApiError, "API: NOT_FOUND - The resource can not be found")
+          end
+        end
+      end
+    end
+
+    context "income uk properties" do
+      it "found a record" do
+        VCR.use_cassette "income_uk_properties_success" do
+          request_params = { matching_id: "ad4a751f-356e-4867-9eef-df722d17fca2", from: "2018-19",
+                             to: "2019-20" }
+          response = endoint.income_uk_properties(access_token, request_params)
+          expect(response["taxReturns"][0]).to have_key("ukProperties")
+        end
+      end
+
+      it "record empty" do
+        VCR.use_cassette "income_uk_properties_success_empty" do
+          request_params = { matching_id: "ad4a751f-356e-4867-9eef-df722d17fca2", from: "2019-20",
+                             to: "2020-21" }
+          response = endoint.income_uk_properties(access_token, request_params)
+          expect(response["taxReturns"]).to eq([])
+        end
+      end
+
+      context "error response" do
+        it "formatting error" do
+          VCR.use_cassette "income_uk_properties_employments_400" do
+            request_params = { matching_id: "ad4a751f-356e-4867-9eef-df722d17fca2", from: "2019-2000",
+                               to: "2019-20" }
+            expect do
+              endoint.income_uk_properties(access_token, request_params)
+            end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - fromTaxYear: invalid tax year format")
+          end
+        end
+
+        it "no record found" do
+          VCR.use_cassette "income_uk_properties_employments_404" do
+            request_params = { matching_id: "ad4a751f-356e-4867-9eef-df722d17fca", from: "2019-20",
+                               to: "2019-20" }
+            expect do
+              endoint.income_uk_properties(access_token, request_params)
             end.to raise_error(HwfHmrcApiError, "API: NOT_FOUND - The resource can not be found")
           end
         end

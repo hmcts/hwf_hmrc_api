@@ -52,7 +52,13 @@ module HwfHmrcApi
 
     # From Tax Year format: YYYY-YY
     # To Tax Year format: YYYY-YY
-    def sa_uk_properties(from_tax_year, to_tax_year); end
+    def sa_uk_properties(from_tax_year, to_tax_year)
+      validate_match_id
+      validate_tax_years(from_tax_year, to_tax_year)
+      params = request_params(from_tax_year, to_tax_year)
+
+      HwfHmrcApi::Endpoint.income_uk_properties(access_token, params)
+    end
 
     # From Tax Year format: YYYY-YY
     # To Tax Year format: YYYY-YY
