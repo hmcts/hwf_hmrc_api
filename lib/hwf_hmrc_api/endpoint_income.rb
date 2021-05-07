@@ -57,6 +57,17 @@ module HwfHmrcApi
       parse_self_assessment_response
     end
 
+    def income_foreign(access_token, attributes)
+      @response = HTTParty.get("#{api_url}/individuals/income/sa/foreign",
+                               headers: request_headers(access_token),
+                               query: {
+                                 matchId: attributes[:matching_id],
+                                 fromTaxYear: attributes[:from],
+                                 toTaxYear: attributes[:to]
+                               })
+      parse_self_assessment_response
+    end
+
     private
 
     def parse_paye_response

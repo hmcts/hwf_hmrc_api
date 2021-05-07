@@ -1,12 +1,5 @@
 # frozen_string_literal: true
 
-# /individuals/income/summary
-# /individuals/income/interests-and-dividends
-# /individuals/income/self-employments
-# /individuals/income/uk-properties
-# /individuals/income/foreign
-# /individuals/income/paye
-
 module HwfHmrcApi
   module IndividualIncome
     require_relative "hwf_hmrc_api_error"
@@ -23,48 +16,42 @@ module HwfHmrcApi
     # From Tax Year format: YYYY-YY
     # To Tax Year format: YYYY-YY
     def sa_summary(from_tax_year, to_tax_year)
-      validate_match_id
-      validate_tax_years(from_tax_year, to_tax_year)
-      params = request_params(from_tax_year, to_tax_year)
-
-      HwfHmrcApi::Endpoint.income_summary(access_token, params)
+      sa_income_endpoint(:income_summary, from_tax_year, to_tax_year)
     end
 
     # From Tax Year format: YYYY-YY
     # To Tax Year format: YYYY-YY
     def sa_interest_dividends(from_tax_year, to_tax_year)
-      validate_match_id
-      validate_tax_years(from_tax_year, to_tax_year)
-      params = request_params(from_tax_year, to_tax_year)
-
-      HwfHmrcApi::Endpoint.income_interest_dividends(access_token, params)
+      sa_income_endpoint(:income_interest_dividends, from_tax_year, to_tax_year)
     end
 
     # From Tax Year format: YYYY-YY
     # To Tax Year format: YYYY-YY
     def sa_self_employments(from_tax_year, to_tax_year)
-      validate_match_id
-      validate_tax_years(from_tax_year, to_tax_year)
-      params = request_params(from_tax_year, to_tax_year)
-
-      HwfHmrcApi::Endpoint.income_self_employments(access_token, params)
+      sa_income_endpoint(:income_self_employments, from_tax_year, to_tax_year)
     end
 
     # From Tax Year format: YYYY-YY
     # To Tax Year format: YYYY-YY
     def sa_uk_properties(from_tax_year, to_tax_year)
-      validate_match_id
-      validate_tax_years(from_tax_year, to_tax_year)
-      params = request_params(from_tax_year, to_tax_year)
-
-      HwfHmrcApi::Endpoint.income_uk_properties(access_token, params)
+      sa_income_endpoint(:income_uk_properties, from_tax_year, to_tax_year)
     end
 
     # From Tax Year format: YYYY-YY
     # To Tax Year format: YYYY-YY
-    def sa_foreign(from_tax_year, to_tax_year); end
+    def sa_foreign(from_tax_year, to_tax_year)
+      sa_income_endpoint(:income_foreign, from_tax_year, to_tax_year)
+    end
 
     private
+
+    def sa_income_endpoint(method_name, from_tax_year, to_tax_year)
+      validate_match_id
+      validate_tax_years(from_tax_year, to_tax_year)
+      params = request_params(from_tax_year, to_tax_year)
+
+      HwfHmrcApi::Endpoint.send(method_name, access_token, params)
+    end
 
     def validate_match_id
       raise HwfHmrcApiError.new("Params validation: Mathching ID is missing", :standard_error) if matching_id.nil?

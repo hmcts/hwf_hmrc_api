@@ -55,6 +55,13 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
       end.to raise_error(HwfHmrcApiError,
                          "Params validation: Mathching ID is missing")
     end
+
+    it "Income foreign" do
+      expect do
+        individual_income.sa_foreign("2018-19", "2019-20")
+      end.to raise_error(HwfHmrcApiError,
+                         "Params validation: Mathching ID is missing")
+    end
   end
 
   context "matching_id present" do
@@ -187,6 +194,20 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
         individual_income.sa_uk_properties(from_tax_year, to_tax_year)
         expect(HwfHmrcApi::Endpoint).to have_received(:income_uk_properties).with(access_token,
                                                                                   tax_year_request_params)
+      end
+    end
+
+    describe "SA foreign" do
+      let(:from_tax_year) { "2018-19" }
+      let(:to_tax_year) { "2020-21" }
+
+      include_examples "Tax year validation", :sa_foreign
+
+      it "call income_foreign" do
+        allow(HwfHmrcApi::Endpoint).to receive(:income_foreign).and_return({})
+        individual_income.sa_foreign(from_tax_year, to_tax_year)
+        expect(HwfHmrcApi::Endpoint).to have_received(:income_foreign).with(access_token,
+                                                                            tax_year_request_params)
       end
     end
   end
