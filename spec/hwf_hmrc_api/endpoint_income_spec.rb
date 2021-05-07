@@ -144,5 +144,47 @@ RSpec.describe HwfHmrcApi::EndpointIncome do
         end
       end
     end
+
+    context "income self employments" do
+      it "found a record" do
+        VCR.use_cassette "income_self_employments_success" do
+          request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f9", from: "2018-19",
+                             to: "2019-20" }
+          response = endoint.income_self_employments(access_token, request_params)
+          expect(response["taxReturns"][0]).to have_key("selfEmployments")
+        end
+      end
+
+      it "record empty" do
+        VCR.use_cassette "income_self_employments_success_empty" do
+          request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f9", from: "2019-20",
+                             to: "2020-21" }
+          response = endoint.income_self_employments(access_token, request_params)
+          expect(response["taxReturns"]).to eq([])
+        end
+      end
+
+      context "error response" do
+        it "formatting error" do
+          VCR.use_cassette "income_self_employments_400" do
+            request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f9", from: "2019-2000",
+                               to: "2019-20" }
+            expect do
+              endoint.income_self_employments(access_token, request_params)
+            end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - fromTaxYear: invalid tax year format")
+          end
+        end
+
+        it "no record found" do
+          VCR.use_cassette "income_self_employments_404" do
+            request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f", from: "2019-20",
+                               to: "2019-20" }
+            expect do
+              endoint.income_self_employments(access_token, request_params)
+            end.to raise_error(HwfHmrcApiError, "API: NOT_FOUND - The resource can not be found")
+          end
+        end
+      end
+    end
   end
 end

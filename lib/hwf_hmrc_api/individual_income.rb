@@ -42,7 +42,13 @@ module HwfHmrcApi
 
     # From Tax Year format: YYYY-YY
     # To Tax Year format: YYYY-YY
-    def sa_self_employments(from_tax_year, to_tax_year); end
+    def sa_self_employments(from_tax_year, to_tax_year)
+      validate_match_id
+      validate_tax_years(from_tax_year, to_tax_year)
+      params = request_params(from_tax_year, to_tax_year)
+
+      HwfHmrcApi::Endpoint.income_self_employments(access_token, params)
+    end
 
     # From Tax Year format: YYYY-YY
     # To Tax Year format: YYYY-YY

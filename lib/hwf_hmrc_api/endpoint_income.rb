@@ -31,6 +31,17 @@ module HwfHmrcApi
                                  matchId: attributes[:matching_id],
                                  fromTaxYear: attributes[:from],
                                  toTaxYear: attributes[:to]
+                               })
+      parse_self_assessment_response
+    end
+
+    def income_self_employments(access_token, attributes)
+      @response = HTTParty.get("#{api_url}/individuals/income/sa/self-employments",
+                               headers: request_headers(access_token),
+                               query: {
+                                 matchId: attributes[:matching_id],
+                                 fromTaxYear: attributes[:from],
+                                 toTaxYear: attributes[:to]
                                },
                                debug_output: $stdout)
       parse_self_assessment_response

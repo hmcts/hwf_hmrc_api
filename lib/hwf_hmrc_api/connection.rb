@@ -41,6 +41,17 @@ require_relative "individual_income"
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-self-assessment-tax-returns-summary_get_accordion
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
+# Method name: sa_interest_dividends(from_date, to_date)
+#
+# Method attributes example:
+# from_tax_year format: YYYY-YY
+# to_tax_year format: YYYY-YY
+#
+# Returns paye Hash: {"taxReturns" => [...]}
+#
+# more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-interest-and-dividends-income-data-from-self-assessment_get_accordion
+#
+# # # # # # # # # # # # # # # # # # # # # # # #
 
 module HwfHmrcApi
   class Connection
