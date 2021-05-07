@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://test-api.service.hmrc.gov.uk/individuals/income/sa/summary?fromTaxYear=2018-19&matchId=0228b1ec-26e6-4f09-b26b-ea80217d5209&toTaxYear=2019-20
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.hmrc.2.0+json
+      Authorization:
+      - Bearer dbc4adfc4bf72fd514437a2c9c28fea5
+      Correlationid:
+      - 38722df0-8fb7-0139-2590-1e00e23ae066
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Cache-Control:
+      - no-cache,no-store,max-age=0
+      X-Envoy-Upstream-Service-Time:
+      - '420'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Content-Security-Policy:
+      - default-src 'self'
+      Date:
+      - Wed, 05 May 2021 10:04:36 GMT
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"_links":{"self":{"href":"/individuals/income/sa/summary?matchId=b1a3ded8-50de-43b3-aa94-8c111e4df569&fromTaxYear=2018-19&toTaxYear=2019-20"}},"selfAssessment":{"taxReturns":[{"taxYear":"2018-19","summary":[{"totalIncome":100.99}]}]}}'
+  recorded_at: Wed, 05 May 2021 10:04:36 GMT
+recorded_with: VCR 6.0.0

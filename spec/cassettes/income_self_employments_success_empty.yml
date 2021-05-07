@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://test-api.service.hmrc.gov.uk/individuals/income/sa/self-employments?fromTaxYear=2019-20&matchId=b5a6e337-87c3-44ac-820d-22d8abc6a1f9&toTaxYear=2020-21
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.hmrc.2.0+json
+      Authorization:
+      - Bearer 94f19ed3aea3443e04849a847d9dde34
+      Correlationid:
+      - fd4b3ec0-9166-0139-d469-1e00e23ae066
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Cache-Control:
+      - no-cache,no-store,max-age=0
+      X-Envoy-Upstream-Service-Time:
+      - '931'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Content-Security-Policy:
+      - default-src 'self'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Content-Length:
+      - '188'
+      Date:
+      - Fri, 07 May 2021 13:35:20 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"_links":{"self":{"href":"/individuals/income/sa/self-employments?matchId=b5a6e337-87c3-44ac-820d-22d8abc6a1f9&fromTaxYear=2019-20&toTaxYear=2020-21"}},"selfAssessment":{"taxReturns":[]}}'
+  recorded_at: Fri, 07 May 2021 13:35:20 GMT
+recorded_with: VCR 6.0.0

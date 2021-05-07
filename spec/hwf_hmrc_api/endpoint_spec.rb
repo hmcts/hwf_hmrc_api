@@ -8,7 +8,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
   let(:hmrc_secret) { "12345" }
   let(:totp_secret) { "base32secret3232" }
   let(:client_id) { "6789" }
-  let(:access_token) { "1988460f19b2c092844931b288a31ca7" }
+  let(:access_token) { "8ca019f0c4024233e746f92562d73a52" }
 
   describe "API calls" do
     context "token" do

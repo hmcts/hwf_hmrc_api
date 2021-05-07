@@ -5,6 +5,7 @@ require "pry"
 require "vcr"
 require "timecop"
 require "hwf_hmrc_api/user_validation"
+require "hwf_hmrc_api/individual_income"
 require "webmock/rspec"
 
 RSpec.configure do |config|
@@ -19,6 +20,8 @@ RSpec.configure do |config|
   end
 
   WebMock.disable_net_connect!(allow_localhost: true)
+
+  Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 end
 
 VCR.configure do |c|

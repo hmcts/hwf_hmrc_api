@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://test-api.service.hmrc.gov.uk/individuals/income/sa/foreign?fromTaxYear=2019-2000&matchId=ad4a751f-356e-4867-9eef-df722d17fca2&toTaxYear=2019-20
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.hmrc.2.0+json
+      Authorization:
+      - Bearer 8c656cbd605d4887c375eedffc5529b4
+      Correlationid:
+      - 0d3ea7b0-916a-0139-d595-1e00e23ae066
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Content-Type:
+      - application/json
+      Cache-Control:
+      - no-cache,no-store,max-age=0
+      X-Envoy-Upstream-Service-Time:
+      - '16'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Content-Security-Policy:
+      - default-src 'self'
+      Date:
+      - Fri, 07 May 2021 13:57:14 GMT
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"code":"INVALID_REQUEST","message":"fromTaxYear: invalid tax year
+        format"}'
+  recorded_at: Fri, 07 May 2021 13:57:14 GMT
+recorded_with: VCR 6.0.0

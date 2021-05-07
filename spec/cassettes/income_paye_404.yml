@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://test-api.service.hmrc.gov.uk/individuals/income/paye?fromDate=2019-04-02&matchId=e5a25de7-9d26-4300-9986-6ea600d400e4&toDate=2019-04-28
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.hmrc.2.0+json
+      Authorization:
+      - Bearer 8ca019f0c4024233e746f92562d73a52
+      Correlationid:
+      - ba52aab0-8be1-0139-cfaa-1e00e23ae066
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Type:
+      - application/json
+      Cache-Control:
+      - no-cache
+      X-Envoy-Upstream-Service-Time:
+      - '142'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Content-Security-Policy:
+      - default-src 'self'
+      Date:
+      - Fri, 30 Apr 2021 12:58:48 GMT
+      Content-Length:
+      - '62'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"code":"NOT_FOUND","message":"The resource can not be found"}'
+  recorded_at: Fri, 30 Apr 2021 12:58:48 GMT
+recorded_with: VCR 6.0.0

@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://test-api.service.hmrc.gov.uk/individuals/income/paye?fromDate=2019-04-01&matchId=e5a25de7-9d26-4300-9986-6ea600d400e5&toDate=2019-04-28
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.hmrc.2.0+json
+      Authorization:
+      - Bearer 8ca019f0c4024233e746f92562d73a52
+      Correlationid:
+      - 3764f3b0-8bde-0139-cf60-1e00e23ae066
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Cache-Control:
+      - no-cache,no-store,max-age=0
+      X-Envoy-Upstream-Service-Time:
+      - '164'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Content-Security-Policy:
+      - default-src 'self'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Fri, 30 Apr 2021 12:33:40 GMT
+      Content-Length:
+      - '1250'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"_links":{"self":{"href":"/individuals/income/paye?matchId=e5a25de7-9d26-4300-9986-6ea600d400e5&fromDate=2019-04-01&toDate=2019-04-28"}},"paye":{"income":[{"employerPayeReference":"345/34678","taxYear":"18-19","employee":{"hasPartner":true},"payroll":{"id":"}\\^W7
+        ci|)pENG;62$"},"payFrequency":"W4","monthPayNumber":3,"weekPayNumber":2,"paymentDate":"2006-02-27","paidHoursWorked":"35","taxCode":"K971","taxablePayToDate":19157.5,"taxablePay":16533.95,"totalTaxToDate":3095.89,"taxDeductedOrRefunded":159228.49,"dednsFromNetPay":198035.8,"employeePensionContribs":{"paidYTD":169731.51,"notPaidYTD":173987.07,"paid":822317.49,"notPaid":818841.65},"statutoryPayYTD":{"maternity":628562.9,"paternity":98600.58,"adoption":48703.26,"parentalBereavement":39708.7},"grossEarningsForNics":{"inPayPeriod1":995979.04,"inPayPeriod2":606456.38,"inPayPeriod3":797877.34,"inPayPeriod4":166334.69},"totalEmployerNics":{"inPayPeriod1":18290.8,"inPayPeriod2":192417.2,"inPayPeriod3":14881.1,"inPayPeriod4":17460.88,"ytd1":530979.47,"ytd2":197448.92,"ytd3":172265.64,"ytd4":122452.65},"employeeNics":{"inPayPeriod1":15797.45,"inPayPeriod2":13170.69,"inPayPeriod3":16193.76,"inPayPeriod4":30846.56,"ytd1":10633.5,"ytd2":15579.18,"ytd3":110849.27,"ytd4":162081.23}}]}}'
+  recorded_at: Fri, 30 Apr 2021 12:33:40 GMT
+recorded_with: VCR 6.0.0
