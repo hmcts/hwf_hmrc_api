@@ -6,6 +6,7 @@ require "vcr"
 require "timecop"
 require "hwf_hmrc_api/user_validation"
 require "hwf_hmrc_api/individual_income"
+require "hwf_hmrc_api/tax_credit"
 require "webmock/rspec"
 
 RSpec.configure do |config|

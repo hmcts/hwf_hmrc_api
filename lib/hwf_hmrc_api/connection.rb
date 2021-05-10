@@ -4,6 +4,7 @@ require "rotp"
 require_relative "authentication"
 require_relative "user_validation"
 require_relative "individual_income"
+require_relative "tax_credit"
 
 # Connection methods
 # IMPORTANT: To be able to get information about user you need to call match_user method first
@@ -85,11 +86,35 @@ require_relative "individual_income"
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-foreign-income-data-from-self-assessment_get_accordion
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
+# Method name: child_tax_credits(from_date, to_date)
+#
+# Method attributes example:
+# from_date format: YYYY-MM-DD
+# to_date format: YYYY-MM-DD
+#
+# Returns paye Hash: {"applications" => [...]}
+#
+# more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-benefits-and-credits-api/1.0#_get-child-tax-credit-data_get_accordion
+#
+# # # # # # # # # # # # # # # # # # # # # # # #
+# Method name: working_tax_credits(from_date, to_date)
+#
+# Method attributes example:
+# from_date format: YYYY-MM-DD
+# to_date format: YYYY-MM-DD
+#
+# Returns paye Hash: {"applications" => [...]}
+#
+# more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-benefits-and-credits-api/1.0#_get-working-tax-credit-data_get_accordion
+#
+# # # # # # # # # # # # # # # # # # # # # # # #
 
 module HwfHmrcApi
   class Connection
     include UserValidation
     include IndividualIncome
+    include TaxCredit
+
     attr_reader :matching_id, :authentication
 
     def initialize(connection_attributes)
