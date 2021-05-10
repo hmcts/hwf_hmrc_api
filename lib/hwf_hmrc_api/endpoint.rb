@@ -3,6 +3,7 @@
 require_relative "endpoint_income"
 require_relative "endpoint_user_matching"
 require_relative "endpoint_token"
+require_relative "endpoint_tax_credit"
 
 module HwfHmrcApi
   module Endpoint
@@ -11,13 +12,14 @@ module HwfHmrcApi
       include EndpointToken
       include EndpointUserMatching
       include EndpointIncome
+      include EndpointTaxCredit
 
       private
 
-      def request_headers(access_token)
+      def request_headers(access_token, version = "2.0")
         {
           "Content-Type": "application/json",
-          "Accept" => "application/vnd.hmrc.2.0+json",
+          "Accept" => "application/vnd.hmrc.#{version}+json",
           "Authorization" => "Bearer #{access_token}",
           "correlationId" => UUID.new.generate
         }

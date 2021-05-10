@@ -86,58 +86,7 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
         end
       end
 
-      context "date present validation" do
-        it do
-          expect do
-            individual_income.paye("", to_date)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: FromDate is missing")
-        end
-
-        it do
-          expect do
-            individual_income.paye(nil, to_date)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: FromDate is missing")
-        end
-
-        it do
-          expect do
-            individual_income.paye(from_date, "")
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: ToDate is missing")
-        end
-
-        it do
-          expect do
-            individual_income.paye(from_date, nil)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: ToDate is missing")
-        end
-
-        it do
-          expect do
-            individual_income.paye(123, to_date)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: FromDate is not a String")
-        end
-      end
-
-      context "date format YYYY-MM-DD" do
-        it do
-          expect do
-            individual_income.paye("21-01-2000", to_date)
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: FromDate format is invalid")
-        end
-
-        it do
-          expect do
-            individual_income.paye(from_date, "21-01-2021")
-          end.to raise_error(HwfHmrcApiError,
-                             "Attributes validation: ToDate format is invalid")
-        end
-      end
+      include_examples "Date validation", described_class, :paye
     end
 
     describe "SA summary" do

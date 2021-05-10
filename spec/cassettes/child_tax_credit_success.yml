@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://test-api.service.hmrc.gov.uk/individuals/benefits-and-credits/child-tax-credit?fromDate=2018-02-02&matchId=198247ac-7325-4233-ae65-9bd548658310&toDate=2018-04-01
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.hmrc.1.0+json
+      Authorization:
+      - Bearer 6f9d12d8c28da016ad6d26296c900087
+      Correlationid:
+      - 884b4aa0-93c1-0139-d7c4-1e00e23ae066
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Cache-Control:
+      - no-cache,no-store,max-age=0
+      X-Envoy-Upstream-Service-Time:
+      - '348'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Content-Security-Policy:
+      - default-src 'self'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Mon, 10 May 2021 13:28:30 GMT
+      Content-Length:
+      - '598'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"_links":{"self":{"href":"/individuals/benefits-and-credits/child-tax-credits?matchId=198247ac-7325-4233-ae65-9bd548658310&fromDate=2018-02-02&toDate=2018-04-01"}},"applications":[{"id":7210565654,"awards":[{"payProfCalcDate":"2020-11-18","totalEntitlement":18765.23,"childTaxCredit":{"childCareAmount":930.98,"ctcChildAmount":730.49,"familyAmount":100.49,"babyAmount":100,"paidYTD":8976.34},"payments":[{"startDate":"2018-01-01","endDate":"2018-05-01","frequency":7,"tcType":"ICC","amount":76.34},{"startDate":"2018-06-01","endDate":"2018-10-01","frequency":7,"tcType":"ICC","amount":76.34}]}]}]}'
+  recorded_at: Mon, 10 May 2021 13:28:30 GMT
+recorded_with: VCR 6.0.0
