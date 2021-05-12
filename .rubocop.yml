@@ -108,5 +108,8 @@ RSpec/InstanceVariable:
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
+RSpec/FilePath:
+  SpecSuffixOnly: true
+
 require:
   - rubocop-rspec
