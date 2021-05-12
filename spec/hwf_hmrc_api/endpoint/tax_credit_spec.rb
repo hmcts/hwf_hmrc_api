@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe HwfHmrcApi::EndpointTaxCredit do
+RSpec.describe HwfHmrcApi::Endpoint::TaxCredit do
   subject(:endpoint) { HwfHmrcApi::Endpoint }
 
   let(:hmrc_secret) { "12345" }

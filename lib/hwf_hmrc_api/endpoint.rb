@@ -1,22 +1,23 @@
 # frozen_string_literal: true
-
-require_relative "endpoint_income"
-require_relative "endpoint_user_matching"
-require_relative "endpoint_token"
-require_relative "endpoint_tax_credit"
-require_relative "endpoint_employment"
-require_relative "endpoint_address"
+# require 'pry'
+# binding.pry
+require "hwf_hmrc_api/endpoint/income"
+require "hwf_hmrc_api/endpoint/user_matching"
+require "hwf_hmrc_api/endpoint/token"
+require "hwf_hmrc_api/endpoint/tax_credit"
+require "hwf_hmrc_api/endpoint/employment"
+require "hwf_hmrc_api/endpoint/address"
 
 module HwfHmrcApi
   module Endpoint
     class << self
       require "httparty"
-      include EndpointToken
-      include EndpointUserMatching
-      include EndpointIncome
-      include EndpointTaxCredit
-      include EndpointEmployment
-      include EndpointAddress
+      include Token
+      include UserMatching
+      include Income
+      include TaxCredit
+      include Employment
+      include Address
 
       private
 

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe HwfHmrcApi::EndpointAddress do
+RSpec.describe HwfHmrcApi::Endpoint::Address do
   subject(:endpoint) { HwfHmrcApi::Endpoint }
 
   let(:hmrc_secret) { "12345" }
