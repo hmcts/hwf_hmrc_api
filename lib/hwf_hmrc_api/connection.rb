@@ -3,10 +3,11 @@
 require "rotp"
 require_relative "authentication"
 require_relative "user_validation"
-require_relative "individual_income"
-require_relative "tax_credit"
-require_relative "employment"
-require_relative "address"
+require "hwf_hmrc_api/hwf_hmrc_api_error"
+require "hwf_hmrc_api/connection/individual_income"
+require "hwf_hmrc_api/connection/tax_credit"
+require "hwf_hmrc_api/connection/employment"
+require "hwf_hmrc_api/connection/address"
 
 # Connection methods
 # IMPORTANT: To be able to get information about user you need to call match_user method first

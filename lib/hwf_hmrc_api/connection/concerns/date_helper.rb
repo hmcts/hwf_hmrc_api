@@ -1,24 +1,7 @@
 # frozen_string_literal: true
 
 module HwfHmrcApi
-  module Employment
-    require_relative "hwf_hmrc_api_error"
-
-    # From Date format: YYYY-MM-DD
-    # To Date format: YYYY-MM-DD
-    def employments(from_date, to_date)
-      validate_match_id
-      validate_dates(from_date, to_date)
-      params = request_params(from_date, to_date)
-      HwfHmrcApi::Endpoint.employments_paye(access_token, params)
-    end
-
-    private
-
-    def validate_match_id
-      raise HwfHmrcApiError.new("Params validation: Mathching ID is missing", :standard_error) if matching_id.nil?
-    end
-
+  module DateHelper
     def validate_dates(from_date, to_date)
       raise_hwf_api_error("FromDate is not a String") unless date_type_valid?(from_date)
       raise_hwf_api_error("ToDate is not a String") unless date_type_valid?(to_date)
@@ -55,14 +38,6 @@ module HwfHmrcApi
 
     def raise_hwf_api_error(message, prefix = "Attributes validation:")
       raise HwfHmrcApiError, "#{prefix} #{message}"
-    end
-
-    def request_params(from, to)
-      {
-        matching_id: matching_id,
-        from: from,
-        to: to
-      }
     end
   end
 end

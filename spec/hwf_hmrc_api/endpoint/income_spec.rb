@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe HwfHmrcApi::EndpointIncome do
+RSpec.describe HwfHmrcApi::Endpoint::Income do
   subject(:endoint) { HwfHmrcApi::Endpoint }
 
   let(:hmrc_secret) { "12345" }

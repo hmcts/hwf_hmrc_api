@@ -108,11 +108,12 @@ RSpec.describe HwfHmrcApi::Connection do
 
       it do
         allow(HwfHmrcApi::Endpoint).to receive(:match_user).and_return({ matching_id: "id" })
+        allow(HwfHmrcApi::Endpoint).to receive(:income_paye).and_return({})
         connection.match_user(user_params)
 
         expect do
           connection.paye(from_date, to_date)
-        end.not_to raise_error(HwfHmrcApiError)
+        end.not_to raise_error
       end
     end
   end
@@ -135,11 +136,12 @@ RSpec.describe HwfHmrcApi::Connection do
 
       it do
         allow(HwfHmrcApi::Endpoint).to receive(:match_user).and_return({ matching_id: "id" })
+        allow(HwfHmrcApi::Endpoint).to receive(:child_tax_credits).and_return({})
         connection.match_user(user_params)
 
         expect do
           connection.child_tax_credits(from_date, to_date)
-        end.not_to raise_error(HwfHmrcApiError)
+        end.not_to raise_error
       end
     end
   end
@@ -162,11 +164,12 @@ RSpec.describe HwfHmrcApi::Connection do
 
       it do
         allow(HwfHmrcApi::Endpoint).to receive(:match_user).and_return({ matching_id: "id" })
+        allow(HwfHmrcApi::Endpoint).to receive(:employments_paye).and_return({})
         connection.match_user(user_params)
 
         expect do
           connection.employments(from_date, to_date)
-        end.not_to raise_error(HwfHmrcApiError)
+        end.not_to raise_error
       end
     end
   end
@@ -189,11 +192,12 @@ RSpec.describe HwfHmrcApi::Connection do
 
       it do
         allow(HwfHmrcApi::Endpoint).to receive(:match_user).and_return({ matching_id: "id" })
+        allow(HwfHmrcApi::Endpoint).to receive(:addresses).and_return({})
         connection.match_user(user_params)
 
         expect do
           connection.addresses(from_date, to_date)
-        end.not_to raise_error(HwfHmrcApiError)
+        end.not_to raise_error
       end
     end
   end
