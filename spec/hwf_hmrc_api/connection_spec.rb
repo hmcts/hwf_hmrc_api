@@ -143,4 +143,58 @@ RSpec.describe HwfHmrcApi::Connection do
       end
     end
   end
+
+  describe "Employment" do
+    let(:from_date) { "2021-01-20" }
+    let(:to_date) { "2021-02-20" }
+
+    context "missing matching_id" do
+      it do
+        expect do
+          connection.employments(from_date, to_date)
+        end.to raise_error(HwfHmrcApiError,
+                           "Params validation: Mathching ID is missing")
+      end
+    end
+
+    context "matching_id present" do
+      let(:user_params) { { first_name: "Tom", last_name: "Jerry", nino: "SN123456C", dob: "1950-05-09" } }
+
+      it do
+        allow(HwfHmrcApi::Endpoint).to receive(:match_user).and_return({ matching_id: "id" })
+        connection.match_user(user_params)
+
+        expect do
+          connection.employments(from_date, to_date)
+        end.not_to raise_error(HwfHmrcApiError)
+      end
+    end
+  end
+
+  describe "Address" do
+    let(:from_date) { "2021-01-20" }
+    let(:to_date) { "2021-02-20" }
+
+    context "missing matching_id" do
+      it do
+        expect do
+          connection.addresses(from_date, to_date)
+        end.to raise_error(HwfHmrcApiError,
+                           "Params validation: Mathching ID is missing")
+      end
+    end
+
+    context "matching_id present" do
+      let(:user_params) { { first_name: "Tom", last_name: "Jerry", nino: "SN123456C", dob: "1950-05-09" } }
+
+      it do
+        allow(HwfHmrcApi::Endpoint).to receive(:match_user).and_return({ matching_id: "id" })
+        connection.match_user(user_params)
+
+        expect do
+          connection.addresses(from_date, to_date)
+        end.not_to raise_error(HwfHmrcApiError)
+      end
+    end
+  end
 end

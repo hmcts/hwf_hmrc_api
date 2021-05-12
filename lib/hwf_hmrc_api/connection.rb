@@ -6,6 +6,7 @@ require_relative "user_validation"
 require_relative "individual_income"
 require_relative "tax_credit"
 require_relative "employment"
+require_relative "address"
 
 # Connection methods
 # IMPORTANT: To be able to get information about user you need to call match_user method first
@@ -27,7 +28,7 @@ require_relative "employment"
 # from_date format: YYYY-MM-DD
 # to_date format: YYYY-MM-DD
 #
-# Returns paye Hash: {"income"=> [...]}
+# Returns Hash: {"income"=> [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-paye-income-history_get_accordion
 #
@@ -38,7 +39,7 @@ require_relative "employment"
 # from_tax_year format: YYYY-YY
 # to_tax_year format: YYYY-YY
 #
-# Returns paye Hash: {"taxReturns" => [...]}
+# Returns Hash: {"taxReturns" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-self-assessment-tax-returns-summary_get_accordion
 #
@@ -49,7 +50,7 @@ require_relative "employment"
 # from_tax_year format: YYYY-YY
 # to_tax_year format: YYYY-YY
 #
-# Returns paye Hash: {"taxReturns" => [...]}
+# Returns Hash: {"taxReturns" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-interest-and-dividends-income-data-from-self-assessment_get_accordion
 #
@@ -60,7 +61,7 @@ require_relative "employment"
 # from_tax_year format: YYYY-YY
 # to_tax_year format: YYYY-YY
 #
-# Returns paye Hash: {"taxReturns" => [...]}
+# Returns Hash: {"taxReturns" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-selfemployments-income-data-from-self-assessment_get_accordion
 #
@@ -71,7 +72,7 @@ require_relative "employment"
 # from_tax_year format: YYYY-YY
 # to_tax_year format: YYYY-YY
 #
-# Returns paye Hash: {"taxReturns" => [...]}
+# Returns Hash: {"taxReturns" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-uk-properties-income-data-from-self-assessment_get_accordion
 #
@@ -82,7 +83,7 @@ require_relative "employment"
 # from_tax_year format: YYYY-YY
 # to_tax_year format: YYYY-YY
 #
-# Returns paye Hash: {"taxReturns" => [...]}
+# Returns Hash: {"taxReturns" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-foreign-income-data-from-self-assessment_get_accordion
 #
@@ -93,7 +94,7 @@ require_relative "employment"
 # from_date format: YYYY-MM-DD
 # to_date format: YYYY-MM-DD
 #
-# Returns paye Hash: {"applications" => [...]}
+# Returns Hash: {"applications" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-benefits-and-credits-api/1.0#_get-child-tax-credit-data_get_accordion
 #
@@ -104,20 +105,31 @@ require_relative "employment"
 # from_date format: YYYY-MM-DD
 # to_date format: YYYY-MM-DD
 #
-# Returns paye Hash: {"applications" => [...]}
+# Returns Hash: {"applications" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-benefits-and-credits-api/1.0#_get-working-tax-credit-data_get_accordion
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
-# Method name: employment(from_date, to_date)
+# Method name: employments(from_date, to_date)
 #
 # Method attributes example:
 # from_date format: YYYY-MM-DD
 # to_date format: YYYY-MM-DD
 #
-# Returns paye Hash: {"employments" => [...]}
+# Returns Hash: {"employments" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-employments-api/2.0#_get-employment-details_get_accordion
+#
+# # # # # # # # # # # # # # # # # # # # # # # #
+# Method name: addresses(from_date, to_date)
+#
+# Method attributes example:
+# from_date format: YYYY-MM-DD
+# to_date format: YYYY-MM-DD
+#
+# Returns Hash: {"residences" => [...]}
+#
+# more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-details-api/1.0#_get-address-details_get_accordion
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -127,6 +139,7 @@ module HwfHmrcApi
     include IndividualIncome
     include TaxCredit
     include Employment
+    include Address
 
     attr_reader :matching_id, :authentication
 
