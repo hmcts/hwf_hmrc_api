@@ -4,6 +4,7 @@ require_relative "endpoint_income"
 require_relative "endpoint_user_matching"
 require_relative "endpoint_token"
 require_relative "endpoint_tax_credit"
+require_relative "endpoint_employment"
 
 module HwfHmrcApi
   module Endpoint
@@ -13,6 +14,7 @@ module HwfHmrcApi
       include EndpointUserMatching
       include EndpointIncome
       include EndpointTaxCredit
+      include EndpointEmployment
 
       private
 

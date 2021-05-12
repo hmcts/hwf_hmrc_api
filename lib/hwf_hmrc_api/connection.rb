@@ -5,6 +5,7 @@ require_relative "authentication"
 require_relative "user_validation"
 require_relative "individual_income"
 require_relative "tax_credit"
+require_relative "employment"
 
 # Connection methods
 # IMPORTANT: To be able to get information about user you need to call match_user method first
@@ -108,12 +109,24 @@ require_relative "tax_credit"
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-benefits-and-credits-api/1.0#_get-working-tax-credit-data_get_accordion
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
+# Method name: employment(from_date, to_date)
+#
+# Method attributes example:
+# from_date format: YYYY-MM-DD
+# to_date format: YYYY-MM-DD
+#
+# Returns paye Hash: {"employments" => [...]}
+#
+# more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-employments-api/2.0#_get-employment-details_get_accordion
+#
+# # # # # # # # # # # # # # # # # # # # # # # #
 
 module HwfHmrcApi
   class Connection
     include UserValidation
     include IndividualIncome
     include TaxCredit
+    include Employment
 
     attr_reader :matching_id, :authentication
 

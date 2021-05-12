@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://test-api.service.hmrc.gov.uk/individuals/employments/paye?fromDate=2019-01-01&matchId=0f44104e-7985-41f5-9660-ad9d02cffdb6&toDate=2019-03-31
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.hmrc.2.0+json
+      Authorization:
+      - Bearer 58f7c026b99895d007e577dbcd481713
+      Correlationid:
+      - 2231cb20-9530-0139-d8c4-1e00e23ae066
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Cache-Control:
+      - no-cache,no-store,max-age=0
+      X-Envoy-Upstream-Service-Time:
+      - '67'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Content-Security-Policy:
+      - default-src 'self'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Content-Length:
+      - '433'
+      Date:
+      - Wed, 12 May 2021 09:12:44 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"_links":{"self":{"href":"/individuals/employments/paye?matchId=0f44104e-7985-41f5-9660-ad9d02cffdb6&fromDate=2019-01-01&toDate=2019-03-31"}},"employments":[{"startDate":"2019-01-01","endDate":"2019-03-31","employer":{"payeReference":"247/ZT65A","name":"HMCTS-C4
+        Industries Limited","address":{"line1":"Unit 23","line2":"Utilitarian Industrial
+        Park","line3":"Utilitown","line4":"County Durham","line5":"UK","postcode":"DH4
+        4YY"}}}]}'
+  recorded_at: Wed, 12 May 2021 09:12:44 GMT
+recorded_with: VCR 6.0.0
