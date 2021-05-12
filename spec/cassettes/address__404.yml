@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://test-api.service.hmrc.gov.uk/individuals/details/addresses?fromDate=2019-04-02&matchId=0f44104e-7985-41f5-9660-ad9d02cffdb63&toDate=2019-04-28
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.hmrc.2.0+json
+      Authorization:
+      - Bearer 58f7c026b99895d007e577dbcd481713
+      Correlationid:
+      - ee880ba0-952e-0139-d8c2-1e00e23ae066
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Type:
+      - application/json
+      Cache-Control:
+      - no-cache
+      X-Envoy-Upstream-Service-Time:
+      - '68'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Content-Security-Policy:
+      - default-src 'self'
+      Content-Length:
+      - '62'
+      Date:
+      - Wed, 12 May 2021 09:04:07 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"code":"NOT_FOUND","message":"The resource can not be found"}'
+  recorded_at: Wed, 12 May 2021 09:04:08 GMT
+recorded_with: VCR 6.0.0

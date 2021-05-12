@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://test-api.service.hmrc.gov.uk/individuals/details/addresses?fromDate=&matchId=0f44104e-7985-41f5-9660-ad9d02cffdb6&toDate=2019-04-28
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.hmrc.2.0+json
+      Authorization:
+      - Bearer 58f7c026b99895d007e577dbcd481713
+      Correlationid:
+      - e82ca5f0-952e-0139-d8c1-1e00e23ae066
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Content-Type:
+      - application/json
+      Cache-Control:
+      - no-cache,no-store,max-age=0
+      X-Envoy-Upstream-Service-Time:
+      - '14'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Content-Security-Policy:
+      - default-src 'self'
+      Content-Length:
+      - '68'
+      Date:
+      - Wed, 12 May 2021 09:03:57 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"code":"INVALID_REQUEST","message":"fromDate: invalid date format"}'
+  recorded_at: Wed, 12 May 2021 09:03:57 GMT
+recorded_with: VCR 6.0.0
