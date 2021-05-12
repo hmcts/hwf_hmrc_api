@@ -54,7 +54,7 @@ RSpec.describe HwfHmrcApi do
         it "allows to pass auth token and expires_in time" do
           expect do
             described_class.new(connection_attributes.merge(access_token: "secrettoken", expires_in: expires_in))
-          end.not_to raise_error(HwfHmrcApiError)
+          end.not_to raise_error
         end
 
         context "expires in validation" do
@@ -62,7 +62,7 @@ RSpec.describe HwfHmrcApi do
             expires_in = "2030-04-27 12:21:43"
             expect do
               described_class.new(connection_attributes.merge(access_token: "secrettoken", expires_in: expires_in))
-            end.not_to raise_error(HwfHmrcApiError)
+            end.not_to raise_error
           end
 
           it "expires_in as valid string date in past" do
@@ -89,7 +89,7 @@ RSpec.describe HwfHmrcApi do
           it "expires_in as Time now" do
             expect do
               described_class.new(connection_attributes.merge(access_token: "secrettoken", expires_in: Time.now + 100))
-            end.not_to raise_error(HwfHmrcApiError)
+            end.not_to raise_error
           end
 
           it "expires_in as Time in past" do
@@ -110,7 +110,7 @@ RSpec.describe HwfHmrcApi do
             expect do
               described_class.new(connection_attributes.merge(access_token: "secrettoken",
                                                               expires_in: Time.now.to_i + 100))
-            end.not_to raise_error(HwfHmrcApiError)
+            end.not_to raise_error
           end
 
           it "expires_in is float number in past" do
@@ -124,7 +124,7 @@ RSpec.describe HwfHmrcApi do
             expect do
               described_class.new(connection_attributes.merge(access_token: "secrettoken",
                                                               expires_in: Time.now.to_f + 100))
-            end.not_to raise_error(HwfHmrcApiError)
+            end.not_to raise_error
           end
         end
 
