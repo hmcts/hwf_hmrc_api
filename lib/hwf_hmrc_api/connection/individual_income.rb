@@ -2,8 +2,6 @@
 
 module HwfHmrcApi
   module IndividualIncome
-    require_relative "hwf_hmrc_api_error"
-
     # From Date format: YYYY-MM-DD
     # To Date format: YYYY-MM-DD
     def paye(from_date, to_date)

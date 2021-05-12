@@ -1,16 +1,23 @@
 # frozen_string_literal: true
 
 module HwfHmrcApi
-  module Address
-    require_relative "hwf_hmrc_api_error"
-
+  module TaxCredit
     # From Date format: YYYY-MM-DD
     # To Date format: YYYY-MM-DD
-    def addresses(from_date, to_date)
+    def child_tax_credits(from_date, to_date)
       validate_match_id
       validate_dates(from_date, to_date)
       params = request_params(from_date, to_date)
-      HwfHmrcApi::Endpoint.addresses(access_token, params)
+      HwfHmrcApi::Endpoint.child_tax_credits(access_token, params)
+    end
+
+    # From Date format: YYYY-MM-DD
+    # To Date format: YYYY-MM-DD
+    def working_tax_credits(from_date, to_date)
+      validate_match_id
+      validate_dates(from_date, to_date)
+      params = request_params(from_date, to_date)
+      HwfHmrcApi::Endpoint.working_tax_credits(access_token, params)
     end
 
     private

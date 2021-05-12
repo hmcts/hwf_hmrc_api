@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 module HwfHmrcApi
-  module Employment
-    require_relative "hwf_hmrc_api_error"
-
+  module Address
     # From Date format: YYYY-MM-DD
     # To Date format: YYYY-MM-DD
-    def employments(from_date, to_date)
+    def addresses(from_date, to_date)
       validate_match_id
       validate_dates(from_date, to_date)
       params = request_params(from_date, to_date)
-      HwfHmrcApi::Endpoint.employments_paye(access_token, params)
+      HwfHmrcApi::Endpoint.addresses(access_token, params)
     end
 
     private

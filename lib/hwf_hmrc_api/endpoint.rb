@@ -1,6 +1,5 @@
 # frozen_string_literal: true
-# require 'pry'
-# binding.pry
+
 require "hwf_hmrc_api/endpoint/income"
 require "hwf_hmrc_api/endpoint/user_matching"
 require "hwf_hmrc_api/endpoint/token"

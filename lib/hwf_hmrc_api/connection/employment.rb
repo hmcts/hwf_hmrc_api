@@ -1,25 +1,14 @@
 # frozen_string_literal: true
 
 module HwfHmrcApi
-  module TaxCredit
-    require_relative "hwf_hmrc_api_error"
-
+  module Employment
     # From Date format: YYYY-MM-DD
     # To Date format: YYYY-MM-DD
-    def child_tax_credits(from_date, to_date)
+    def employments(from_date, to_date)
       validate_match_id
       validate_dates(from_date, to_date)
       params = request_params(from_date, to_date)
-      HwfHmrcApi::Endpoint.child_tax_credits(access_token, params)
-    end
-
-    # From Date format: YYYY-MM-DD
-    # To Date format: YYYY-MM-DD
-    def working_tax_credits(from_date, to_date)
-      validate_match_id
-      validate_dates(from_date, to_date)
-      params = request_params(from_date, to_date)
-      HwfHmrcApi::Endpoint.working_tax_credits(access_token, params)
+      HwfHmrcApi::Endpoint.employments_paye(access_token, params)
     end
 
     private
