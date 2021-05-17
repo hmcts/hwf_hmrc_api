@@ -42,8 +42,7 @@ module HwfHmrcApi
       end
 
       def api_url
-        # "https://api.service.hmrc.gov.uk"
-        "https://test-api.service.hmrc.gov.uk"
+        ENV["HMRC_API_URL"]
       end
     end
   end
