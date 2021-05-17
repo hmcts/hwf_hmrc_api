@@ -27,7 +27,10 @@ To be able to use HMRC API, you will need three credentials. HMRC_SECRET, TOTP t
 You can generate HMRC_SECRET in your account on https://developer.service.hmrc.gov.uk/.
 To receive the TOTP secret, you need to speak with the team from HMRC.
 
-### How to use
+### API URL
+Is loaded from HMRC_API_URL env variable.
+
+## How to use
 
 #### When you don't have access_token already
 ```ruby

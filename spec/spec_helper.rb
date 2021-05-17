@@ -20,6 +20,7 @@ RSpec.configure do |config|
   WebMock.disable_net_connect!(allow_localhost: true)
 
   Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
+  ENV["HMRC_API_URL"] = "https://test-api.service.hmrc.gov.uk"
 end
 
 VCR.configure do |c|
