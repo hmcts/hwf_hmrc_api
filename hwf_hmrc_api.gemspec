@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = "Basic logic to communicate and parse data to/from HMRC API."
   spec.homepage      = "https://github.com/hmcts/hwf_hmrc_api"
   spec.license       = "MIT"
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.7.4")
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/ministryofjustice/glimr-api-client"
