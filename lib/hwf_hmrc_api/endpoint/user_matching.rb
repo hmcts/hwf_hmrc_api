@@ -6,7 +6,7 @@ module HwfHmrcApi
       def match_user(access_token, user_info)
         @response = HTTParty.post("#{api_url}/individuals/matching",
                                   headers: { "Content-Type": "application/json",
-                                             "correlationId" => UUID.new.generate,
+                                             "correlationId" => SecureRandom.uuid,
                                              "Accept" => "application/vnd.hmrc.2.0+json",
                                              "Authorization" => "Bearer #{access_token}" },
                                   body: user_info.to_json)

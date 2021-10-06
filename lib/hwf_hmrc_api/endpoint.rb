@@ -25,7 +25,7 @@ module HwfHmrcApi
           "Content-Type": "application/json",
           "Accept" => "application/vnd.hmrc.#{version}+json",
           "Authorization" => "Bearer #{access_token}",
-          "correlationId" => UUID.new.generate
+          "correlationId" => SecureRandom.uuid
         }
       end
 
