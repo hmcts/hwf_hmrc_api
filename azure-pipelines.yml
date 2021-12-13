@@ -16,7 +16,7 @@ jobs:
       vmImage: ubuntu-latest
 
     variables:
-      rubyVersion: '= 2.7.4'
+      rubyVersion: '= 2.7.5'
       bundlerVersion: '2.2.15'
 
     steps:
