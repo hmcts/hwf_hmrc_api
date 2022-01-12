@@ -10,6 +10,12 @@ RSpec.describe HwfHmrcApi::Endpoint::TaxCredit do
   let(:client_id) { "6789" }
   let(:access_token) { "6f9d12d8c28da016ad6d26296c900087" }
   let(:matching_id) { "198247ac-7325-4233-ae65-9bd548658310" }
+  let(:correlation_id) { "c93b5167-71d7-433a-b06f-08dc387203e4" }
+
+  let(:header_info) do
+    { access_token: access_token,
+      correlation_id: correlation_id }
+  end
 
   describe "API calls" do
     context "Child Tax credit" do
@@ -17,7 +23,7 @@ RSpec.describe HwfHmrcApi::Endpoint::TaxCredit do
         VCR.use_cassette "child_tax_credit_success" do
           request_params = { matching_id: matching_id, from: "2018-02-02",
                              to: "2018-04-01" }
-          response = endpoint.child_tax_credits(access_token, request_params)
+          response = endpoint.child_tax_credits(header_info, request_params)
           expect(response[0]["awards"][0]).to have_key("childTaxCredit")
         end
       end
@@ -26,7 +32,7 @@ RSpec.describe HwfHmrcApi::Endpoint::TaxCredit do
         VCR.use_cassette "child_tax_credit_success_empty" do
           request_params = { matching_id: matching_id, from: "2019-04-02",
                              to: "2019-04-28" }
-          response = endpoint.child_tax_credits(access_token, request_params)
+          response = endpoint.child_tax_credits(header_info, request_params)
           expect(response).to eq([])
         end
       end
@@ -36,7 +42,7 @@ RSpec.describe HwfHmrcApi::Endpoint::TaxCredit do
           request_params = { matching_id: matching_id, from: "",
                              to: "2019-04-28" }
           expect do
-            endpoint.child_tax_credits(access_token, request_params)
+            endpoint.child_tax_credits(header_info, request_params)
           end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - fromDate: invalid date format")
         end
       end
@@ -46,7 +52,7 @@ RSpec.describe HwfHmrcApi::Endpoint::TaxCredit do
           request_params = { matching_id: "#{matching_id}3", from: "2019-04-02",
                              to: "2019-04-28" }
           expect do
-            endpoint.child_tax_credits(access_token, request_params)
+            endpoint.child_tax_credits(header_info, request_params)
           end.to raise_error(HwfHmrcApiError, "API: NOT_FOUND - The resource can not be found")
         end
       end
@@ -57,7 +63,7 @@ RSpec.describe HwfHmrcApi::Endpoint::TaxCredit do
         VCR.use_cassette "work_tax_credit_success" do
           request_params = { matching_id: matching_id, from: "2019-02-02",
                              to: "2019-04-01" }
-          response = endpoint.working_tax_credits(access_token, request_params)
+          response = endpoint.working_tax_credits(header_info, request_params)
           expect(response[0]["awards"][0]).to have_key("workingTaxCredit")
         end
       end
@@ -66,7 +72,7 @@ RSpec.describe HwfHmrcApi::Endpoint::TaxCredit do
         VCR.use_cassette "work_tax_credit_success_empty" do
           request_params = { matching_id: matching_id, from: "2019-04-02",
                              to: "2019-04-28" }
-          response = endpoint.working_tax_credits(access_token, request_params)
+          response = endpoint.working_tax_credits(header_info, request_params)
           expect(response).to eq([])
         end
       end
@@ -76,7 +82,7 @@ RSpec.describe HwfHmrcApi::Endpoint::TaxCredit do
           request_params = { matching_id: matching_id, from: "",
                              to: "2019-04-28" }
           expect do
-            endpoint.working_tax_credits(access_token, request_params)
+            endpoint.working_tax_credits(header_info, request_params)
           end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - fromDate: invalid date format")
         end
       end
@@ -86,7 +92,7 @@ RSpec.describe HwfHmrcApi::Endpoint::TaxCredit do
           request_params = { matching_id: "#{matching_id}3", from: "2019-04-02",
                              to: "2019-04-28" }
           expect do
-            endpoint.working_tax_credits(access_token, request_params)
+            endpoint.working_tax_credits(header_info, request_params)
           end.to raise_error(HwfHmrcApiError, "API: NOT_FOUND - The resource can not be found")
         end
       end

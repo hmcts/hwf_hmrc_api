@@ -148,14 +148,19 @@ module HwfHmrcApi
       @authentication = HwfHmrcApi::Authentication.new(connection_attributes)
     end
 
-    def match_user(user_params)
+    def match_user(user_params, correlation_id)
       validate_user_params(user_params)
       user_info = map_user_params(user_params)
-      response = HwfHmrcApi::Endpoint.match_user(@authentication.access_token, user_info)
+      response = HwfHmrcApi::Endpoint.match_user(header_info(correlation_id), user_info)
       @matching_id = response[:matching_id]
     rescue HwfHmrcApiTokenError
       @authentication.get_token
-      match_user(user_params)
+      match_user(user_params, correlation_id)
+    end
+
+    def header_info(correlation_id)
+      { access_token: access_token,
+        correlation_id: correlation_id }
     end
 
     def access_token

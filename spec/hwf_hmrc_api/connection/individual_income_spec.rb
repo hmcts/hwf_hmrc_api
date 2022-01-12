@@ -18,47 +18,54 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
     }
   end
 
+  let(:correlation_id) { "b77609d0-8a2a-0139-cebe-1e00e23ae066" }
+
+  let(:header_info) do
+    { access_token: access_token,
+      correlation_id: correlation_id }
+  end
+
   context "missing matching_id" do
     before { allow(dummy_class).to receive(:matching_id).and_return nil }
 
     it "Paye" do
       expect do
-        individual_income.paye(from_date, to_date)
+        individual_income.paye(from_date, to_date, correlation_id)
       end.to raise_error(HwfHmrcApiError,
                          "Params validation: Mathching ID is missing")
     end
 
     it "Income summary" do
       expect do
-        individual_income.sa_summary("2018-19", "2019-20")
+        individual_income.sa_summary("2018-19", "2019-20", correlation_id)
       end.to raise_error(HwfHmrcApiError,
                          "Params validation: Mathching ID is missing")
     end
 
     it "Income interest and dividends" do
       expect do
-        individual_income.sa_interest_dividends("2018-19", "2019-20")
+        individual_income.sa_interest_dividends("2018-19", "2019-20", correlation_id)
       end.to raise_error(HwfHmrcApiError,
                          "Params validation: Mathching ID is missing")
     end
 
     it "Income self employements" do
       expect do
-        individual_income.sa_self_employments("2018-19", "2019-20")
+        individual_income.sa_self_employments("2018-19", "2019-20", correlation_id)
       end.to raise_error(HwfHmrcApiError,
                          "Params validation: Mathching ID is missing")
     end
 
     it "Income uk properties" do
       expect do
-        individual_income.sa_uk_properties("2018-19", "2019-20")
+        individual_income.sa_uk_properties("2018-19", "2019-20", correlation_id)
       end.to raise_error(HwfHmrcApiError,
                          "Params validation: Mathching ID is missing")
     end
 
     it "Income foreign" do
       expect do
-        individual_income.sa_foreign("2018-19", "2019-20")
+        individual_income.sa_foreign("2018-19", "2019-20", correlation_id)
       end.to raise_error(HwfHmrcApiError,
                          "Params validation: Mathching ID is missing")
     end
@@ -68,6 +75,7 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
     before do
       allow(dummy_class).to receive(:matching_id).and_return matching_id
       allow(dummy_class).to receive(:access_token).and_return access_token
+      allow(dummy_class).to receive(:header_info).and_return header_info
     end
 
     describe "Paye" do
@@ -81,8 +89,8 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
       context "call endpoint" do
         it do
           allow(HwfHmrcApi::Endpoint).to receive(:income_paye).and_return({})
-          individual_income.paye(from_date, to_date)
-          expect(HwfHmrcApi::Endpoint).to have_received(:income_paye).with(access_token, paye_request_params)
+          individual_income.paye(from_date, to_date, correlation_id)
+          expect(HwfHmrcApi::Endpoint).to have_received(:income_paye).with(header_info, paye_request_params)
         end
       end
 
@@ -98,8 +106,8 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
       context "call summary endpoint" do
         it do
           allow(HwfHmrcApi::Endpoint).to receive(:income_summary).and_return({})
-          individual_income.sa_summary(from_tax_year, to_tax_year)
-          expect(HwfHmrcApi::Endpoint).to have_received(:income_summary).with(access_token, tax_year_request_params)
+          individual_income.sa_summary(from_tax_year, to_tax_year, correlation_id)
+          expect(HwfHmrcApi::Endpoint).to have_received(:income_summary).with(header_info, tax_year_request_params)
         end
       end
     end
@@ -112,8 +120,8 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
 
       it "call income_interest_dividends" do
         allow(HwfHmrcApi::Endpoint).to receive(:income_interest_dividends).and_return({})
-        individual_income.sa_interest_dividends(from_tax_year, to_tax_year)
-        expect(HwfHmrcApi::Endpoint).to have_received(:income_interest_dividends).with(access_token,
+        individual_income.sa_interest_dividends(from_tax_year, to_tax_year, correlation_id)
+        expect(HwfHmrcApi::Endpoint).to have_received(:income_interest_dividends).with(header_info,
                                                                                        tax_year_request_params)
       end
     end
@@ -126,8 +134,8 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
 
       it "call income_interest_dividends" do
         allow(HwfHmrcApi::Endpoint).to receive(:income_self_employments).and_return({})
-        individual_income.sa_self_employments(from_tax_year, to_tax_year)
-        expect(HwfHmrcApi::Endpoint).to have_received(:income_self_employments).with(access_token,
+        individual_income.sa_self_employments(from_tax_year, to_tax_year, correlation_id)
+        expect(HwfHmrcApi::Endpoint).to have_received(:income_self_employments).with(header_info,
                                                                                      tax_year_request_params)
       end
     end
@@ -140,8 +148,8 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
 
       it "call income_interest_dividends" do
         allow(HwfHmrcApi::Endpoint).to receive(:income_uk_properties).and_return({})
-        individual_income.sa_uk_properties(from_tax_year, to_tax_year)
-        expect(HwfHmrcApi::Endpoint).to have_received(:income_uk_properties).with(access_token,
+        individual_income.sa_uk_properties(from_tax_year, to_tax_year, correlation_id)
+        expect(HwfHmrcApi::Endpoint).to have_received(:income_uk_properties).with(header_info,
                                                                                   tax_year_request_params)
       end
     end
@@ -154,8 +162,8 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
 
       it "call income_foreign" do
         allow(HwfHmrcApi::Endpoint).to receive(:income_foreign).and_return({})
-        individual_income.sa_foreign(from_tax_year, to_tax_year)
-        expect(HwfHmrcApi::Endpoint).to have_received(:income_foreign).with(access_token,
+        individual_income.sa_foreign(from_tax_year, to_tax_year, correlation_id)
+        expect(HwfHmrcApi::Endpoint).to have_received(:income_foreign).with(header_info,
                                                                             tax_year_request_params)
       end
     end

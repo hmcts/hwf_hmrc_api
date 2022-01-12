@@ -3,9 +3,9 @@
 module HwfHmrcApi
   module Endpoint
     module Address
-      def addresses(access_token, attributes)
+      def addresses(header_info, attributes)
         @response = HTTParty.get("#{api_url}/individuals/details/addresses",
-                                 headers: request_headers(access_token, "1.0"),
+                                 headers: request_headers(header_info, "1.0"),
                                  query: {
                                    matchId: attributes[:matching_id],
                                    fromDate: attributes[:from],

@@ -3,13 +3,11 @@
 module HwfHmrcApi
   module Endpoint
     module UserMatching
-      def match_user(access_token, user_info)
+      def match_user(header_info, user_info)
         @response = HTTParty.post("#{api_url}/individuals/matching",
-                                  headers: { "Content-Type": "application/json",
-                                             "correlationId" => SecureRandom.uuid,
-                                             "Accept" => "application/vnd.hmrc.2.0+json",
-                                             "Authorization" => "Bearer #{access_token}" },
+                                  headers: request_headers(header_info, "2.0"),
                                   body: user_info.to_json)
+
         parse_matching_user_response
       end
 

@@ -9,6 +9,12 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
   let(:totp_secret) { "base32secret3232" }
   let(:client_id) { "6789" }
   let(:access_token) { "8c656cbd605d4887c375eedffc5529b4" }
+  let(:correlation_id) { "c93b5167-71d7-433a-b06f-08dc387203e4" }
+
+  let(:header_info) do
+    { access_token: access_token,
+      correlation_id: correlation_id }
+  end
 
   describe "API calls" do
     context "income paye" do
@@ -16,7 +22,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
         VCR.use_cassette "income_paye_success" do
           request_params = { matching_id: "e5a25de7-9d26-4300-9986-6ea600d400e5", from: "2019-04-01",
                              to: "2019-04-28" }
-          response = endoint.income_paye(access_token, request_params)
+          response = endoint.income_paye(header_info, request_params)
           expect(response["income"][0]).to have_key("totalTaxToDate")
         end
       end
@@ -25,7 +31,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
         VCR.use_cassette "income_paye_success_empty" do
           request_params = { matching_id: "e5a25de7-9d26-4300-9986-6ea600d400e5", from: "2019-04-02",
                              to: "2019-04-28" }
-          response = endoint.income_paye(access_token, request_params)
+          response = endoint.income_paye(header_info, request_params)
           expect(response["income"]).to eq([])
         end
       end
@@ -35,7 +41,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
           request_params = { matching_id: "e5a25de7-9d26-4300-9986-6ea600d400e5", from: "",
                              to: "2019-04-28" }
           expect do
-            endoint.income_paye(access_token, request_params)
+            endoint.income_paye(header_info, request_params)
           end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - fromDate: invalid date format")
         end
       end
@@ -45,7 +51,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
           request_params = { matching_id: "e5a25de7-9d26-4300-9986-6ea600d400e4", from: "2019-04-02",
                              to: "2019-04-28" }
           expect do
-            endoint.income_paye(access_token, request_params)
+            endoint.income_paye(header_info, request_params)
           end.to raise_error(HwfHmrcApiError, "API: NOT_FOUND - The resource can not be found")
         end
       end
@@ -56,7 +62,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
         VCR.use_cassette "income_summary_success" do
           request_params = { matching_id: "0228b1ec-26e6-4f09-b26b-ea80217d5209", from: "2018-19",
                              to: "2019-20" }
-          response = endoint.income_summary(access_token, request_params)
+          response = endoint.income_summary(header_info, request_params)
           expect(response["taxReturns"][0]).to have_key("taxYear")
         end
       end
@@ -65,7 +71,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
         VCR.use_cassette "income_summary_success_empty" do
           request_params = { matching_id: "b1a3ded8-50de-43b3-aa94-8c111e4df569", from: "2019-20",
                              to: "2020-21" }
-          response = endoint.income_summary(access_token, request_params)
+          response = endoint.income_summary(header_info, request_params)
           expect(response["taxReturns"]).to eq([])
         end
       end
@@ -76,7 +82,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
             request_params = { matching_id: "e5a25de7-9d26-4300-9986-6ea600d400e5", from: "2019-20",
                                to: "2019-20" }
             expect do
-              endoint.income_summary(access_token, request_params)
+              endoint.income_summary(header_info, request_params)
             end.to raise_error(HwfHmrcApiError, "API: INTERNAL_SERVER_ERROR - Something went wrong.")
           end
         end
@@ -86,7 +92,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
             request_params = { matching_id: "e5a25de7-9d26-4300-9986-6ea600d400e5", from: "2019-2000",
                                to: "2019-20" }
             expect do
-              endoint.income_summary(access_token, request_params)
+              endoint.income_summary(header_info, request_params)
             end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - fromTaxYear: invalid tax year format")
           end
         end
@@ -96,7 +102,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
             request_params = { matching_id: "e5a25de7-9d26-4300-9986-6ea600d400e6", from: "2019-20",
                                to: "2019-20" }
             expect do
-              endoint.income_summary(access_token, request_params)
+              endoint.income_summary(header_info, request_params)
             end.to raise_error(HwfHmrcApiError, "API: NOT_FOUND - The resource can not be found")
           end
         end
@@ -108,7 +114,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
         VCR.use_cassette "income_interest_dividends_success" do
           request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f9", from: "2018-19",
                              to: "2019-20" }
-          response = endoint.income_interest_dividends(access_token, request_params)
+          response = endoint.income_interest_dividends(header_info, request_params)
           expect(response["taxReturns"][0]).to have_key("interestsAndDividends")
         end
       end
@@ -117,7 +123,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
         VCR.use_cassette "income_interest_dividends_success_empty" do
           request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f9", from: "2019-20",
                              to: "2020-21" }
-          response = endoint.income_interest_dividends(access_token, request_params)
+          response = endoint.income_interest_dividends(header_info, request_params)
           expect(response["taxReturns"]).to eq([])
         end
       end
@@ -128,7 +134,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
             request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f9", from: "2019-2000",
                                to: "2019-20" }
             expect do
-              endoint.income_interest_dividends(access_token, request_params)
+              endoint.income_interest_dividends(header_info, request_params)
             end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - fromTaxYear: invalid tax year format")
           end
         end
@@ -138,7 +144,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
             request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f", from: "2019-20",
                                to: "2019-20" }
             expect do
-              endoint.income_interest_dividends(access_token, request_params)
+              endoint.income_interest_dividends(header_info, request_params)
             end.to raise_error(HwfHmrcApiError, "API: NOT_FOUND - The resource can not be found")
           end
         end
@@ -150,7 +156,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
         VCR.use_cassette "income_self_employments_success" do
           request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f9", from: "2018-19",
                              to: "2019-20" }
-          response = endoint.income_self_employments(access_token, request_params)
+          response = endoint.income_self_employments(header_info, request_params)
           expect(response["taxReturns"][0]).to have_key("selfEmployments")
         end
       end
@@ -159,7 +165,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
         VCR.use_cassette "income_self_employments_success_empty" do
           request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f9", from: "2019-20",
                              to: "2020-21" }
-          response = endoint.income_self_employments(access_token, request_params)
+          response = endoint.income_self_employments(header_info, request_params)
           expect(response["taxReturns"]).to eq([])
         end
       end
@@ -170,7 +176,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
             request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f9", from: "2019-2000",
                                to: "2019-20" }
             expect do
-              endoint.income_self_employments(access_token, request_params)
+              endoint.income_self_employments(header_info, request_params)
             end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - fromTaxYear: invalid tax year format")
           end
         end
@@ -180,7 +186,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
             request_params = { matching_id: "b5a6e337-87c3-44ac-820d-22d8abc6a1f", from: "2019-20",
                                to: "2019-20" }
             expect do
-              endoint.income_self_employments(access_token, request_params)
+              endoint.income_self_employments(header_info, request_params)
             end.to raise_error(HwfHmrcApiError, "API: NOT_FOUND - The resource can not be found")
           end
         end
@@ -192,7 +198,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
         VCR.use_cassette "income_uk_properties_success" do
           request_params = { matching_id: "ad4a751f-356e-4867-9eef-df722d17fca2", from: "2018-19",
                              to: "2019-20" }
-          response = endoint.income_uk_properties(access_token, request_params)
+          response = endoint.income_uk_properties(header_info, request_params)
           expect(response["taxReturns"][0]).to have_key("ukProperties")
         end
       end
@@ -201,7 +207,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
         VCR.use_cassette "income_uk_properties_success_empty" do
           request_params = { matching_id: "ad4a751f-356e-4867-9eef-df722d17fca2", from: "2019-20",
                              to: "2020-21" }
-          response = endoint.income_uk_properties(access_token, request_params)
+          response = endoint.income_uk_properties(header_info, request_params)
           expect(response["taxReturns"]).to eq([])
         end
       end
@@ -212,7 +218,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
             request_params = { matching_id: "ad4a751f-356e-4867-9eef-df722d17fca2", from: "2019-2000",
                                to: "2019-20" }
             expect do
-              endoint.income_uk_properties(access_token, request_params)
+              endoint.income_uk_properties(header_info, request_params)
             end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - fromTaxYear: invalid tax year format")
           end
         end
@@ -222,7 +228,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
             request_params = { matching_id: "ad4a751f-356e-4867-9eef-df722d17fca", from: "2019-20",
                                to: "2019-20" }
             expect do
-              endoint.income_uk_properties(access_token, request_params)
+              endoint.income_uk_properties(header_info, request_params)
             end.to raise_error(HwfHmrcApiError, "API: NOT_FOUND - The resource can not be found")
           end
         end
@@ -234,7 +240,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
         VCR.use_cassette "income_foreign_success" do
           request_params = { matching_id: "ad4a751f-356e-4867-9eef-df722d17fca2", from: "2018-19",
                              to: "2019-20" }
-          response = endoint.income_foreign(access_token, request_params)
+          response = endoint.income_foreign(header_info, request_params)
           expect(response["taxReturns"][0]).to have_key("foreign")
         end
       end
@@ -243,7 +249,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
         VCR.use_cassette "income_foreign_success_empty" do
           request_params = { matching_id: "ad4a751f-356e-4867-9eef-df722d17fca2", from: "2019-20",
                              to: "2020-21" }
-          response = endoint.income_foreign(access_token, request_params)
+          response = endoint.income_foreign(header_info, request_params)
           expect(response["taxReturns"]).to eq([])
         end
       end
@@ -254,7 +260,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
             request_params = { matching_id: "ad4a751f-356e-4867-9eef-df722d17fca2", from: "2019-2000",
                                to: "2019-20" }
             expect do
-              endoint.income_foreign(access_token, request_params)
+              endoint.income_foreign(header_info, request_params)
             end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - fromTaxYear: invalid tax year format")
           end
         end
@@ -264,7 +270,7 @@ RSpec.describe HwfHmrcApi::Endpoint::Income do
             request_params = { matching_id: "ad4a751f-356e-4867-9eef-df722d17fca", from: "2019-20",
                                to: "2019-20" }
             expect do
-              endoint.income_foreign(access_token, request_params)
+              endoint.income_foreign(header_info, request_params)
             end.to raise_error(HwfHmrcApiError, "API: NOT_FOUND - The resource can not be found")
           end
         end

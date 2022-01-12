@@ -19,19 +19,25 @@ RSpec.describe HwfHmrcApi::TaxCredit do
     }
   end
 
+  let(:correlation_id) { "b77609d0-8a2a-0139-cebe-1e00e23ae066" }
+  let(:header_info) do
+    { access_token: access_token,
+      correlation_id: correlation_id }
+  end
+
   context "missing matching_id" do
     before { allow(dummy_class).to receive(:matching_id).and_return nil }
 
     it "Child" do
       expect do
-        tax_credit.child_tax_credits(from_date, to_date)
+        tax_credit.child_tax_credits(from_date, to_date, correlation_id)
       end.to raise_error(HwfHmrcApiError,
                          "Params validation: Mathching ID is missing")
     end
 
     it "Work" do
       expect do
-        tax_credit.working_tax_credits("2018-19", "2019-20")
+        tax_credit.working_tax_credits("2018-19", "2019-20", correlation_id)
       end.to raise_error(HwfHmrcApiError,
                          "Params validation: Mathching ID is missing")
     end
@@ -41,6 +47,7 @@ RSpec.describe HwfHmrcApi::TaxCredit do
     before do
       allow(dummy_class).to receive(:matching_id).and_return matching_id
       allow(dummy_class).to receive(:access_token).and_return access_token
+      allow(dummy_class).to receive(:header_info).and_return header_info
     end
 
     describe "Child" do
@@ -49,8 +56,8 @@ RSpec.describe HwfHmrcApi::TaxCredit do
       context "call endpoint" do
         it do
           allow(HwfHmrcApi::Endpoint).to receive(:child_tax_credits).and_return({})
-          tax_credit.child_tax_credits(from_date, to_date)
-          expect(HwfHmrcApi::Endpoint).to have_received(:child_tax_credits).with(access_token, tax_request_params)
+          tax_credit.child_tax_credits(from_date, to_date, correlation_id)
+          expect(HwfHmrcApi::Endpoint).to have_received(:child_tax_credits).with(header_info, tax_request_params)
         end
       end
     end
@@ -61,8 +68,8 @@ RSpec.describe HwfHmrcApi::TaxCredit do
       context "call endpoint" do
         it do
           allow(HwfHmrcApi::Endpoint).to receive(:working_tax_credits).and_return({})
-          tax_credit.working_tax_credits(from_date, to_date)
-          expect(HwfHmrcApi::Endpoint).to have_received(:working_tax_credits).with(access_token, tax_request_params)
+          tax_credit.working_tax_credits(from_date, to_date, correlation_id)
+          expect(HwfHmrcApi::Endpoint).to have_received(:working_tax_credits).with(header_info, tax_request_params)
         end
       end
     end

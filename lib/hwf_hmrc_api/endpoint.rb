@@ -20,12 +20,14 @@ module HwfHmrcApi
 
       private
 
-      def request_headers(access_token, version = "2.0")
+      def request_headers(header_info, version = "2.0")
+        access_token = header_info[:access_token]
+        uuid = header_info[:correlation_id] || SecureRandom.uuid
         {
           "Content-Type": "application/json",
           "Accept" => "application/vnd.hmrc.#{version}+json",
           "Authorization" => "Bearer #{access_token}",
-          "correlationId" => SecureRandom.uuid
+          "correlationId" => uuid
         }
       end
 
