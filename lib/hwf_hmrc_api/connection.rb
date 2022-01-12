@@ -12,7 +12,7 @@ require "hwf_hmrc_api/connection/address"
 # Connection methods
 # IMPORTANT: To be able to get information about user you need to call match_user method first
 # # # # # # # # # # # # # # # # # # # # # # # #
-# Method name: match_user(user_info_hash)
+# Method name: match_user(user_info_hash, correlation_id)
 #
 # Method attributes example:
 # { first_name: "Nell",
@@ -23,110 +23,120 @@ require "hwf_hmrc_api/connection/address"
 # Returns matching_id
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
-# Method name: paye(from_date, to_date)
+# Method name: paye(from_date, to_date, correlation_id)
 #
 # Method attributes example:
 # from_date format: YYYY-MM-DD
 # to_date format: YYYY-MM-DD
+# correlation_id: UUID, used for traceability purposes.
 #
 # Returns Hash: {"income"=> [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-paye-income-history_get_accordion
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
-# Method name: sa_summary(from_date, to_date)
+# Method name: sa_summary(from_date, to_date, correlation_id)
 #
 # Method attributes example:
 # from_tax_year format: YYYY-YY
 # to_tax_year format: YYYY-YY
+# correlation_id: UUID, used for traceability purposes.
 #
 # Returns Hash: {"taxReturns" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-self-assessment-tax-returns-summary_get_accordion
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
-# Method name: sa_interest_dividends(from_date, to_date)
+# Method name: sa_interest_dividends(from_date, to_date, correlation_id)
 #
 # Method attributes example:
 # from_tax_year format: YYYY-YY
 # to_tax_year format: YYYY-YY
+# correlation_id: UUID, used for traceability purposes.
 #
 # Returns Hash: {"taxReturns" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-interest-and-dividends-income-data-from-self-assessment_get_accordion
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
-# Method name: sa_self_employments(from_date, to_date)
+# Method name: sa_self_employments(from_date, to_date, correlation_id)
 #
 # Method attributes example:
 # from_tax_year format: YYYY-YY
 # to_tax_year format: YYYY-YY
+# correlation_id: UUID, used for traceability purposes.
 #
 # Returns Hash: {"taxReturns" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-selfemployments-income-data-from-self-assessment_get_accordion
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
-# Method name: sa_uk_properties(from_date, to_date)
+# Method name: sa_uk_properties(from_date, to_date, correlation_id)
 #
 # Method attributes example:
 # from_tax_year format: YYYY-YY
 # to_tax_year format: YYYY-YY
+# correlation_id: UUID, used for traceability purposes.
 #
 # Returns Hash: {"taxReturns" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-uk-properties-income-data-from-self-assessment_get_accordion
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
-# Method name: sa_foreign(from_date, to_date)
+# Method name: sa_foreign(from_date, to_date, correlation_id)
 #
 # Method attributes example:
 # from_tax_year format: YYYY-YY
 # to_tax_year format: YYYY-YY
+# correlation_id: UUID, used for traceability purposes.
 #
 # Returns Hash: {"taxReturns" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-income-api/2.0#_get-foreign-income-data-from-self-assessment_get_accordion
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
-# Method name: child_tax_credits(from_date, to_date)
+# Method name: child_tax_credits(from_date, to_date, correlation_id)
 #
 # Method attributes example:
 # from_date format: YYYY-MM-DD
 # to_date format: YYYY-MM-DD
+# correlation_id: UUID, used for traceability purposes.
 #
 # Returns Hash: {"applications" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-benefits-and-credits-api/1.0#_get-child-tax-credit-data_get_accordion
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
-# Method name: working_tax_credits(from_date, to_date)
+# Method name: working_tax_credits(from_date, to_date, correlation_id)
 #
 # Method attributes example:
 # from_date format: YYYY-MM-DD
 # to_date format: YYYY-MM-DD
+# correlation_id: UUID, used for traceability purposes.
 #
 # Returns Hash: {"applications" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-benefits-and-credits-api/1.0#_get-working-tax-credit-data_get_accordion
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
-# Method name: employments(from_date, to_date)
+# Method name: employments(from_date, to_date, correlation_id)
 #
 # Method attributes example:
 # from_date format: YYYY-MM-DD
 # to_date format: YYYY-MM-DD
+# correlation_id: UUID, used for traceability purposes.
 #
 # Returns Hash: {"employments" => [...]}
 #
 # more info: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-employments-api/2.0#_get-employment-details_get_accordion
 #
 # # # # # # # # # # # # # # # # # # # # # # # #
-# Method name: addresses(from_date, to_date)
+# Method name: addresses(from_date, to_date, correlation_id)
 #
 # Method attributes example:
 # from_date format: YYYY-MM-DD
 # to_date format: YYYY-MM-DD
+# correlation_id: UUID, used for traceability purposes.
 #
 # Returns Hash: {"residences" => [...]}
 #
