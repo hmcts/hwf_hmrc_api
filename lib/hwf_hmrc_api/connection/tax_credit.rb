@@ -8,20 +8,20 @@ module HwfHmrcApi
 
     # From Date format: YYYY-MM-DD
     # To Date format: YYYY-MM-DD
-    def child_tax_credits(from_date, to_date)
+    def child_tax_credits(from_date, to_date, correlation_id)
       validate_match_id
       validate_dates(from_date, to_date)
       params = request_params(from_date, to_date)
-      HwfHmrcApi::Endpoint.child_tax_credits(access_token, params)
+      HwfHmrcApi::Endpoint.child_tax_credits(header_info(correlation_id), params)
     end
 
     # From Date format: YYYY-MM-DD
     # To Date format: YYYY-MM-DD
-    def working_tax_credits(from_date, to_date)
+    def working_tax_credits(from_date, to_date, correlation_id)
       validate_match_id
       validate_dates(from_date, to_date)
       params = request_params(from_date, to_date)
-      HwfHmrcApi::Endpoint.working_tax_credits(access_token, params)
+      HwfHmrcApi::Endpoint.working_tax_credits(header_info(correlation_id), params)
     end
 
     private

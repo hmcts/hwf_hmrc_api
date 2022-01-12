@@ -3,9 +3,9 @@
 module HwfHmrcApi
   module Endpoint
     module Income
-      def income_paye(access_token, attributes)
+      def income_paye(header_info, attributes)
         @response = HTTParty.get("#{api_url}/individuals/income/paye",
-                                 headers: request_headers(access_token),
+                                 headers: request_headers(header_info),
                                  query: {
                                    matchId: attributes[:matching_id],
                                    fromDate: attributes[:from],
@@ -14,9 +14,9 @@ module HwfHmrcApi
         parse_paye_response
       end
 
-      def income_summary(access_token, attributes)
+      def income_summary(header_info, attributes)
         @response = HTTParty.get("#{api_url}/individuals/income/sa/summary",
-                                 headers: request_headers(access_token),
+                                 headers: request_headers(header_info),
                                  query: {
                                    matchId: attributes[:matching_id],
                                    fromTaxYear: attributes[:from],
@@ -25,9 +25,9 @@ module HwfHmrcApi
         parse_self_assessment_response
       end
 
-      def income_interest_dividends(access_token, attributes)
+      def income_interest_dividends(header_info, attributes)
         @response = HTTParty.get("#{api_url}/individuals/income/sa/interests-and-dividends",
-                                 headers: request_headers(access_token),
+                                 headers: request_headers(header_info),
                                  query: {
                                    matchId: attributes[:matching_id],
                                    fromTaxYear: attributes[:from],
@@ -36,9 +36,9 @@ module HwfHmrcApi
         parse_self_assessment_response
       end
 
-      def income_self_employments(access_token, attributes)
+      def income_self_employments(header_info, attributes)
         @response = HTTParty.get("#{api_url}/individuals/income/sa/self-employments",
-                                 headers: request_headers(access_token),
+                                 headers: request_headers(header_info),
                                  query: {
                                    matchId: attributes[:matching_id],
                                    fromTaxYear: attributes[:from],
@@ -47,9 +47,9 @@ module HwfHmrcApi
         parse_self_assessment_response
       end
 
-      def income_uk_properties(access_token, attributes)
+      def income_uk_properties(header_info, attributes)
         @response = HTTParty.get("#{api_url}/individuals/income/sa/uk-properties",
-                                 headers: request_headers(access_token),
+                                 headers: request_headers(header_info),
                                  query: {
                                    matchId: attributes[:matching_id],
                                    fromTaxYear: attributes[:from],
@@ -58,9 +58,9 @@ module HwfHmrcApi
         parse_self_assessment_response
       end
 
-      def income_foreign(access_token, attributes)
+      def income_foreign(header_info, attributes)
         @response = HTTParty.get("#{api_url}/individuals/income/sa/foreign",
-                                 headers: request_headers(access_token),
+                                 headers: request_headers(header_info),
                                  query: {
                                    matchId: attributes[:matching_id],
                                    fromTaxYear: attributes[:from],

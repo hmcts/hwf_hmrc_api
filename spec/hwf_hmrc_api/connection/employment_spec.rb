@@ -19,12 +19,18 @@ RSpec.describe HwfHmrcApi::Employment do
     }
   end
 
+  let(:correlation_id) { "b77609d0-8a2a-0139-cebe-1e00e23ae066" }
+  let(:header_info) do
+    { access_token: access_token,
+      correlation_id: correlation_id }
+  end
+
   context "missing matching_id" do
     before { allow(dummy_class).to receive(:matching_id).and_return nil }
 
     it "Employments" do
       expect do
-        employment.employments(from_date, to_date)
+        employment.employments(from_date, to_date, correlation_id)
       end.to raise_error(HwfHmrcApiError,
                          "Params validation: Mathching ID is missing")
     end
@@ -34,6 +40,7 @@ RSpec.describe HwfHmrcApi::Employment do
     before do
       allow(dummy_class).to receive(:matching_id).and_return matching_id
       allow(dummy_class).to receive(:access_token).and_return access_token
+      allow(dummy_class).to receive(:header_info).and_return header_info
     end
 
     describe "Employments paye" do
@@ -42,8 +49,8 @@ RSpec.describe HwfHmrcApi::Employment do
       context "call endpoint" do
         it do
           allow(HwfHmrcApi::Endpoint).to receive(:employments_paye).and_return({})
-          employment.employments(from_date, to_date)
-          expect(HwfHmrcApi::Endpoint).to have_received(:employments_paye).with(access_token, request_params)
+          employment.employments(from_date, to_date, correlation_id)
+          expect(HwfHmrcApi::Endpoint).to have_received(:employments_paye).with(header_info, request_params)
         end
       end
     end

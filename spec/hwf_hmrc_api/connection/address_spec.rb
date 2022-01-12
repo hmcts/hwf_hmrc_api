@@ -19,12 +19,18 @@ RSpec.describe HwfHmrcApi::Address do
     }
   end
 
+  let(:correlation_id) { "b77609d0-8a2a-0139-cebe-1e00e23ae066" }
+  let(:header_info) do
+    { access_token: access_token,
+      correlation_id: correlation_id }
+  end
+
   context "missing matching_id" do
     before { allow(dummy_class).to receive(:matching_id).and_return nil }
 
     it "addresses" do
       expect do
-        address.addresses(from_date, to_date)
+        address.addresses(from_date, to_date, correlation_id)
       end.to raise_error(HwfHmrcApiError,
                          "Params validation: Mathching ID is missing")
     end
@@ -34,6 +40,7 @@ RSpec.describe HwfHmrcApi::Address do
     before do
       allow(dummy_class).to receive(:matching_id).and_return matching_id
       allow(dummy_class).to receive(:access_token).and_return access_token
+      allow(dummy_class).to receive(:header_info).and_return header_info
     end
 
     describe "addresses" do
@@ -42,8 +49,8 @@ RSpec.describe HwfHmrcApi::Address do
       context "call endpoint" do
         it do
           allow(HwfHmrcApi::Endpoint).to receive(:addresses).and_return({})
-          address.addresses(from_date, to_date)
-          expect(HwfHmrcApi::Endpoint).to have_received(:addresses).with(access_token, request_params)
+          address.addresses(from_date, to_date, correlation_id)
+          expect(HwfHmrcApi::Endpoint).to have_received(:addresses).with(header_info, request_params)
         end
       end
     end

@@ -8,11 +8,11 @@ module HwfHmrcApi
 
     # From Date format: YYYY-MM-DD
     # To Date format: YYYY-MM-DD
-    def employments(from_date, to_date)
+    def employments(from_date, to_date, correlation_id)
       validate_match_id
       validate_dates(from_date, to_date)
       params = request_params(from_date, to_date)
-      HwfHmrcApi::Endpoint.employments_paye(access_token, params)
+      HwfHmrcApi::Endpoint.employments_paye(header_info(correlation_id), params)
     end
 
     private

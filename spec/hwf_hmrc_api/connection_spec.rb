@@ -15,6 +15,11 @@ RSpec.describe HwfHmrcApi::Connection do
       client_id: client_id
     }
   end
+  let(:correlation_id) { "b77609d0-8a2a-0139-cebe-1e00e23ae066" }
+  let(:header_info) do
+    { access_token: access_token,
+      correlation_id: correlation_id }
+  end
 
   let(:authentication) { instance_double("HwfHmrcApi::Authentication") }
 
@@ -40,26 +45,26 @@ RSpec.describe HwfHmrcApi::Connection do
 
     it "with valid params" do
       allow(HwfHmrcApi::Endpoint).to receive(:match_user).and_return({ matching_id: "id" })
-      connection.match_user(user_params)
+      connection.match_user(user_params, correlation_id)
       expect(HwfHmrcApi::Endpoint).to have_received(:match_user)
     end
 
     it "with invalid params and validation exception" do
       expect do
-        connection.match_user(user_params.merge(nino: ""))
+        connection.match_user(user_params.merge(nino: ""), correlation_id)
       end.to raise_error(HwfHmrcApiError,
                          "User validation: NINO is missing")
     end
 
     it "call endpoint with formatted params" do
       allow(HwfHmrcApi::Endpoint).to receive(:match_user).and_return({ matching_id: "id" })
-      connection.match_user(user_params)
-      expect(HwfHmrcApi::Endpoint).to have_received(:match_user).with(access_token, user_info)
+      connection.match_user(user_params, correlation_id)
+      expect(HwfHmrcApi::Endpoint).to have_received(:match_user).with(header_info, user_info)
     end
 
     it "store matching_id to attribute" do
       allow(HwfHmrcApi::Endpoint).to receive(:match_user).and_return({ matching_id: "id" })
-      connection.match_user(user_params)
+      connection.match_user(user_params, correlation_id)
       expect(connection.matching_id).to eql("id")
     end
 
@@ -68,10 +73,11 @@ RSpec.describe HwfHmrcApi::Connection do
         VCR.use_cassette "hmrc_user_matching_invalid_token_error" do
           allow(authentication).to receive(:access_token).and_return(access_token, "new token")
           allow(authentication).to receive(:get_token)
-          allow(HwfHmrcApi::Endpoint).to receive(:match_user).with(access_token, user_info).and_call_original
-          allow(HwfHmrcApi::Endpoint).to receive(:match_user).with("new token",
+          allow(HwfHmrcApi::Endpoint).to receive(:match_user).with(header_info, user_info).and_call_original
+          new_header_info = { access_token: "new token", correlation_id: correlation_id }
+          allow(HwfHmrcApi::Endpoint).to receive(:match_user).with(new_header_info,
                                                                    user_info).and_return({ matching_id: "id" })
-          connection.match_user(user_params)
+          connection.match_user(user_params, correlation_id)
           expect(authentication).to have_received(:get_token).once
         end
       end
@@ -80,10 +86,11 @@ RSpec.describe HwfHmrcApi::Connection do
         VCR.use_cassette "hmrc_user_matching_invalid_token_error" do
           allow(authentication).to receive(:access_token).and_return(access_token, "new token")
           allow(authentication).to receive(:get_token)
-          allow(HwfHmrcApi::Endpoint).to receive(:match_user).with(access_token, user_info).and_call_original
-          allow(HwfHmrcApi::Endpoint).to receive(:match_user).with("new token",
+          allow(HwfHmrcApi::Endpoint).to receive(:match_user).with(header_info, user_info).and_call_original
+          new_header_info = { access_token: "new token", correlation_id: correlation_id }
+          allow(HwfHmrcApi::Endpoint).to receive(:match_user).with(new_header_info,
                                                                    user_info).and_return({ matching_id: "id" })
-          connection.match_user(user_params)
+          connection.match_user(user_params, correlation_id)
           expect(HwfHmrcApi::Endpoint).to have_received(:match_user).twice
         end
       end
@@ -97,7 +104,7 @@ RSpec.describe HwfHmrcApi::Connection do
     context "missing matching_id" do
       it do
         expect do
-          connection.paye(from_date, to_date)
+          connection.paye(from_date, to_date, correlation_id)
         end.to raise_error(HwfHmrcApiError,
                            "Params validation: Mathching ID is missing")
       end
@@ -109,10 +116,10 @@ RSpec.describe HwfHmrcApi::Connection do
       it do
         allow(HwfHmrcApi::Endpoint).to receive(:match_user).and_return({ matching_id: "id" })
         allow(HwfHmrcApi::Endpoint).to receive(:income_paye).and_return({})
-        connection.match_user(user_params)
+        connection.match_user(user_params, correlation_id)
 
         expect do
-          connection.paye(from_date, to_date)
+          connection.paye(from_date, to_date, correlation_id)
         end.not_to raise_error
       end
     end
@@ -125,7 +132,7 @@ RSpec.describe HwfHmrcApi::Connection do
     context "missing matching_id" do
       it do
         expect do
-          connection.child_tax_credits(from_date, to_date)
+          connection.child_tax_credits(from_date, to_date, correlation_id)
         end.to raise_error(HwfHmrcApiError,
                            "Params validation: Mathching ID is missing")
       end
@@ -137,10 +144,10 @@ RSpec.describe HwfHmrcApi::Connection do
       it do
         allow(HwfHmrcApi::Endpoint).to receive(:match_user).and_return({ matching_id: "id" })
         allow(HwfHmrcApi::Endpoint).to receive(:child_tax_credits).and_return({})
-        connection.match_user(user_params)
+        connection.match_user(user_params, correlation_id)
 
         expect do
-          connection.child_tax_credits(from_date, to_date)
+          connection.child_tax_credits(from_date, to_date, correlation_id)
         end.not_to raise_error
       end
     end
@@ -153,7 +160,7 @@ RSpec.describe HwfHmrcApi::Connection do
     context "missing matching_id" do
       it do
         expect do
-          connection.employments(from_date, to_date)
+          connection.employments(from_date, to_date, correlation_id)
         end.to raise_error(HwfHmrcApiError,
                            "Params validation: Mathching ID is missing")
       end
@@ -165,10 +172,10 @@ RSpec.describe HwfHmrcApi::Connection do
       it do
         allow(HwfHmrcApi::Endpoint).to receive(:match_user).and_return({ matching_id: "id" })
         allow(HwfHmrcApi::Endpoint).to receive(:employments_paye).and_return({})
-        connection.match_user(user_params)
+        connection.match_user(user_params, correlation_id)
 
         expect do
-          connection.employments(from_date, to_date)
+          connection.employments(from_date, to_date, correlation_id)
         end.not_to raise_error
       end
     end
@@ -181,7 +188,7 @@ RSpec.describe HwfHmrcApi::Connection do
     context "missing matching_id" do
       it do
         expect do
-          connection.addresses(from_date, to_date)
+          connection.addresses(from_date, to_date, correlation_id)
         end.to raise_error(HwfHmrcApiError,
                            "Params validation: Mathching ID is missing")
       end
@@ -193,10 +200,10 @@ RSpec.describe HwfHmrcApi::Connection do
       it do
         allow(HwfHmrcApi::Endpoint).to receive(:match_user).and_return({ matching_id: "id" })
         allow(HwfHmrcApi::Endpoint).to receive(:addresses).and_return({})
-        connection.match_user(user_params)
+        connection.match_user(user_params, correlation_id)
 
         expect do
-          connection.addresses(from_date, to_date)
+          connection.addresses(from_date, to_date, correlation_id)
         end.not_to raise_error
       end
     end
