@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = "Basic logic to communicate and parse data to/from HMRC API."
   spec.homepage      = "https://github.com/hmcts/hwf_hmrc_api"
   spec.license       = "MIT"
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.7.5")
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.7.6")
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/ministryofjustice/glimr-api-client"
@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Uncomment to register a new dependency of your gem
-  spec.add_dependency "httparty", "~> 0.18.1"
+  spec.add_dependency "httparty", "~> 0.20.0"
   spec.add_dependency "rotp", "~> 6.2.0"
   spec.add_dependency "uuid", "~> 2.3.9"
   spec.add_development_dependency "vcr"
