@@ -16,8 +16,8 @@ jobs:
       vmImage: ubuntu-latest
 
     variables:
-      rubyVersion: '= 2.7.6'
-      bundlerVersion: '2.2.15'
+      rubyVersion: '= 3.1.2'
+      bundlerVersion: '2.3.16'
 
     steps:
     - template: ./pipeline-steps/test-application.yaml
