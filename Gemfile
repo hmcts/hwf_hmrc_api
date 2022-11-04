@@ -8,11 +8,11 @@ gemspec
 group :development, :test do
   gem "pry"
   gem "rake", "~> 13.0"
-  gem "rspec", "~> 3.11"
-  gem "rubocop", "~> 1.30"
-  gem "rubocop-rspec", "~> 2.11"
+  gem "rspec", "~> 3.12"
+  gem "rubocop", "~> 1.38"
+  gem "rubocop-rspec", "~> 2.15"
   gem "timecop", "~> 0.9.5"
-  gem "webmock", "~> 3.14"
+  gem "webmock", "~> 3.18"
 end
 
 group :test do

@@ -1,6 +1,6 @@
 
 AllCops:
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.1
   SuggestExtensions: false
   NewCops: disable
 
@@ -24,6 +24,9 @@ Metrics/CyclomaticComplexity:
 
 Style/Documentation:
   Description: Document classes and non-namespace modules.
+  Enabled: false
+
+Style/HashSyntax:
   Enabled: false
 
 Naming/AccessorMethodName:
