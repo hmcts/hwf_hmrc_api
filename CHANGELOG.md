@@ -1,3 +1,8 @@
+## [v0.2.2] - 2022-12-20
+### System
+- Ruby update from 3.1.2 to 3.1.3
+- Gem updates
+
 ## [v0.2.2] - 2022-06-23
 ### System
 - Ruby update from 2.7.6 to 3.1.2
