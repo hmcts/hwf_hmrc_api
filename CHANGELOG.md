@@ -1,3 +1,8 @@
+## [v0.2.5] - 2023-01-20
+### System
+- Httparty security update
+- Gem updates
+
 ## [v0.2.4] - 2023-01-03
 ### System
 - Ruby update from 3.1.2 to 3.1.3
