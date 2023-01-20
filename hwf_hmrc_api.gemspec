@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Uncomment to register a new dependency of your gem
-  spec.add_dependency "httparty", "~> 0.20.0"
+  spec.add_dependency "httparty", "~> 0.21.0"
   spec.add_dependency "rotp", "~> 6.2.2"
   spec.add_dependency "uuid", "~> 2.3.9"
   spec.add_development_dependency "vcr"
