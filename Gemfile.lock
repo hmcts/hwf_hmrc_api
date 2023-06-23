@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hwf_hmrc_api (0.1.0)
+    hwf_hmrc_api (0.2.6)
       httparty (~> 0.21.0)
       rotp (~> 6.2.2)
       uuid (~> 2.3.9)
@@ -101,4 +101,4 @@ DEPENDENCIES
   webmock (~> 3.18)
 
 BUNDLED WITH
-   2.3.26
+   2.4.14

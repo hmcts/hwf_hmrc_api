@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "lib/hwf_hmrc_api/version"
-
 Gem::Specification.new do |spec|
   spec.name          = "hwf_hmrc_api"
-  spec.version       = HwfHmrcApi::VERSION
+  spec.version       = "0.2.6"
   spec.authors       = ["Petr Zaparka"]
   spec.email         = ["petr@zaparka.cz"]
 
