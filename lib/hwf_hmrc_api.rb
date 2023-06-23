@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "hwf_hmrc_api/version"
 require_relative "hwf_hmrc_api/connection"
 require_relative "hwf_hmrc_api/connection_attribute_validation"
 

@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+      args:
+        source_image: 'ruby:3.2-alpine'

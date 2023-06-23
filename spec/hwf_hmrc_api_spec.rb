@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe HwfHmrcApi do
-  it "has a version number" do
-    expect(HwfHmrcApi::VERSION).not_to be nil
-  end
-
   describe "load credentials" do
     let(:hmrc_secret) { "12345" }
     let(:totp_secret) { "base32secret3232" }

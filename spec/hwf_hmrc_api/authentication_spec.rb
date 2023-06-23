@@ -16,10 +16,6 @@ RSpec.describe HwfHmrcApi::Authentication do
   let(:expires_in) { 14_400 }
   let(:access_token) { "d7070416e4e8e6dd8384573a24d2a1eb" }
 
-  it "has a version number" do
-    expect(HwfHmrcApi::VERSION).not_to be nil
-  end
-
   describe "load credentials" do
     let(:connection_attributes) do
       {

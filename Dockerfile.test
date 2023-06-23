@@ -1,0 +1,22 @@
+FROM ruby:3.2-alpine
+ENV RAILS_ENV=test
+ENV ENV test
+
+ENV APPVERSION ${APPVERSION}
+ENV APP_BUILD_DATE ${APP_BUILD_DATE}
+ENV APP_GIT_COMMIT ${APP_GIT_COMMIT}
+ENV APP_BUILD_TAG ${APP_BUILD_TAG}
+
+WORKDIR /home/app
+
+COPY hwf_hmrc_api.gemspec .
+COPY Gemfile .
+COPY Gemfile.lock .
+COPY .rubocop.yml .
+
+RUN apk add --no-cache --virtual .build-tools git build-base curl-dev && \
+    bundle install --no-cache --jobs=5 --retry=3
+
+COPY . .
+
+CMD ["sh", "-c", "bundle exec rubocop --fail-fast && bundle exec rake"]

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "lib/hwf_hmrc_api/version"
-
 Gem::Specification.new do |spec|
   spec.name          = "hwf_hmrc_api"
-  spec.version       = HwfHmrcApi::VERSION
+  spec.version       = "0.2.6"
   spec.authors       = ["Petr Zaparka"]
   spec.email         = ["petr@zaparka.cz"]
 
@@ -12,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.description   = "Basic logic to communicate and parse data to/from HMRC API."
   spec.homepage      = "https://github.com/hmcts/hwf_hmrc_api"
   spec.license       = "MIT"
-  spec.required_ruby_version = Gem::Requirement.new(">= 3.1.3")
+  spec.required_ruby_version = Gem::Requirement.new(">= 3.2.2")
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/ministryofjustice/glimr-api-client"
