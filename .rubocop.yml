@@ -1,6 +1,6 @@
 
 AllCops:
-  TargetRubyVersion: 3.1
+  TargetRubyVersion: 3.2
   SuggestExtensions: false
   NewCops: disable
 
@@ -79,7 +79,7 @@ RSpec/MultipleExpectations:
 RSpec/EmptyLineAfterSubject:
   Enabled: false
 
-RSpec/FactoryBot/AttributeDefinedStatically:
+FactoryBot/AttributeDefinedStatically:
   Enabled: false
 
 RSpec/ReceiveCounts:
@@ -93,10 +93,11 @@ RSpec/LetBeforeExamples:
 
 RSpec/HooksBeforeExamples:
   Enabled: false
+
 RSpec/Capybara/FeatureMethods:
   Enabled: false
 
-RSpec/Capybara/CurrentPathExpectation:
+Capybara/CurrentPathExpectation:
   Enabled: false
 
 RSpec/ExpectInHook:
