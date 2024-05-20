@@ -1,4 +1,4 @@
-FROM ruby:3.2-alpine
+FROM ruby:3.3.1-alpine3.18
 ENV RAILS_ENV=test
 ENV ENV test
 

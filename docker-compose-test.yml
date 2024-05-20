@@ -6,4 +6,4 @@ services:
       context: .
       dockerfile: Dockerfile.test
       args:
-        source_image: 'ruby:3.2-alpine'
+        source_image: 'ruby:3.3.1-alpine3.18'

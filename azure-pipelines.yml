@@ -16,8 +16,8 @@ jobs:
       vmImage: 'Ubuntu-22.04'
 
     variables:
-      rubyVersion: '= 3.2.2'
-      bundlerVersion: '2.4.14'
+      rubyVersion: '= 3.3.1'
+      bundlerVersion: '2.5.10'
 
     steps:
     - template: ./pipeline-steps/test-application.yaml
