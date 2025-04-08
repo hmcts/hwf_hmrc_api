@@ -17,6 +17,7 @@ RSpec.describe HwfHmrcApi do
       before do
         allow(HwfHmrcApi::Connection).to receive(:new).and_return "connection"
       end
+
       it {
         expect { described_class.new(connection_attributes) }.not_to raise_error
       }

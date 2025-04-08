@@ -44,7 +44,7 @@ module HwfHmrcApi
       end
 
       def api_url
-        ENV["HMRC_API_URL"]
+        ENV.fetch("HMRC_API_URL", nil)
       end
     end
   end

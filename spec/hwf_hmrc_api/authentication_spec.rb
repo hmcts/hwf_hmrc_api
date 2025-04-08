@@ -4,14 +4,15 @@ require "timecop"
 
 RSpec.describe HwfHmrcApi::Authentication do
   subject(:application) { described_class.new(connection_attributes) }
+
   let(:hmrc_secret) { "12345" }
   let(:totp_secret) { "base32secret3232" }
   let(:client_id) { "6789" }
   let(:auth_token) do
-    { "access_token": access_token,
-      "scope": "read:individuals-matching-hmcts-c2",
-      "expires_in": expires_in,
-      "token_type": "bearer" }
+    { access_token: access_token,
+      scope: "read:individuals-matching-hmcts-c2",
+      expires_in: expires_in,
+      token_type: "bearer" }
   end
   let(:expires_in) { 14_400 }
   let(:access_token) { "d7070416e4e8e6dd8384573a24d2a1eb" }
@@ -27,6 +28,7 @@ RSpec.describe HwfHmrcApi::Authentication do
 
     context "totp" do
       let(:totp) { instance_double(ROTP::TOTP) }
+
       before do
         allow(HwfHmrcApi::Endpoint).to receive(:token).and_return auth_token
         allow(ROTP::TOTP).to receive(:new).with(totp_secret, digits: 8, digest: "sha512").and_return totp
@@ -61,6 +63,7 @@ RSpec.describe HwfHmrcApi::Authentication do
 
       context "expires time" do
         let(:expires_in) { 0 }
+
         it "load new token if old is expired" do
           application.token
           expect(HwfHmrcApi::Endpoint).to have_received(:token).twice
@@ -69,20 +72,22 @@ RSpec.describe HwfHmrcApi::Authentication do
 
       context "not expired when expires_in is more then 100s in future" do
         let(:expires_in) { 400 }
+
         it "set expire time" do
           Timecop.freeze(Time.now) do
             application.token
-            expect(application.expired?).to be_falsey
+            expect(application).not_to be_expired
           end
         end
       end
 
       context "expired when expires_in is less or eql 100s in future" do
         let(:expires_in) { 100 }
+
         it "set expire time" do
           Timecop.freeze(Time.now) do
             application.token
-            expect(application.expired?).to be_truthy
+            expect(application).to be_expired
           end
         end
       end

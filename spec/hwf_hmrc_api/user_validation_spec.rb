@@ -7,6 +7,7 @@ RSpec.describe HwfHmrcApi::UserValidation do
   let(:last_name) { "Jerry" }
   let(:nino) { "SN123456C" }
   let(:dob) { "1950-05-20" }
+
   describe "user validation" do
     context "presence" do
       describe "nino" do

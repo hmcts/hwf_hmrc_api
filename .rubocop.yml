@@ -19,6 +19,9 @@ Style/Documentation:
   Description: Document classes and non-namespace modules.
   Enabled: false
 
+Style/ReturnNilInPredicateMethodDefinition:
+  Enabled: false
+
 Naming/AccessorMethodName:
   Enabled: false
 
@@ -47,6 +50,4 @@ RSpec/FilePath:
 require:
   - rubocop-rspec
   - rubocop-capybara
-  - rubocop-rails
   - rubocop-factory_bot
-  - rubocop-rspec_rails

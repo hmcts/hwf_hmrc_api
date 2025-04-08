@@ -17,14 +17,13 @@ RSpec.describe HwfHmrcApi::Endpoint do
   end
 
   describe "API calls" do
-
     context "token" do
       let(:auth_token) do
         {
-          "access_token": access_token,
-          "token_type": "bearer",
-          "expires_in": 14_400,
-          "scope": "hello"
+          access_token: access_token,
+          token_type: "bearer",
+          expires_in: 14_400,
+          scope: "hello"
         }
       end
 
@@ -49,6 +48,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
       context "token errors" do
         context "status_code 400" do
           let(:status_code) { 400 }
+
           it do
             VCR.use_cassette "hmrc_token_400" do
               expect do
@@ -60,6 +60,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
 
         context "status_code 401" do
           let(:status_code) { 401 }
+
           it do
             VCR.use_cassette "hmrc_token_401" do
               expect do
@@ -71,6 +72,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
 
         context "status_code 500" do
           let(:status_code) { 500 }
+
           it do
             VCR.use_cassette "hmrc_token_500" do
               expect do
@@ -87,7 +89,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
         allow(SecureRandom).to receive(:uuid)
         VCR.use_cassette "match_user_success" do
           info_hash = { access_token: access_token }
-          user_info = { "firstName": "Nell", "lastName": "Walker", "nino": "ZL262438D", "dateOfBirth": "1964-09-20" }
+          user_info = { firstName: "Nell", lastName: "Walker", nino: "ZL262438D", dateOfBirth: "1964-09-20" }
           described_class.match_user(info_hash, user_info)
           expect(SecureRandom).to have_received(:uuid)
         end
@@ -96,7 +98,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
       it "use one from params" do
         allow(SecureRandom).to receive(:uuid)
         VCR.use_cassette "match_user_success" do
-          user_info = { "firstName": "Nell", "lastName": "Walker", "nino": "ZL262438D", "dateOfBirth": "1964-09-20" }
+          user_info = { firstName: "Nell", lastName: "Walker", nino: "ZL262438D", dateOfBirth: "1964-09-20" }
           described_class.match_user(header_info, user_info)
           expect(SecureRandom).not_to have_received(:uuid)
         end
@@ -106,7 +108,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
     context "match_user" do
       it "found a match" do
         VCR.use_cassette "match_user_success" do
-          user_info = { "firstName": "Nell", "lastName": "Walker", "nino": "ZL262438D", "dateOfBirth": "1964-09-20" }
+          user_info = { firstName: "Nell", lastName: "Walker", nino: "ZL262438D", dateOfBirth: "1964-09-20" }
           response = described_class.match_user(header_info, user_info)
           expect(response).to eq({ matching_id: "d7899dfd-99c1-44f4-b3c3-c7631d206245" })
         end
@@ -116,8 +118,8 @@ RSpec.describe HwfHmrcApi::Endpoint do
         context "erorr code 403" do
           it do
             VCR.use_cassette "match_user_matching_failed" do
-              user_info = { "firstName": "Nell", "lastName": "Walker", "nino": "ZL262438D",
-                            "dateOfBirth": "1960-09-20" }
+              user_info = { firstName: "Nell", lastName: "Walker", nino: "ZL262438D",
+                            dateOfBirth: "1960-09-20" }
               expect do
                 described_class.match_user(header_info, user_info)
               end.to raise_error(HwfHmrcApiError,
@@ -129,7 +131,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
         context "erorr code 400" do
           it do
             VCR.use_cassette "match_user_invalid_request" do
-              user_info = { "firstName": "Nell" }
+              user_info = { firstName: "Nell" }
               expect do
                 described_class.match_user(header_info, user_info)
               end.to raise_error(HwfHmrcApiError, "API: INVALID_REQUEST - nino is required")
@@ -140,8 +142,8 @@ RSpec.describe HwfHmrcApi::Endpoint do
         context "erorr code 401 INVALID_CREDENTIALS" do
           it do
             VCR.use_cassette "hmrc_user_matching_invalid_token_error" do
-              user_info = { "firstName": "Nell", "lastName": "Walker", "nino": "ZL262438D",
-                            "dateOfBirth": "1960-09-20" }
+              user_info = { firstName: "Nell", lastName: "Walker", nino: "ZL262438D",
+                            dateOfBirth: "1960-09-20" }
               expect do
                 described_class.match_user(header_info, user_info)
               end.to raise_error(HwfHmrcApiTokenError,
@@ -166,14 +168,14 @@ RSpec.describe HwfHmrcApi::Endpoint do
   # rubocop:disable Metrics/MethodLength
   def match_user_response
     {
-      "_links": {
-        "individual": {
-          "name": "GET",
-          "href": "/individuals/matching/e5c601b6-0aea-4023-9c3b-4fc421ab3d48",
-          "title": "Get a matched individual’s information"
+      _links: {
+        individual: {
+          name: "GET",
+          href: "/individuals/matching/e5c601b6-0aea-4023-9c3b-4fc421ab3d48",
+          title: "Get a matched individual’s information"
         },
-        "self": {
-          "href": "/individuals/matching/"
+        self: {
+          href: "/individuals/matching/"
         }
       }
     }

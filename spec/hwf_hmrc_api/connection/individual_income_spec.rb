@@ -3,9 +3,9 @@
 require "spec_helper"
 
 RSpec.describe HwfHmrcApi::IndividualIncome do
-  let(:dummy_class) { Class.new { extend HwfHmrcApi::IndividualIncome } }
   subject(:individual_income) { dummy_class }
 
+  let(:dummy_class) { Class.new { extend HwfHmrcApi::IndividualIncome } }
   let(:matching_id) { "6789" }
   let(:from_date) { "2021-01-20" }
   let(:to_date) { "2021-02-20" }
@@ -17,9 +17,7 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
       to: to_tax_year
     }
   end
-
   let(:correlation_id) { "b77609d0-8a2a-0139-cebe-1e00e23ae066" }
-
   let(:header_info) do
     { access_token: access_token,
       correlation_id: correlation_id }
@@ -73,9 +71,8 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
 
   context "matching_id present" do
     before do
-      allow(dummy_class).to receive(:matching_id).and_return matching_id
-      allow(dummy_class).to receive(:access_token).and_return access_token
-      allow(dummy_class).to receive(:header_info).and_return header_info
+      allow(dummy_class).to receive_messages(matching_id: matching_id, access_token: access_token,
+                                             header_info: header_info)
     end
 
     describe "Paye" do
@@ -86,6 +83,7 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
           to: to_date
         }
       end
+
       context "call endpoint" do
         it do
           allow(HwfHmrcApi::Endpoint).to receive(:income_paye).and_return({})
