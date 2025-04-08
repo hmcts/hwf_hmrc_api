@@ -17,6 +17,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
   end
 
   describe "API calls" do
+
     context "token" do
       let(:auth_token) do
         {
@@ -41,7 +42,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
             .to_return(body: "Something went wrong", status: 500)
           expect do
             described_class.token(1, 2)
-          end.to raise_error(HwfHmrcApiError, /unexpected token at 'Something went wrong'/)
+          end.to raise_error(HwfHmrcApiError, "unexpected character: 'Something went wrong'")
         end
       end
 
@@ -157,7 +158,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
           .to_return(body: "Something went wrong", status: 500)
         expect do
           described_class.match_user(header_info, 2)
-        end.to raise_error(HwfHmrcApiError, /unexpected token at 'Something went wrong'/)
+        end.to raise_error(HwfHmrcApiError, "unexpected character: 'Something went wrong'")
       end
     end
   end
