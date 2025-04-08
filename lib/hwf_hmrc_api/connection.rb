@@ -185,10 +185,10 @@ module HwfHmrcApi
     end
 
     def map_user_params(user_params)
-      { "firstName": user_params[:first_name],
-        "lastName": user_params[:last_name],
-        "nino": user_params[:nino],
-        "dateOfBirth": user_params[:dob] }
+      { firstName: user_params[:first_name],
+        lastName: user_params[:last_name],
+        nino: user_params[:nino],
+        dateOfBirth: user_params[:dob] }
     end
   end
 end

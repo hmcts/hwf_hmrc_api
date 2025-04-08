@@ -3,14 +3,13 @@
 require "spec_helper"
 
 RSpec.describe HwfHmrcApi::Employment do
-  let(:dummy_class) { Class.new { extend HwfHmrcApi::Employment } }
   subject(:employment) { dummy_class }
 
+  let(:dummy_class) { Class.new { extend HwfHmrcApi::Employment } }
   let(:matching_id) { "6789" }
   let(:from_date) { "2021-01-20" }
   let(:to_date) { "2021-02-20" }
   let(:access_token) { "0f3adcfc0e6f5ace9102af880cedd279" }
-
   let(:request_params) do
     {
       matching_id: matching_id,
@@ -18,7 +17,6 @@ RSpec.describe HwfHmrcApi::Employment do
       to: to_date
     }
   end
-
   let(:correlation_id) { "b77609d0-8a2a-0139-cebe-1e00e23ae066" }
   let(:header_info) do
     { access_token: access_token,
@@ -38,9 +36,8 @@ RSpec.describe HwfHmrcApi::Employment do
 
   context "matching_id present" do
     before do
-      allow(dummy_class).to receive(:matching_id).and_return matching_id
-      allow(dummy_class).to receive(:access_token).and_return access_token
-      allow(dummy_class).to receive(:header_info).and_return header_info
+      allow(dummy_class).to receive_messages(matching_id: matching_id, access_token: access_token,
+                                             header_info: header_info)
     end
 
     describe "Employments paye" do

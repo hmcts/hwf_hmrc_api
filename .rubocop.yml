@@ -1,9 +1,8 @@
 
 AllCops:
-  TargetRubyVersion: 3.3
+  TargetRubyVersion: 3.4.2
   SuggestExtensions: false
-  NewCops: disable
-
+  NewCops: enable
 
 Style/StringLiterals:
   Enabled: true
@@ -13,12 +12,6 @@ Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes
 
-Style/IfUnlessModifier:
-  Enabled: false
-
-Layout/LineLength:
-  Max: 120
-
 Metrics/CyclomaticComplexity:
   Enabled: false
 
@@ -26,7 +19,7 @@ Style/Documentation:
   Description: Document classes and non-namespace modules.
   Enabled: false
 
-Style/HashSyntax:
+Style/ReturnNilInPredicateMethodDefinition:
   Enabled: false
 
 Naming/AccessorMethodName:
@@ -36,84 +29,25 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
-RSpec/NestedGroups:
-  Max: 10
-
-RSpec/ExampleLength:
-  Exclude:
-    - 'spec/**/*'
-
-RSpec/ImplicitSubject:
-  Enabled: false
-
-RSpec/EmptyLineAfterFinalLet:
-  Enabled: false
-
-RSpec/ExpectChange:
+RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
 RSpec/ContextWording:
   Enabled: false
 
-RSpec/ScatteredLet:
+RSpec/NestedGroups:
   Enabled: false
 
-RSpec/EmptyLineAfterExampleGroup:
+RSpec/ExampleLength:
   Enabled: false
 
-RSpec/LeadingSubject:
-  Enabled: false
-
-RSpec/ExampleWording:
-  Enabled: false
-
-RSpec/MultipleSubjects:
-  Enabled: false
-
-RSpec/EmptyLineAfterHook:
-  Enabled: false
-
-RSpec/MultipleExpectations:
-  Enabled: false
-
-RSpec/EmptyLineAfterSubject:
-  Enabled: false
-
-FactoryBot/AttributeDefinedStatically:
-  Enabled: false
-
-RSpec/ReceiveCounts:
-  Enabled: false
-
-RSpec/PredicateMatcher:
-  Enabled: false
-
-RSpec/LetBeforeExamples:
-  Enabled: false
-
-RSpec/HooksBeforeExamples:
-  Enabled: false
-
-RSpec/Capybara/FeatureMethods:
-  Enabled: false
-
-Capybara/CurrentPathExpectation:
-  Enabled: false
-
-RSpec/ExpectInHook:
-  Enabled: false
-
-RSpec/OverwritingSetup:
-  Enabled: false
-
-RSpec/InstanceVariable:
-  Enabled: false
-
-RSpec/MultipleMemoizedHelpers:
+RSpec/SpecFilePathFormat:
   Enabled: false
 
 RSpec/FilePath:
-  SpecSuffixOnly: true
+  Enabled: false
 
 require:
   - rubocop-rspec
+  - rubocop-capybara
+  - rubocop-factory_bot

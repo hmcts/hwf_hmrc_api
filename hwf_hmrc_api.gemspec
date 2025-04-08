@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "hwf_hmrc_api"
-  spec.version       = "0.2.10"
+  spec.version       = "0.3.0"
   spec.authors       = ["Petr Zaparka"]
   spec.email         = ["petr@zaparka.cz"]
 
@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.description   = "Basic logic to communicate and parse data to/from HMRC API."
   spec.homepage      = "https://github.com/hmcts/hwf_hmrc_api"
   spec.license       = "MIT"
-  spec.required_ruby_version = Gem::Requirement.new(">= 3.3.4")
+  spec.required_ruby_version = Gem::Requirement.new(">= 3.4.2")
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/ministryofjustice/glimr-api-client"
@@ -26,12 +26,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Uncomment to register a new dependency of your gem
-  spec.add_dependency "httparty", "~> 0.22.0"
+  spec.add_dependency "httparty", "~> 0.23.0"
   spec.add_dependency "rotp", "~> 6.3.0"
   spec.add_dependency "uuid", "~> 2.3.9"
-  spec.add_development_dependency "base64"
-  spec.add_development_dependency "vcr"
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html
+  spec.metadata["rubygems_mfa_required"] = "true"
 end
