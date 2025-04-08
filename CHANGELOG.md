@@ -1,3 +1,9 @@
+## [v0.3.0] - 2025-04-08
+### System
+- Ruby update from to 3.3.4 to 3.4.2
+- Gem updates
+- Rubocop related updates
+
 ## [v0.2.10] - 2024-08-02
 ### System
 - Ruby update from to 3.3.1 to 3.3.4
