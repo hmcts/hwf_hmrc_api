@@ -1,6 +1,6 @@
 
 AllCops:
-  TargetRubyVersion: 3.3
+  TargetRubyVersion: 3.4.2
   SuggestExtensions: false
   NewCops: disable
 
@@ -13,20 +13,11 @@ Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes
 
-Style/IfUnlessModifier:
-  Enabled: false
-
-Layout/LineLength:
-  Max: 120
-
 Metrics/CyclomaticComplexity:
   Enabled: false
 
 Style/Documentation:
   Description: Document classes and non-namespace modules.
-  Enabled: false
-
-Style/HashSyntax:
   Enabled: false
 
 Naming/AccessorMethodName:
@@ -36,84 +27,3 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
-RSpec/NestedGroups:
-  Max: 10
-
-RSpec/ExampleLength:
-  Exclude:
-    - 'spec/**/*'
-
-RSpec/ImplicitSubject:
-  Enabled: false
-
-RSpec/EmptyLineAfterFinalLet:
-  Enabled: false
-
-RSpec/ExpectChange:
-  Enabled: false
-
-RSpec/ContextWording:
-  Enabled: false
-
-RSpec/ScatteredLet:
-  Enabled: false
-
-RSpec/EmptyLineAfterExampleGroup:
-  Enabled: false
-
-RSpec/LeadingSubject:
-  Enabled: false
-
-RSpec/ExampleWording:
-  Enabled: false
-
-RSpec/MultipleSubjects:
-  Enabled: false
-
-RSpec/EmptyLineAfterHook:
-  Enabled: false
-
-RSpec/MultipleExpectations:
-  Enabled: false
-
-RSpec/EmptyLineAfterSubject:
-  Enabled: false
-
-FactoryBot/AttributeDefinedStatically:
-  Enabled: false
-
-RSpec/ReceiveCounts:
-  Enabled: false
-
-RSpec/PredicateMatcher:
-  Enabled: false
-
-RSpec/LetBeforeExamples:
-  Enabled: false
-
-RSpec/HooksBeforeExamples:
-  Enabled: false
-
-RSpec/Capybara/FeatureMethods:
-  Enabled: false
-
-Capybara/CurrentPathExpectation:
-  Enabled: false
-
-RSpec/ExpectInHook:
-  Enabled: false
-
-RSpec/OverwritingSetup:
-  Enabled: false
-
-RSpec/InstanceVariable:
-  Enabled: false
-
-RSpec/MultipleMemoizedHelpers:
-  Enabled: false
-
-RSpec/FilePath:
-  SpecSuffixOnly: true
-
-require:
-  - rubocop-rspec
