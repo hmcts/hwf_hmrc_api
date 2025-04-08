@@ -2,8 +2,7 @@
 AllCops:
   TargetRubyVersion: 3.4.2
   SuggestExtensions: false
-  NewCops: disable
-
+  NewCops: enable
 
 Style/StringLiterals:
   Enabled: true
@@ -27,3 +26,27 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/SpecFilePathFormat:
+  Enabled: false
+
+RSpec/FilePath:
+  Enabled: false
+
+require:
+  - rubocop-rspec
+  - rubocop-capybara
+  - rubocop-rails
+  - rubocop-factory_bot
+  - rubocop-rspec_rails

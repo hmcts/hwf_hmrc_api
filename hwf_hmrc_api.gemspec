@@ -29,9 +29,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "httparty", "~> 0.23.0"
   spec.add_dependency "rotp", "~> 6.3.0"
   spec.add_dependency "uuid", "~> 2.3.9"
-  spec.add_development_dependency "base64"
-  spec.add_development_dependency "vcr"
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html
+  spec.metadata["rubygems_mfa_required"] = "true"
 end
