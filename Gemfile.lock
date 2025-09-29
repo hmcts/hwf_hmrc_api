@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hwf_hmrc_api (0.3.0)
+    hwf_hmrc_api (0.3.1)
       httparty (~> 0.23.0)
       rotp (~> 6.3.0)
       uuid (~> 2.3.9)
