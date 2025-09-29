@@ -1,3 +1,9 @@
+## [v0.3.1] - 2025-09-29
+### System
+- Ruby update from 3.3.4 to 3.4.6
+- Gem updates
+- Tests parse error message update
+
 ## [v0.3.0] - 2025-04-08
 ### System
 - Ruby update from to 3.3.4 to 3.4.2
