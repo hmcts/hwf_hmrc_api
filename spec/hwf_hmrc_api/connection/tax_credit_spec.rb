@@ -48,7 +48,7 @@ RSpec.describe HwfHmrcApi::TaxCredit do
     end
 
     describe "Child" do
-      include_examples "Date validation", described_class, :child_tax_credits
+      it_behaves_like "Date validation", described_class, :child_tax_credits
 
       context "call endpoint" do
         it do
@@ -60,7 +60,7 @@ RSpec.describe HwfHmrcApi::TaxCredit do
     end
 
     describe "Work" do
-      include_examples "Date validation", described_class, :working_tax_credits
+      it_behaves_like "Date validation", described_class, :working_tax_credits
 
       context "call endpoint" do
         it do
