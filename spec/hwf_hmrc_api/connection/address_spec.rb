@@ -41,7 +41,7 @@ RSpec.describe HwfHmrcApi::Address do
     end
 
     describe "addresses" do
-      include_examples "Date validation", described_class, :addresses
+      it_behaves_like "Date validation", described_class, :addresses
 
       context "call endpoint" do
         it do

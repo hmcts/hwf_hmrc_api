@@ -6,6 +6,7 @@ require_relative "hwf_hmrc_api/connection_attribute_validation"
 module HwfHmrcApi
   class << self
     include ConnectionAttributeValidation
+
     # Mandatory attributes
     # :hmrc_secret - String
     # :totp_secret - String

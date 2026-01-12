@@ -41,7 +41,7 @@ RSpec.describe HwfHmrcApi::Employment do
     end
 
     describe "Employments paye" do
-      include_examples "Date validation", described_class, :employments
+      it_behaves_like "Date validation", described_class, :employments
 
       context "call endpoint" do
         it do

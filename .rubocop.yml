@@ -1,6 +1,6 @@
 
 AllCops:
-  TargetRubyVersion: 3.4.2
+  TargetRubyVersion: 4.0.0
   SuggestExtensions: false
   NewCops: enable
 
@@ -44,10 +44,13 @@ RSpec/ExampleLength:
 RSpec/SpecFilePathFormat:
   Enabled: false
 
-RSpec/FilePath:
+RSpec/SpecFilePathSuffix:
   Enabled: false
 
-require:
+Naming/PredicateMethod:
+  Enabled: false
+
+plugins:
   - rubocop-rspec
   - rubocop-capybara
   - rubocop-factory_bot

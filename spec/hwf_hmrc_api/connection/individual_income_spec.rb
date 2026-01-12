@@ -92,14 +92,14 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
         end
       end
 
-      include_examples "Date validation", described_class, :paye
+      it_behaves_like "Date validation", described_class, :paye
     end
 
     describe "SA summary" do
       let(:from_tax_year) { "2018-19" }
       let(:to_tax_year) { "2020-21" }
 
-      include_examples "Tax year validation", :sa_summary
+      it_behaves_like "Tax year validation", :sa_summary
 
       context "call summary endpoint" do
         it do
@@ -114,7 +114,7 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
       let(:from_tax_year) { "2018-19" }
       let(:to_tax_year) { "2020-21" }
 
-      include_examples "Tax year validation", :sa_interest_dividends
+      it_behaves_like "Tax year validation", :sa_interest_dividends
 
       it "call income_interest_dividends" do
         allow(HwfHmrcApi::Endpoint).to receive(:income_interest_dividends).and_return({})
@@ -128,7 +128,7 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
       let(:from_tax_year) { "2018-19" }
       let(:to_tax_year) { "2020-21" }
 
-      include_examples "Tax year validation", :sa_self_employments
+      it_behaves_like "Tax year validation", :sa_self_employments
 
       it "call income_interest_dividends" do
         allow(HwfHmrcApi::Endpoint).to receive(:income_self_employments).and_return({})
@@ -142,7 +142,7 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
       let(:from_tax_year) { "2018-19" }
       let(:to_tax_year) { "2020-21" }
 
-      include_examples "Tax year validation", :sa_uk_properties
+      it_behaves_like "Tax year validation", :sa_uk_properties
 
       it "call income_interest_dividends" do
         allow(HwfHmrcApi::Endpoint).to receive(:income_uk_properties).and_return({})
@@ -156,7 +156,7 @@ RSpec.describe HwfHmrcApi::IndividualIncome do
       let(:from_tax_year) { "2018-19" }
       let(:to_tax_year) { "2020-21" }
 
-      include_examples "Tax year validation", :sa_foreign
+      it_behaves_like "Tax year validation", :sa_foreign
 
       it "call income_foreign" do
         allow(HwfHmrcApi::Endpoint).to receive(:income_foreign).and_return({})

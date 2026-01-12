@@ -1,3 +1,8 @@
+## [v0.3.2] - 2026-01-12
+### System
+- Ruby update from 3.3.6 to 4.0.0
+- Gem updates
+
 ## [v0.3.1] - 2025-09-29
 ### System
 - Ruby update from 3.3.4 to 3.4.6
