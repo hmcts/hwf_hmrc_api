@@ -1,6 +1,6 @@
 
 AllCops:
-  TargetRubyVersion: 4.0.0
+  TargetRubyVersion: 4.0.5
   SuggestExtensions: false
   NewCops: enable
 
@@ -20,6 +20,9 @@ Style/Documentation:
   Enabled: false
 
 Style/ReturnNilInPredicateMethodDefinition:
+  Enabled: false
+
+Style/OneClassPerFile:
   Enabled: false
 
 Naming/AccessorMethodName:
