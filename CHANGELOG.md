@@ -1,3 +1,9 @@
+## [v0.3.4] - 2026-10-27
+### Security
+- json 2.20.0 → 3.1.0: fixes CVE-2026-71847 (ResumableParser use-after-free on truncated input). The library only uses `JSON.parse` and `to_json`, which json 3 keeps unchanged.
+### System
+- rubocop 1.88.1 → 1.92.1; one `disable`/`enable` pair became `disable-next` for the new `Style/DirectiveScope` cop.
+
 ## [v0.3.3] - 2026-07-06
 ### System
 - Ruby update from 4.0.0 to 4.0.5

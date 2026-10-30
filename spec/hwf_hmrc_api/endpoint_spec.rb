@@ -165,7 +165,7 @@ RSpec.describe HwfHmrcApi::Endpoint do
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable-next Metrics/MethodLength
   def match_user_response
     {
       _links: {
@@ -180,5 +180,4 @@ RSpec.describe HwfHmrcApi::Endpoint do
       }
     }
   end
-  # rubocop:enable Metrics/MethodLength
 end
