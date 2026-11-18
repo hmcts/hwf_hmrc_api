@@ -1,0 +1,12 @@
+# Monthly salary on days 28, 59 and 90 of the window, for the three-month average check.
+# A one-month window only gets the first payslip.
+individual:
+  internal_id: "three_month_average"
+  firstName: "David"
+  lastName: "Hughes"
+  nino: "HM100004A"
+  dateOfBirth: "1982-01-20"
+  paye:
+    - { employerPayeReference: "321/GH11111", taxYear: "26-27", payFrequency: "M1", paymentDay: 28, taxablePay: 1600.00 }
+    - { employerPayeReference: "321/GH11111", taxYear: "26-27", payFrequency: "M1", paymentDay: 59, taxablePay: 1650.00 }
+    - { employerPayeReference: "321/GH11111", taxYear: "26-27", payFrequency: "M1", paymentDay: 90, taxablePay: 1700.00 }

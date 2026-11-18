@@ -1,0 +1,10 @@
+# Matched, then the PAYE call times out (staff app asks to submit the form again)
+individual:
+  internal_id: "timeout"
+  firstName: "Liam"
+  lastName: "Ward"
+  nino: "HM100012A"
+  dateOfBirth: "1984-10-10"
+  errors:
+    paye:
+      timeout: true

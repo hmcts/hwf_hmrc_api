@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "date"
+
 module HwfHmrcApi
   module DateHelper
     def validate_dates(from_date, to_date)

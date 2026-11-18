@@ -1,0 +1,16 @@
+# A monthly salary and a four-weekly part-time job
+individual:
+  internal_id: "two_employers"
+  firstName: "Chloe"
+  lastName: "Evans"
+  nino: "HM100003A"
+  dateOfBirth: "1990-11-05"
+  paye:
+    - { employerPayeReference: "123/AB45678", taxYear: "26-27", payFrequency: "M1", paymentDay: 25, taxablePay: 1200.00 }
+    - employerPayeReference: "789/EF98765"
+      taxYear: "26-27"
+      payFrequency: "W4"
+      paymentDay: 20
+      taxablePay: 350.00
+      employeePensionContribs:
+        paid: 10.50

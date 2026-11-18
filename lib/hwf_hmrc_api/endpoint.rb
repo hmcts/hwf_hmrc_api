@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "json"
+require "securerandom"
 require "hwf_hmrc_api/endpoint/income"
 require "hwf_hmrc_api/endpoint/user_matching"
 require "hwf_hmrc_api/endpoint/token"
@@ -19,6 +21,13 @@ module HwfHmrcApi
       include Address
 
       private
+
+      # Every call to HMRC goes through here, so the mock connection can answer instead
+      def http_request(method, path, options = {})
+        return HwfHmrcApi::Mock::Responder.call(path, options) if HwfHmrcApi.mock_connection?
+
+        HTTParty.public_send(method, "#{api_url}#{path}", **options)
+      end
 
       def request_headers(header_info, version = "2.0")
         access_token = header_info[:access_token]

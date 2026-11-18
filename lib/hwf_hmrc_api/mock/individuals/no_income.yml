@@ -1,0 +1,7 @@
+# Matched, but HMRC holds no PAYE or tax credits (staff app shows "NO RESULT")
+individual:
+  internal_id: "no_income"
+  firstName: "Grace"
+  lastName: "Patel"
+  nino: "HM100007A"
+  dateOfBirth: "1993-02-02"

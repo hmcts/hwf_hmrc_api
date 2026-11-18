@@ -1,0 +1,12 @@
+# Matched, then the PAYE call is rate limited
+individual:
+  internal_id: "throttled"
+  firstName: "Jack"
+  lastName: "Reid"
+  nino: "HM100010A"
+  dateOfBirth: "1970-12-12"
+  errors:
+    paye:
+      status: 429
+      code: "MESSAGE_THROTTLED_OUT"
+      message: "The request for the API is throttled as you have exceeded your quota."

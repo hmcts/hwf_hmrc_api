@@ -1,0 +1,20 @@
+# Working tax credit calculated after the window (staff app asks for a paper evidence check).
+# The staff app only checks the working tax credit's payProfCalcDate.
+individual:
+  internal_id: "entitlement_after_window"
+  firstName: "Kate"
+  lastName: "Scott"
+  nino: "HM100011A"
+  dateOfBirth: "1987-08-08"
+  paye:
+    - { employerPayeReference: "333/QR66666", taxYear: "26-27", payFrequency: "M1", paymentDay: 28, taxablePay: 800.00 }
+  working_tax_credit:
+    - id: 7210565656
+      awards:
+        - payProfCalcDate: "2099-01-01"
+          totalEntitlement: 3000.00
+          workingTaxCredit:
+            amount: 57.70
+            paidYTD: 600.00
+          payments:
+            - { frequency: 7, tcType: "ICC", amount: 57.70 }

@@ -1,0 +1,18 @@
+# One monthly salary with a pension contribution, no tax credits
+individual:
+  internal_id: "monthly_salary"
+  firstName: "Alice"
+  lastName: "Turner"
+  nino: "HM100001A"
+  dateOfBirth: "1985-03-12"
+  paye:
+    - employerPayeReference: "123/AB45678"
+      taxYear: "26-27"
+      payFrequency: "M1"
+      paymentDay: 28
+      taxCode: "1257L"
+      taxablePay: 1850.00
+      taxablePayToDate: 12950.00
+      employeePensionContribs:
+        paid: 75.00
+        paidYTD: 525.00
