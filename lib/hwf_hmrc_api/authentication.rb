@@ -40,6 +40,9 @@ module HwfHmrcApi
     end
 
     def clien_secret
+      # The mock connection needs no credentials
+      return "mock" if HwfHmrcApi.mock_connection?
+
       totp_code + @hmrc_secret
     end
 

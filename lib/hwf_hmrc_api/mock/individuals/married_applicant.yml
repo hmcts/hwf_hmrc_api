@@ -1,0 +1,9 @@
+# Married couple - applicant; the partner is married_partner.yml (Isla Shah)
+individual:
+  internal_id: "married_applicant"
+  firstName: "Harry"
+  lastName: "Shah"
+  nino: "HM100008A"
+  dateOfBirth: "1980-04-04"
+  paye:
+    - { employerPayeReference: "111/MN44444", taxYear: "26-27", payFrequency: "M1", paymentDay: 28, taxablePay: 1450.00 }

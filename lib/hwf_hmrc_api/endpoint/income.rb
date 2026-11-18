@@ -4,7 +4,7 @@ module HwfHmrcApi
   module Endpoint
     module Income
       def income_paye(header_info, attributes)
-        @response = HTTParty.get("#{api_url}/individuals/income/paye",
+        @response = http_request(:get, "/individuals/income/paye",
                                  headers: request_headers(header_info),
                                  query: {
                                    matchId: attributes[:matching_id],
@@ -15,7 +15,7 @@ module HwfHmrcApi
       end
 
       def income_summary(header_info, attributes)
-        @response = HTTParty.get("#{api_url}/individuals/income/sa/summary",
+        @response = http_request(:get, "/individuals/income/sa/summary",
                                  headers: request_headers(header_info),
                                  query: {
                                    matchId: attributes[:matching_id],
@@ -26,7 +26,7 @@ module HwfHmrcApi
       end
 
       def income_interest_dividends(header_info, attributes)
-        @response = HTTParty.get("#{api_url}/individuals/income/sa/interests-and-dividends",
+        @response = http_request(:get, "/individuals/income/sa/interests-and-dividends",
                                  headers: request_headers(header_info),
                                  query: {
                                    matchId: attributes[:matching_id],
@@ -37,7 +37,7 @@ module HwfHmrcApi
       end
 
       def income_self_employments(header_info, attributes)
-        @response = HTTParty.get("#{api_url}/individuals/income/sa/self-employments",
+        @response = http_request(:get, "/individuals/income/sa/self-employments",
                                  headers: request_headers(header_info),
                                  query: {
                                    matchId: attributes[:matching_id],
@@ -48,7 +48,7 @@ module HwfHmrcApi
       end
 
       def income_uk_properties(header_info, attributes)
-        @response = HTTParty.get("#{api_url}/individuals/income/sa/uk-properties",
+        @response = http_request(:get, "/individuals/income/sa/uk-properties",
                                  headers: request_headers(header_info),
                                  query: {
                                    matchId: attributes[:matching_id],
@@ -59,7 +59,7 @@ module HwfHmrcApi
       end
 
       def income_foreign(header_info, attributes)
-        @response = HTTParty.get("#{api_url}/individuals/income/sa/foreign",
+        @response = http_request(:get, "/individuals/income/sa/foreign",
                                  headers: request_headers(header_info),
                                  query: {
                                    matchId: attributes[:matching_id],

@@ -1,0 +1,18 @@
+# Part-time salary plus weekly working tax credit
+individual:
+  internal_id: "working_tax_credit"
+  firstName: "Frank"
+  lastName: "Morris"
+  nino: "HM100006A"
+  dateOfBirth: "1975-09-30"
+  paye:
+    - { employerPayeReference: "987/KL33333", taxYear: "26-27", payFrequency: "M1", paymentDay: 28, taxablePay: 1100.00 }
+  working_tax_credit:
+    - id: 7210565655
+      awards:
+        - totalEntitlement: 4160.00
+          workingTaxCredit:
+            amount: 80.00
+            paidYTD: 1600.00
+          payments:
+            - { frequency: 7, tcType: "ICC", amount: 80.00 }

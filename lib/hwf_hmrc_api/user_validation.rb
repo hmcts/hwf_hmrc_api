@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "date"
+
 module HwfHmrcApi
   module UserValidation
     require_relative "hwf_hmrc_api_error"

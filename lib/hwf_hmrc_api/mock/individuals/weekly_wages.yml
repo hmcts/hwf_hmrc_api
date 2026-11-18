@@ -1,0 +1,12 @@
+# Four weekly payslips from one employer
+individual:
+  internal_id: "weekly_wages"
+  firstName: "Ben"
+  lastName: "Carter"
+  nino: "HM100002A"
+  dateOfBirth: "1979-07-01"
+  paye:
+    - { employerPayeReference: "456/CD12345", taxYear: "26-27", payFrequency: "W1", paymentDay: 7, taxablePay: 410.25 }
+    - { employerPayeReference: "456/CD12345", taxYear: "26-27", payFrequency: "W1", paymentDay: 14, taxablePay: 398.10 }
+    - { employerPayeReference: "456/CD12345", taxYear: "26-27", payFrequency: "W1", paymentDay: 21, taxablePay: 422.00 }
+    - { employerPayeReference: "456/CD12345", taxYear: "26-27", payFrequency: "W1", paymentDay: 28, taxablePay: 410.25 }

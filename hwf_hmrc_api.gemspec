@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "hwf_hmrc_api"
-  spec.version       = "0.3.4"
+  spec.version       = "0.4.0"
   spec.authors       = ["Petr Zaparka"]
   spec.email         = ["petr@zaparka.cz"]
 

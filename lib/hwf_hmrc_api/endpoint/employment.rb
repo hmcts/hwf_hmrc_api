@@ -4,7 +4,7 @@ module HwfHmrcApi
   module Endpoint
     module Employment
       def employments_paye(header_info, attributes)
-        @response = HTTParty.get("#{api_url}/individuals/employments/paye",
+        @response = http_request(:get, "/individuals/employments/paye",
                                  headers: request_headers(header_info),
                                  query: {
                                    matchId: attributes[:matching_id],

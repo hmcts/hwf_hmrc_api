@@ -6,10 +6,10 @@ module HwfHmrcApi
       require "uuid"
 
       def token(secret, client_id)
-        @response = HTTParty.post("#{api_url}/oauth/token",
-                                  headers: { "content-type" => "application/x-www-form-urlencoded" },
-                                  body: { client_secret: secret, client_id: client_id,
-                                          grant_type: "client_credentials" })
+        @response = http_request(:post, "/oauth/token",
+                                 headers: { "content-type" => "application/x-www-form-urlencoded" },
+                                 body: { client_secret: secret, client_id: client_id,
+                                         grant_type: "client_credentials" })
 
         process_token_response
       end

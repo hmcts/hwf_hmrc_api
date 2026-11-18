@@ -4,9 +4,9 @@ module HwfHmrcApi
   module Endpoint
     module UserMatching
       def match_user(header_info, user_info)
-        @response = HTTParty.post("#{api_url}/individuals/matching",
-                                  headers: request_headers(header_info, "2.0"),
-                                  body: user_info.to_json)
+        @response = http_request(:post, "/individuals/matching",
+                                 headers: request_headers(header_info, "2.0"),
+                                 body: user_info.to_json)
 
         parse_matching_user_response
       end

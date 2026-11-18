@@ -1,3 +1,10 @@
+## [v0.4.0] - 2026-11-18
+### Added
+- Mock connection: with `HMRC_API_CONNECTION=mock_hmrc` the gem answers `token`, `match_user`, `paye` and both tax credit calls from the test individuals in `lib/hwf_hmrc_api/mock/individuals` and needs no credentials, as the DWP gem's `mock_dwp` does. The switch sits at the HTTP call, so the existing response and error handling still runs.
+- The test individuals' dates are relative to the requested window rather than fixed, because the staff app's window moves with each application's date.
+### Fixed
+- The gem now requires `json`, `date` and `securerandom` itself; it only loaded inside Rails, which had already required them.
+
 ## [v0.3.4] - 2026-10-27
 ### Security
 - json 2.20.0 → 3.1.0: fixes CVE-2026-71847 (ResumableParser use-after-free on truncated input). The library only uses `JSON.parse` and `to_json`, which json 3 keeps unchanged.

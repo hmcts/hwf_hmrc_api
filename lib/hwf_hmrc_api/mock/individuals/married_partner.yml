@@ -1,0 +1,10 @@
+# Married couple - partner of married_applicant.yml
+individual:
+  internal_id: "married_partner"
+  firstName: "Isla"
+  lastName: "Shah"
+  nino: "HM100009A"
+  dateOfBirth: "1981-06-06"
+  paye:
+    - { employerPayeReference: "222/OP55555", taxYear: "26-27", payFrequency: "W2", paymentDay: 14, taxablePay: 520.00 }
+    - { employerPayeReference: "222/OP55555", taxYear: "26-27", payFrequency: "W2", paymentDay: 28, taxablePay: 520.00 }

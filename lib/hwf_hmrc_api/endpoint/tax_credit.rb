@@ -4,7 +4,7 @@ module HwfHmrcApi
   module Endpoint
     module TaxCredit
       def child_tax_credits(header_info, attributes)
-        @response = HTTParty.get("#{api_url}/individuals/benefits-and-credits/child-tax-credit",
+        @response = http_request(:get, "/individuals/benefits-and-credits/child-tax-credit",
                                  headers: request_headers(header_info, "1.0"),
                                  query: {
                                    matchId: attributes[:matching_id],
@@ -15,7 +15,7 @@ module HwfHmrcApi
       end
 
       def working_tax_credits(header_info, attributes)
-        @response = HTTParty.get("#{api_url}/individuals/benefits-and-credits/working-tax-credit",
+        @response = http_request(:get, "/individuals/benefits-and-credits/working-tax-credit",
                                  headers: request_headers(header_info, "1.0"),
                                  query: {
                                    matchId: attributes[:matching_id],

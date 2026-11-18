@@ -1,0 +1,21 @@
+# Low salary plus weekly child tax credit with a childcare element
+individual:
+  internal_id: "child_tax_credit"
+  firstName: "Emma"
+  lastName: "Lewis"
+  nino: "HM100005A"
+  dateOfBirth: "1988-05-14"
+  paye:
+    - { employerPayeReference: "654/IJ22222", taxYear: "26-27", payFrequency: "M1", paymentDay: 28, taxablePay: 900.00 }
+  child_tax_credit:
+    - id: 7210565654
+      awards:
+        - totalEntitlement: 6000.00
+          childTaxCredit:
+            childCareAmount: 1200.00
+            ctcChildAmount: 2500.00
+            familyAmount: 545.00
+            babyAmount: 0
+            paidYTD: 2400.00
+          payments:
+            - { frequency: 7, tcType: "ICC", amount: 85.50 }
